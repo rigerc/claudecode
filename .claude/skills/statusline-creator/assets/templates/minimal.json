@@ -1,0 +1,5 @@
+{
+  "statusline": {
+    "format": "$(basename \"$PWD\") $(git branch --show-current 2>/dev/null)"
+  }
+}

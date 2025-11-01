@@ -1,0 +1,10 @@
+{
+  "description": "Example hooks configuration for statusline-creator skill",
+  "hooks": {
+    "onDirectoryChange": {
+      "command": "~/.claude/skills/statusline-creator/scripts/get_git_info.sh --format statusline > /tmp/claude_statusline_cache",
+      "description": "Cache git info on directory change for faster statusline rendering"
+    }
+  },
+  "installation": "Merge this configuration into your ~/.claude/hooks.json file. This example shows how to cache git information when changing directories, which can then be read by statuslines for improved performance."
+}

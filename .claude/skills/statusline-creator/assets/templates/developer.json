@@ -1,0 +1,5 @@
+{
+  "statusline": {
+    "format": "\\x1b[1;36m$(basename \"$PWD\")\\x1b[0m \\x1b[90m│\\x1b[0m \\x1b[32m$(git branch --show-current 2>/dev/null)\\x1b[0m $(git status --porcelain 2>/dev/null | wc -l | awk '{if($1>0) print \"\\x1b[33m\"$1\"\\x1b[0m\"; else print \"\\x1b[32m✓\\x1b[0m\"}') \\x1b[90m│\\x1b[0m $(date +%H:%M) \\x1b[90m│\\x1b[0m \\x1b[90m$(uptime | awk -F'load average:' '{print $2}' | awk '{print $1}' | tr -d ',')\\x1b[0m"
+  }
+}

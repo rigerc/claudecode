@@ -1,0 +1,229 @@
+#!/bin/bash
+# One-time package installation script
+# This script runs only once when first applied
+
+set -e
+
+echo "Starting package installation..."
+
+# Detect operating system
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+    OS="linux"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+    OS="darwin"
+else
+    echo "Unsupported OS: $OSTYPE"
+    exit 1
+fi
+
+# Install packages based on OS
+if [[ "$OS" == "linux" ]]; then
+    # Detect Linux distribution
+    if [[ -f /etc/os-release ]]; then
+        . /etc/os-release
+        DISTRO=$ID
+    else
+        echo "Cannot detect Linux distribution"
+        exit 1
+    fi
+
+    case "$DISTRO" in
+        ubuntu|debian)
+            echo "Detected Ubuntu/Debian"
+            sudo apt-get update
+
+            # Install packages
+            {{ range .packages.ubuntu.apt }}
+            echo "Installing {{ . }}..."
+            sudo apt-get install -y {{ . }}
+            {{ end }}
+
+            # Install snap packages
+            {{ range .packages.ubuntu.snap }}
+            echo "Installing {{ . }} via snap..."
+            sudo snap install {{ . }}
+            {{ end }}
+            ;;
+
+        fedora|centos|rhel)
+            echo "Detected Fedora/CentOS/RHEL"
+            sudo dnf update -y
+
+            # Install packages
+            {{ range .packages.fedora.dnf }}
+            echo "Installing {{ . }}..."
+            sudo dnf install -y {{ . }}
+            {{ end }}
+            ;;
+
+        arch)
+            echo "Detected Arch Linux"
+            sudo pacman -Sy --noconfirm
+
+            # Install packages
+            {{ range .packages.arch.pacman }}
+            echo "Installing {{ . }}..."
+            sudo pacman -S --noconfirm {{ . }}
+            {{ end }}
+            ;;
+
+        *)
+            echo "Unsupported distribution: $DISTRO"
+            exit 1
+            ;;
+    esac
+
+elif [[ "$OS" == "darwin" ]]; then
+    echo "Detected macOS"
+
+    # Check if Homebrew is installed
+    if ! command -v brew &> /dev/null; then
+        echo "Installing Homebrew..."
+        /bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+    fi
+
+    # Update Homebrew
+    brew update
+
+    # Install packages
+    {{ range .packages.macos.brews }}
+    echo "Installing {{ . }}..."
+    brew install {{ . }}
+    {{ end }}
+
+    # Install casks
+    {{ range .packages.macos.casks }}
+    echo "Installing {{ . }}..."
+    brew install --cask {{ . }}
+    {{ end }}
+fi
+
+# Development tools installation
+echo "Installing development tools..."
+
+{{ if .development.go }}
+# Install Go
+if ! command -v go &> /dev/null; then
+    echo "Installing Go..."
+    if [[ "$OS" == "darwin" ]]; then
+        brew install go
+    else
+        # Download and install Go for Linux
+        GO_VERSION="1.21.0"
+        cd /tmp
+        wget "https://golang.org/dl/go${GO_VERSION}.linux-amd64.tar.gz"
+        sudo tar -C /usr/local -xzf "go${GO_VERSION}.linux-amd64.tar.gz"
+        echo 'export PATH=$PATH:/usr/local/go/bin' >> ~/.bashrc
+        rm "go${GO_VERSION}.linux-amd64.tar.gz"
+    fi
+else
+    echo "Go is already installed: $(go version)"
+fi
+{{ end }}
+
+{{ if .development.node }}
+# Install Node.js via nvm
+if ! command -v nvm &> /dev/null; then
+    echo "Installing nvm..."
+    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.0/install.sh | bash
+
+    # Load nvm
+    export NVM_DIR="$HOME/.nvm"
+    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+
+    # Install latest LTS Node.js
+    nvm install --lts
+else
+    echo "nvm is already installed"
+fi
+{{ end }}
+
+{{ if .development.python }}
+# Install Python via pyenv
+if ! command -v pyenv &> /dev/null; then
+    echo "Installing pyenv..."
+    if [[ "$OS" == "darwin" ]]; then
+        brew install pyenv
+    else
+        # Install pyenv dependencies and pyenv
+        sudo apt-get install -y make build-essential libssl-dev zlib1g-dev \
+            libbz2-dev libreadline-dev libsqlite3-dev wget curl llvm \
+            libncurses5-dev libncursesw5-dev xz-utils tk-dev
+
+        curl https://pyenv.run | bash
+    fi
+
+    # Add pyenv to shell
+    echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bashrc
+    echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bashrc
+    echo 'eval "$(pyenv init -)"' >> ~/.bashrc
+
+    # Install latest Python
+    export PYENV_ROOT="$HOME/.pyenv"
+    export PATH="$PYENV_ROOT/bin:$PATH"
+    eval "$(pyenv init -)"
+    pyenv install 3.11.0
+    pyenv global 3.11.0
+else
+    echo "pyenv is already installed: $(pyenv --version)"
+fi
+{{ end }}
+
+# Install shell tools
+echo "Installing shell tools..."
+
+{{ if eq .shell "zsh" }}
+# Install Oh My Zsh
+if [[ ! -d "$HOME/.oh-my-zsh" ]]; then
+    echo "Installing Oh My Zsh..."
+    sh -c "$(curl -fsSL https://raw.github.com/ohmyzsh/ohmyzsh/master/tools/install.sh)" "" --unattended
+else
+    echo "Oh My Zsh is already installed"
+fi
+{{ end }}
+
+# Install tmux plugin manager
+if [[ ! -d "$HOME/.tmux/plugins/tpm" ]]; then
+    echo "Installing tmux plugin manager..."
+    git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+else
+    echo "tmux plugin manager is already installed"
+fi
+
+# Install vim plugin manager
+if [[ ! -f "$HOME/.vim/autoload/plug.vim" ]]; then
+    echo "Installing vim-plug..."
+    curl -fLo ~/.vim/autoload/plug.vim --create-dirs \
+        https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+else
+    echo "vim-plug is already installed"
+fi
+
+echo "Package installation completed successfully!"
+
+# Show summary
+echo ""
+echo "Installation Summary:"
+echo "- OS: $OS{{ if eq .chezmoi.os "linux" }} ($DISTRO){{ end }}"
+echo "- Shell: $SHELL"
+
+{{ if .development.go }}
+echo "- Go: $(go version 2>/dev/null || echo 'Not installed')"
+{{ end }}
+
+{{ if .development.node }}
+echo "- Node.js: $(node --version 2>/dev/null || echo 'Not installed')"
+{{ end }}
+
+{{ if .development.python }}
+echo "- Python: $(python --version 2>/dev/null || echo 'Not installed')"
+{{ end }}
+
+echo ""
+echo "Next steps:"
+echo "1. Restart your shell or run: source ~/.bashrc"
+echo "2. Install vim plugins: vim +PlugInstall +qall"
+echo "3. Install tmux plugins: tmux + I + Enter"
+{{ if eq .shell "zsh" }}
+echo "4. Configure zsh plugins in ~/.zshrc"
+{{ end }}

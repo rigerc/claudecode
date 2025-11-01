@@ -1,0 +1,2 @@
+## Always Use Context7
+For all library lookups, and when integrating libraries or packages automatically invoke Context7 MCP tools (if available) to fetch the latest and relevant context without explicit prompting.

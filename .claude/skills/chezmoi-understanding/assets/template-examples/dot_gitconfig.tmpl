@@ -1,0 +1,45 @@
+[user]
+    email = {{ .email }}
+    name = {{ if eq .chezmoi.hostname "work-laptop" }}{{ .name_work }}{{ else }}{{ .name_personal }}{{ end }}
+
+[core]
+    editor = {{ if eq .chezmoi.os "darwin" }}/usr/local/bin/vim{{ else }}/usr/bin/vim{{ end }}
+    autocrlf = input
+    quotePath = false
+
+[push]
+    default = simple
+
+[pull]
+    rebase = true
+
+[init]
+    defaultBranch = main
+
+[github]
+    user = {{ .github_username }}
+
+# GitHub integration (if token is available)
+{{ if .github_token }}
+[credential "https://github.com"]
+    helper = !gh auth git-credential
+    username = {{ .github_username }}
+{{ end }}
+
+# Work-specific configuration
+{{ if eq .chezmoi.hostname "work-laptop" }}
+[gitlab]
+    user = {{ .gitlab_username }}
+
+[credential "https://gitlab.com"]
+    helper = !lab auth git-credential
+{{ end }}
+
+# Personal-specific configuration
+{{ if ne .chezmoi.hostname "work-laptop" }}
+[github]
+    user = {{ .github_username }}
+
+[url "git@github.com:"]
+    insteadOf = https://github.com/
+{{ end }}

@@ -1,0 +1,29 @@
+{
+  "prompts": [
+    {
+      "name": "ServiceName",
+      "message": "Service name?",
+      "default": "myservice"
+    },
+    {
+      "name": "ModuleName",
+      "message": "Go module name?",
+      "default": "github.com/username/myservice"
+    },
+    {
+      "name": "Port",
+      "message": "HTTP port?",
+      "default": "8080"
+    },
+    {
+      "name": "Description",
+      "message": "Service description?",
+      "default": "A web service"
+    },
+    {
+      "name": "EnableTLS",
+      "message": "Enable TLS?",
+      "default": "false"
+    }
+  ]
+}

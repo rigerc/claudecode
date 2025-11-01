@@ -1,0 +1,5 @@
+{
+  "statusline": {
+    "format": "\\x1b[1m$(whoami)@$(hostname -s)\\x1b[0m │ \\x1b[34m$(basename \"$PWD\")\\x1b[0m │ \\x1b[32m$(git branch --show-current 2>/dev/null)\\x1b[0m $([ -n \"$(git status --porcelain 2>/dev/null)\" ] && echo '\\x1b[33m±\\x1b[0m' || echo '\\x1b[32m✓\\x1b[0m') │ \\x1b[90m$(date +%H:%M:%S)\\x1b[0m"
+  }
+}

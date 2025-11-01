@@ -1,0 +1,5 @@
+{
+  "statusline": {
+    "format": "\\x1b[38;2;255;255;255m\\x1b[48;2;30;30;30m $(basename \"$PWD\") \\x1b[0m\\x1b[38;2;30;30;30m\\x1b[48;2;60;60;60m❯\\x1b[0m\\x1b[38;2;255;255;255m\\x1b[48;2;60;60;60m $(git branch --show-current 2>/dev/null || echo 'no git') \\x1b[0m\\x1b[38;2;60;60;60m❯\\x1b[0m"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "prompts": [
+    {
+      "name": "AppName",
+      "message": "What is your CLI application name?",
+      "default": "mycli"
+    },
+    {
+      "name": "ModuleName",
+      "message": "What is your Go module name?",
+      "default": "github.com/username/mycli"
+    },
+    {
+      "name": "Description",
+      "message": "Provide a short description:",
+      "default": "A CLI application"
+    },
+    {
+      "name": "Author",
+      "message": "Who is the author?",
+      "default": ""
+    },
+    {
+      "name": "Version",
+      "message": "Initial version?",
+      "default": "v0.1.0"
+    }
+  ]
+}

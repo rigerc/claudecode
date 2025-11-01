@@ -1,0 +1,5 @@
+{
+  "statusline": {
+    "format": "\\x1b[96m❯\\x1b[0m \\x1b[1m$(basename \"$PWD\")\\x1b[0m \\x1b[90m·\\x1b[0m \\x1b[35m$(git branch --show-current 2>/dev/null)\\x1b[0m $([ -z \"$(git status --porcelain 2>/dev/null)\" ] && echo '\\x1b[32m●\\x1b[0m' || echo '\\x1b[33m●\\x1b[0m')"
+  }
+}

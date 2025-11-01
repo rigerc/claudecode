@@ -1,0 +1,20 @@
+{
+  "name": "statusline-creator",
+  "version": "1.0.0",
+  "description": "Design and customize beautiful, performant statuslines for Claude Code. Includes 6 pre-built templates, helper scripts for dynamic data, and comprehensive customization options.",
+  "author": {
+    "name": "AstroSteveo",
+    "url": "https://github.com/astrosteveo"
+  },
+  "homepage": "https://github.com/astrosteveo/astrorepo",
+  "repository": "https://github.com/astrosteveo/astrorepo",
+  "license": "MIT",
+  "keywords": [
+    "statusline",
+    "customization",
+    "ui",
+    "terminal",
+    "productivity",
+    "templates"
+  ]
+}
