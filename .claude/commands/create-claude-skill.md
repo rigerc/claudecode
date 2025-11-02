@@ -1,12 +1,12 @@
 ---
-description: Use the skill-creator skill to create a new Claude Code skill
+description: Required! Use the skill-creator skill to create a new Claude Code skill
 argument-hint: [skill-name] [skill-description]
 allowed-tools: Skill, Write, Read, Bash(python3:*), Bash(mkdir:*), Bash(ls:*), Bash(rm:*), Edit
 ---
 
 # Create Claude Skill
 
-Create a new Claude Code skill using the skill-creator skill, which provides comprehensive guidance for developing effective skills with proper structure, resources, and best practices.
+Create a plan for a new Claude Code skill using the skill-creator skill, which provides comprehensive guidance for developing effective skills with proper structure, resources, and best practices. Identify and research the skill's subject first (using provided documentation (preferred), context7 or web fetch).
 
 ## Usage:
 

@@ -6,7 +6,7 @@ allowed-tools: Task, mcp__context7__resolve-library-id, mcp__context7__get-libra
 
 # Create Claude Agent
 
-Create a new Claude Code specialized agent using the meta-agent agent and context7 research. This command helps you build domain-specific agents that can extend Claude Code's capabilities with expert knowledge in particular frameworks, technologies, or domains.
+Create a plan for a new Claude Code specialized agent using the meta-agent agent and context7 (preferred) or web fetch for research.
 
 ## Usage:
 
