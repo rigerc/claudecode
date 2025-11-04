@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# Script to sync .claude/ contents to .opencode/ directories
-# Removes existing .opencode directories and copies fresh from .claude/
+# Sync script to copy .claude/commands and .claude/agents to .opencode directories
+# with proper frontmatter processing
 
 set -euo pipefail
 
@@ -17,131 +17,189 @@ print_status() {
 }
 
 print_warning() {
-    echo -e "${YELLOW}[WARNING]${NC} $1"
+    echo -e "${YELLOW}[WARN]${NC} $1"
 }
 
 print_error() {
     echo -e "${RED}[ERROR]${NC} $1"
 }
 
-# Check if .claude directory exists
-if [[ ! -d ".claude" ]]; then
-    print_error ".claude directory not found!"
-    exit 1
-fi
-
-# Create .opencode directory if it doesn't exist
-if [[ ! -d ".opencode" ]]; then
-    print_status "Creating .opencode directory..."
-    mkdir -p .opencode
-fi
-
-# Remove existing directories
-print_status "Removing existing .opencode directories..."
-rm -rf .opencode/command .opencode/agent .opencode/skills
-
-# Copy contents from .claude to .opencode
-print_status "Copying commands from .claude/commands to .opencode/command..."
-if [[ -d ".claude/commands" ]]; then
-    cp -r .claude/commands .opencode/command
-    print_status "Commands copied successfully"
-else
-    print_warning ".claude/commands directory not found, skipping..."
-fi
-
-print_status "Copying agents from .claude/agents to .opencode/agent..."
-if [[ -d ".claude/agents" ]]; then
-    cp -r .claude/agents .opencode/agent
-    print_status "Agents copied successfully"
-else
-    print_warning ".claude/agents directory not found, skipping..."
-fi
-
-print_status "Copying skills from .claude/skills to .opencode/skills..."
-if [[ -d ".claude/skills" ]]; then
-    cp -r .claude/skills .opencode/skills
-    print_status "Skills copied successfully"
-else
-    print_warning ".claude/skills directory not found, skipping..."
-fi
-
-# Function to clean frontmatter, keeping only 'description'
-clean_frontmatter() {
-    local file="$1"
-    
-    # Check if file has frontmatter (starts with ---)
-    if [[ "$(head -n1 "$file")" != "---" ]]; then
-        return 0  # No frontmatter, skip
+# Check if yq is available
+check_dependencies() {
+    if ! command -v yq &> /dev/null; then
+        print_warning "yq not found. Installing yq..."
+        # Install yq if not available
+        if command -v wget &> /dev/null; then
+            wget https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -O /tmp/yq
+        elif command -v curl &> /dev/null; then
+            curl -L https://github.com/mikefarah/yq/releases/latest/download/yq_linux_amd64 -o /tmp/yq
+        else
+            print_error "Neither wget nor curl available. Please install yq manually."
+            exit 1
+        fi
+        chmod +x /tmp/yq
+        sudo mv /tmp/yq /usr/local/bin/yq
     fi
-    
-    # Create temporary file
-    local temp_file=$(mktemp)
-    
-    # Process the file:
-    # 1. Find the end of frontmatter (second ---)
-    # 2. Extract only the description line from frontmatter
-    # 3. Encapsulate description in double quotes
-    # 4. Keep the rest of the file content
-    awk '
-    BEGIN { in_frontmatter = 0; frontmatter_ended = 0; description_found = 0 }
-    NR == 1 && $0 == "---" { in_frontmatter = 1; next }
-    in_frontmatter && $0 == "---" { 
-        in_frontmatter = 0; 
-        frontmatter_ended = 1;
-        if (description_found) {
-            print "---";
-            print "description: \"" description "\"";
-            print "---";
-        }
-        next 
-    }
-    in_frontmatter && /^description:/ { 
-        description = $0; 
-        sub(/^description:\s*/, "", description);
-        # Remove existing quotes if present
-        gsub(/^"|"$/, "", description);
-        description_found = 1;
-        next 
-    }
-    in_frontmatter { next }  # Skip other frontmatter
-    { print }  # Print rest of content
-    ' "$file" > "$temp_file"
-    
-    # Replace original file with cleaned version
-    mv "$temp_file" "$file"
 }
 
-# Clean frontmatter from copied files
-print_status "Cleaning frontmatter from copied files..."
+# Process frontmatter: quote all values and escape properly
+process_frontmatter() {
+    local input_file="$1"
+    local output_file="$2"
 
-# Clean command files
-if [[ -d ".opencode/command" ]]; then
-    find .opencode/command -name "*.md" -type f | while read -r file; do
-        print_status "Cleaning frontmatter from: $file"
-        clean_frontmatter "$file"
-    done
-fi
+    # Temporarily disable strict mode for this function
+    local old_opts=$(set +o)
+    set +e
 
-# Clean agent files
-if [[ -d ".opencode/agent" ]]; then
-    find .opencode/agent -name "*.md" -type f | while read -r file; do
-        print_status "Cleaning frontmatter from: $file"
-        clean_frontmatter "$file"
-    done
-fi
+    # Extract frontmatter (between --- markers)
+    local frontmatter_start=$(grep -n "^---$" "$input_file" | head -1 | cut -d: -f1)
+    local frontmatter_end=$(grep -n "^---$" "$input_file" | tail -1 | cut -d: -f1)
 
-# Clean skill files (if they contain markdown files)
-if [[ -d ".opencode/skills" ]]; then
-    find .opencode/skills -name "*.md" -type f | while read -r file; do
-        print_status "Cleaning frontmatter from: $file"
-        clean_frontmatter "$file"
-    done
-fi
+    if [[ -z "$frontmatter_start" || -z "$frontmatter_end" ]]; then
+        print_warning "No frontmatter found in $input_file, copying as-is"
+        cp "$input_file" "$output_file"
+        return
+    fi
 
-# Verify the operation
-print_status "Verifying the sync operation..."
-echo "Contents of .opencode directory:"
-ls -la .opencode/
+    # Extract frontmatter and content
+    local frontmatter=$(sed -n "${frontmatter_start},${frontmatter_end}p" "$input_file")
+    local content=$(sed -n "$((frontmatter_end + 1)),\$p" "$input_file")
 
-echo ""
-echo "Sync completed successfully!"
+    # Process frontmatter with simple bash-based approach
+    local frontmatter_body=$(echo "$frontmatter" | sed '1d;$d')
+    local processed_frontmatter_body=""
+
+    # Process each line in frontmatter to quote string values
+    local in_array=false
+    local array_indent=""
+
+    while IFS= read -r line; do
+        if [[ -n "$line" ]]; then
+            # Check if this is an array line
+            if [[ "$line" =~ ^[[:space:]]*- ]]; then
+                in_array=true
+                array_indent=$(echo "$line" | sed 's/^\([[:space:]]*\).*/\1/')
+                # Process array item
+                local item_content=$(echo "$line" | sed 's/^[[:space:]]*- *//')
+                if [[ "$item_content" =~ ^[0-9]+$ ]] || [[ "$item_content" == "true" ]] || [[ "$item_content" == "false" ]]; then
+                    processed_frontmatter_body+="${line}"$'\n'
+                else
+                    local escaped_item=$(echo "$item_content" | sed 's/"/\\"/g')
+                    processed_frontmatter_body+="${array_indent}- \"${escaped_item}\""$'\n'
+                fi
+            else
+                in_array=false
+                # Process regular key-value pair
+                if [[ "$line" == *":"* ]]; then
+                    local key=$(echo "$line" | cut -d: -f1 | xargs)
+                    local value_part=$(echo "$line" | cut -d: -f2- | sed 's/^ *//')
+
+                    # Check if value is already quoted or is a special type
+                    if [[ "$value_part" == \"*\" ]] || [[ "$value_part" == "["* ]] || [[ "$value_part" == "true" ]] || [[ "$value_part" == "false" ]] || [[ "$value_part" =~ ^[0-9]+$ ]]; then
+                        processed_frontmatter_body+="${line}"$'\n'
+                    else
+                        # Quote the string value and escape quotes
+                        local escaped_value=$(echo "$value_part" | sed 's/"/\\"/g')
+                        processed_frontmatter_body+="${key}: \"${escaped_value}\""$'\n'
+                    fi
+                else
+                    processed_frontmatter_body+="${line}"$'\n'
+                fi
+            fi
+        else
+            processed_frontmatter_body+=$'\n'
+        fi
+    done <<< "$frontmatter_body"
+
+    local processed_frontmatter="$processed_frontmatter_body"
+
+    # Reconstruct the file with processed frontmatter
+    cat > "$output_file" << EOF
+---
+$processed_frontmatter
+---
+$content
+EOF
+
+    # Restore original options
+    eval "$old_opts"
+    return 0
+}
+
+# Sync directory
+sync_directory() {
+    local source_dir="$1"
+    local target_dir="$2"
+
+    print_status "Syncing $source_dir to $target_dir..."
+
+    # Remove target directory if it exists
+    if [[ -d "$target_dir" ]]; then
+        print_status "Removing existing $target_dir"
+        rm -rf "$target_dir"
+    fi
+
+    # Create target directory
+    mkdir -p "$target_dir"
+
+    # Process each markdown file
+    local file_count=0
+    while IFS= read -r -d '' file; do
+        local filename=$(basename "$file")
+        local target_file="$target_dir/$filename"
+
+        print_status "Processing $filename"
+        if ! process_frontmatter "$file" "$target_file"; then
+            print_error "Failed to process $filename, copying as-is"
+            cp "$file" "$target_file"
+        fi
+        ((file_count++))
+    done < <(find "$source_dir" -name "*.md" -print0)
+
+    print_status "Processed $file_count files from $source_dir"
+}
+
+# Main function
+main() {
+    print_status "Starting sync from .claude to .opencode..."
+
+    # Check dependencies
+    check_dependencies
+
+    # Get script directory
+    local script_dir="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+    local project_root="$script_dir"
+
+    # Define paths
+    local claude_commands="$project_root/.claude/commands"
+    local claude_agents="$project_root/.claude/agents"
+    local opencode_commands="$project_root/.opencode/command"
+    local opencode_agents="$project_root/.opencode/agent"
+
+    # Check if source directories exist
+    if [[ ! -d "$claude_commands" ]]; then
+        print_error "Source directory $claude_commands not found"
+        exit 1
+    fi
+
+    if [[ ! -d "$claude_agents" ]]; then
+        print_error "Source directory $claude_agents not found"
+        exit 1
+    fi
+
+    # Sync directories
+    sync_directory "$claude_commands" "$opencode_commands"
+    sync_directory "$claude_agents" "$opencode_agents"
+
+    print_status "Sync completed successfully!"
+
+    # Show summary
+    echo
+    print_status "Sync Summary:"
+    echo "  Commands: $(find "$opencode_commands" -name "*.md" | wc -l) files"
+    echo "  Agents: $(find "$opencode_agents" -name "*.md" | wc -l) files"
+    echo
+}
+
+# Run main function
+main "$@"
