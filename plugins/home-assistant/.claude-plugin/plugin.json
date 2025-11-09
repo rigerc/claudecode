@@ -1,0 +1,31 @@
+{
+  "name": "home-assistant",
+  "version": "1.0.0",
+  "description": "Home Assistant development tools and automation skills for creating add-ons, integrations, and smart home workflows",
+  "author": "rigerc",
+  "license": "MIT",
+  "keywords": [
+    "home-assistant",
+    "smart-home",
+    "iot",
+    "automation",
+    "add-ons",
+    "integrations",
+    "docker"
+  ],
+  "category": "development",
+  "repository": "https://github.com/rigerc/claude-code-marketplace",
+  "homepage": "https://github.com/rigerc/claude-code-marketplace/tree/main/plugins/home-assistant",
+  "skills": [
+    "ha-addon"
+  ],
+  "dependencies": [],
+  "claude_code_version": ">=1.0.0",
+  "tags": [
+    "home-automation",
+    "iot-development",
+    "docker-containers",
+    "yaml-configuration",
+    "api-integration"
+  ]
+}

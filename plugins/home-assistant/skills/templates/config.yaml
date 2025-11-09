@@ -1,0 +1,31 @@
+---
+name: "My Awesome Add-on"
+version: "1.0.0"
+slug: "my-awesome-addon"
+description: "A comprehensive description of what this add-on does"
+url: "https://github.com/yourusername/your-repo"
+codenotary: "your-email@example.com"
+init: false
+arch:
+  - aarch64
+  - amd64
+  - armhf
+  - armv7
+  - i386
+ports:
+  8080/tcp: null
+ports_description:
+  8080/tcp: "Web interface port"
+map:
+  - "share"
+  - "ssl"
+options:
+  log_level: "info"
+  enable_feature: true
+  custom_port: 8080
+schema:
+  log_level: "list(trace|debug|info|notice|warning|error|fatal)"
+  enable_feature: "bool"
+  custom_port: "int(1,65535)"
+startup: "application"
+boot: "auto"

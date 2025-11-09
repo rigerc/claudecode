@@ -1,4 +1,4 @@
 {
     "$schema": "https://opencode.ai/config.json",
-    "plugin": ["opencode-skills"]
+    "plugin": ["/mnt/d/dev/projects/claude-sync/dist/index.js"]
 }
