@@ -7,11 +7,11 @@ A curated collection of Claude Code extensions that enhance your development wor
 
 ## 📊 Extension Statistics
 
-- **Commands**: 10
+- **Commands**: 9
 - **Skills**: 6
 - **Agents**: 11
 - **Hooks**: 0
-- **Total Extensions**: 27
+- **Total Extensions**: 26
 
 ## 🚀 Quick Start
 

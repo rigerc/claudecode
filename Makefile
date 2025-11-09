@@ -34,6 +34,11 @@ validate:
 	else \
 		echo "❌ marketplace.json not found - run 'make generate' first"; \
 	fi
+	@if [ -f "README.md" ]; then \
+		echo "✅ README.md exists"; \
+	else \
+		echo "❌ README.md not found - run 'make generate' first"; \
+	fi
 
 # Clean generated files
 clean:

@@ -26,23 +26,33 @@ jobs:
 
     - name: Generate marketplace
       run: |
+        echo "🚀 Regenerating marketplace from .claude directory..."
         python3 scripts/generate-marketplace.py
 
-    - name: Validate generated marketplace
+    - name: Validate generated files
       run: |
-        make validate
+        echo "🔍 Validating generated marketplace..."
+        python3 -m json.tool .claude-plugin/marketplace.json > /dev/null && echo "✅ marketplace.json is valid" || exit 1
+        [ -f "README.md" ] && echo "✅ README.md exists" || exit 1
 
     - name: Show statistics
       run: |
-        make stats
+        echo "📊 Current Extension Statistics:"
+        echo "   Commands: $(find .claude/commands -name '*.md' 2>/dev/null | wc -l | tr -d ' ')"
+        echo "   Skills: $(find .claude/skills -name 'SKILL.md' 2>/dev/null | wc -l | tr -d ' ')"
+        echo "   Agents: $(find .claude/agents -name '*.md' 2>/dev/null | wc -l | tr -d ' ')"
+        echo "   Hooks: $(find .claude/hooks -name '*.md' 2>/dev/null | wc -l | tr -d ' ')"
+        echo "   Marketplace plugins: $(jq '.plugins | length' .claude-plugin/marketplace.json 2>/dev/null | tr -d ' ' || echo '0')"
 
     - name: Check for changes
       id: verify-changed-files
       run: |
         if [ -n "$(git status --porcelain)" ]; then
           echo "changed=true" >> $GITHUB_OUTPUT
+          echo "📝 Changes detected - files will be committed"
         else
           echo "changed=false" >> $GITHUB_OUTPUT
+          echo "ℹ️  No changes needed - marketplace already up to date"
         fi
 
     - name: Commit and push changes
@@ -51,5 +61,13 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
         git add .claude-plugin/marketplace.json README.md
-        git commit -m "🤖 Auto-regenerate marketplace from .claude changes"
+        git commit -m "🤖 Auto-regenerate marketplace from .claude changes
+
+        📊 Extension Stats:
+        - Commands: $(find .claude/commands -name '*.md' 2>/dev/null | wc -l | tr -d ' ')
+        - Skills: $(find .claude/skills -name 'SKILL.md' 2>/dev/null | wc -l | tr -d ' ')
+        - Agents: $(find .claude/agents -name '*.md' 2>/dev/null | wc -l | tr -d ' ')
+        - Hooks: $(find .claude/hooks -name '*.md' 2>/dev/null | wc -l | tr -d ' ')
+
+        Generated with ❤️ by automation"
         git push
