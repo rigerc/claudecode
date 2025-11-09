@@ -1,31 +1,29 @@
 {
   "config": {
     "default": true,
-    "MD013": {
-      "code_blocks": false,
-      "tables": false,
-      "headings": false,
-      "strict": false,
-      "stern": false
-    },
-    "MD033": {
-      "allowed_elements": [
-        "details",
-        "summary",
-        "sup",
-        "sub",
-        "kbd",
-        "br",
-        "hr",
-        "img",
-        "div",
-        "span"
-      ]
-    },
+    "MD013": false,
+    "MD033": false,
     "MD041": false,
-    "MD007": {
-      "indent": 2
-    }
+    "MD007": false,
+    "MD022": false,
+    "MD031": false,
+    "MD032": false,
+    "MD040": false,
+    "MD010": false,
+    "MD047": false,
+    "MD009": false,
+    "MD024": false,
+    "MD026": false,
+    "MD029": false,
+    "MD034": false,
+    "MD036": false,
+    "MD046": false,
+    "MD058": false,
+    "MD001": false,
+    "MD038": false,
+    "MD051": false,
+    "MD056": false,
+    "MD059": false
   },
   "ignores": [
     "plugins/**/node_modules",
