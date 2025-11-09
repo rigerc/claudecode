@@ -1,6 +1,6 @@
 ---
 name: beets
-description: Comprehensive music library management system guide covering setup, advanced querying, plugin development, and automation workflows for the beets music organization tool. This skill should be used when working with music collections, metadata management, library organization, or extending beets functionality through plugins and automation.
+description: Use PROACTIVELY for comprehensive music library management system guidance covering setup, advanced querying, plugin development, and automation workflows for the beets music organization tool. MUST BE USED when working with music collections, metadata management, library organization, or extending beets functionality through plugins and automation.
 ---
 
 # Beets Music Library Management

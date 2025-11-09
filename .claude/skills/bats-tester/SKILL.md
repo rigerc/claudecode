@@ -1,6 +1,6 @@
 ---
 name: bats-tester
-description: This skill should be used when creating tests for bash scripts using the bats-core testing framework. It provides guidance for writing effective .bats test files, setting up test environments, using helper libraries like bats-support and bats-assert, and following best practices for bash script testing. Use this skill when users need to create automated tests for shell scripts, command-line tools, or bash functions.
+description: Use PROACTIVELY when creating tests for bash scripts using the bats-core testing framework. MUST BE USED for any bats-core related tasks including writing .bats test files, setting up test environments, using helper libraries like bats-support and bats-assert, and following best practices for bash script testing. This skill provides comprehensive guidance for automated testing of shell scripts, command-line tools, or bash functions.
 ---
 
 # Bats Tester
