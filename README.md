@@ -1,117 +1,140 @@
-# Claude Code Extension Marketplace
+# Claude Extensions Plugin Collection
 
-> A curated collection of Claude Code extensions to enhance your development workflow
+A curated collection of specialized plugins for Claude Code, organized by functionality to provide focused tools for specific development tasks.
 
-## 🚀 Quick Installation
+## Overview
 
-Install this marketplace in Claude Code:
+- **7 Specialized Plugins**
+- **9 Custom Commands**
+- **11 Expert Agents**
+- **6 Specialized Skills**
 
-```bash
-/plugin marketplace add rigerc/claudecode
-```
+## Available Plugins
 
-Then install the extensions:
+| Plugin | Commands | Agents | Skills | Focus |
+|--------|----------|---------|---------|-------|
+| **Bash Scripting** | 0 | 1 | 1 | Shell automation |
+| **Claude Code Development** | 5 | 4 | 2 | Extending Claude Code |
+| **Code Quality** | 2 | 1 | 0 | Code review |
+| **Documentation Generation** | 1 | 3 | 2 | Technical writing |
+| **Go Development** | 0 | 1 | 0 | Go programming |
+| **Music Management** | 0 | 0 | 1 | Beets tool |
+| **Productivity Tools** | 1 | 1 | 0 | Workflow enhancement |
 
-```bash
-/plugin install claudecode-extensions
-```
+## Plugin Details
 
-## 📦 Available Extensions
+### Bash Scripting
+Expert tools for Bash scripting, automation, and testing with bats-core framework
 
-### 🔧 Development Tools
-Commands for creating, reviewing, and managing code:
+**Install**: `bash-scripting@claude-extensions`
 
-- **`feature-brainstorm`** - /feature-brainstorm [focus-area]
-- **`create-command`** - This command helps you create a new Claude Code slash command using the official documentation from the working-with-claude-code skill
-- **`create-skill`** - This command helps you create a new Claude Code Skill using the official documentation from the working-with-claude-code skill
-- **`create-documentation`** - Use the generate-documentation skill to create comprehensive documentation for the specified target
-- **`code-review`** - Perform comprehensive code quality review: $ARGUMENTS
-- **`create-hook`** - This command helps you create a new Claude Code hook using the official documentation from the working-with-claude-code skill
-- **`create-skill-from-documentation`** - Use the working-with-claude-code skill to create a new Agent Skill based on a documentation file specified by the user
-- **`create-agent`** - This command helps you create a new Claude Code agent or sub-agent using the official documentation from the working-with-claude-code skill
-- **`refactor-code`** - Intelligently refactor and improve code quality
+### Claude Code Development
+Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks
 
-### 🤖 Specialist Agents
-Domain-specific expert agents:
+**Install**: `claude-code-development@claude-extensions`
 
-- **`code-reviewer`** - You are a senior code reviewer ensuring high standards of code quality and security
-- **`meta-agent`** - Your sole purpose is to act as an expert agent architect. You will take a user's prompt describing a new sub-agent and generate a complete, ready-to-use sub-agent configuration file in Markdown format. You will create and write this new file. Think hard about the user's prompt, and the documentation, and the tools available
-- **`mcp-expert`** - You are an MCP (Model Context Protocol) expert specializing in creating, configuring, and optimizing MCP integrations for the claude-code-templates CLI system. You have deep expertise in MCP server architecture, protocol specifications, and integration patterns
-- **`claude-optimizer`** - You are an expert optimizer for CLAUDE.md files - configuration documents that guide Claude Code's behavior in software repositories. Your specialized knowledge covers best practices for token optimization, attention patterns, and instruction effectiveness for Sonnet 4 and Opus 4 models
-- **`bash-scripting-expert`** - You are an expert Bash scripting developer with years of experience in creating production-ready automation scripts, optimizing performance, and teaching modern Bash best practices. You specialize in transforming complex requirements into clean, efficient, and maintainable Bash solutions following the comprehensive style guide located at bash-style-guide/
-- **`context-manager`** - You are a specialized context management agent responsible for maintaining coherent state across multiple agent interactions and sessions. Your role is critical for complex, long-running projects, especially those exceeding 10k tokens
-- **`chezmoi`** - You are a Chezmoi dotfile management specialist focusing on secure, efficient configuration file management across multiple machines. Your expertise covers Chezmoi CLI operations, template creation, encryption setup, and workflow optimization
-- **`technical-docs-writer`** - You are a senior technical writer and developer advocate specializing in creating clear, complete, user-facing documentation for software projects. Your audience is mid-level engineers who need to understand and successfully use the documented features
-- **`readme-writer`** - You are a README documentation specialist who creates compelling, authentic documentation for developer-focused projects. Your expertise lies in crafting READMEs that drive adoption through clear value propositions, honest communication, and developer-centric content
-- **`golang-pro`** - You are a Go expert specializing in concurrent, performant, and idiomatic Go code
-- **`researcher`** - Context: User needs API documentation
+### Code Quality
+Code review, refactoring, and quality analysis tools for improving code maintainability and security
 
-### 📚 Documentation Tools
-Generate and manage documentation:
+**Install**: `code-quality@claude-extensions`
 
-- **`api-docs-generator`** - Automatically generate clean, comprehensive API documentation from multiple source formats and save to `/docs/API.md`. Supports OpenAPI/Swagger specifications, Python/JavaScript/TypeScript docstrings, JSDoc/TSDoc comments, and inline Markdown documentation
-- **`generate-documentation`** - This skill researches, analyzes, and generates comprehensive documentation for software projects. It combines code analysis, library documentation research, and best practices to create clear, useful documentation that helps developers understand and use your code effectively
+### Documentation Generation
+Comprehensive tools for generating API documentation, technical docs, and project documentation
 
-### 🛠️ Testing & Quality
-Tools for testing, validation, and quality assurance:
+**Install**: `documentation-generation@claude-extensions`
 
-- **`working-with-claude-code`** - This skill provides complete, authoritative documentation for Claude Code directly from docs.claude.com. Instead of guessing about configuration paths, API structures, or feature capabilities, read the official docs stored in this skill's references directory
-- **`developing-claude-code-plugins`** - This skill provides efficient workflows for creating Claude Code plugins. Use it to make plugin development fast and correct - it synthesizes official docs into actionable steps and provides working examples
-- **`bats-tester`** - This skill enables the creation of comprehensive tests for bash scripts using the bats-core framework. It provides templates, best practices, and workflows for setting up test environments, writing test cases, and organizing test suites effectively
+### Go Development
+Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns
 
-### 🎵 Specialized Tools
-Domain-specific utilities:
+**Install**: `go-development@claude-extensions`
 
-- **`beets`** - This skill provides comprehensive guidance for working with beets, the powerful music library management system and MusicBrainz tagger. It covers everything from initial library setup to advanced automation workflows, enabling efficient music collection management with precise metadata handling and organizational control
+### Music Management
+Comprehensive music library management system guidance using the beets music organization tool
 
-## 📊 Statistics
+**Install**: `music-management@claude-extensions`
 
-- **26 Extensions**: 9 commands, 6 skills, 11 agents
-- **5 Categories**: Development, Agents, Documentation, Testing, Tools
-- **Auto-updated**: Extensions are maintained and updated automatically
+### Productivity Tools
+Productivity enhancement tools including feature brainstorming and dotfile management
 
-## 🔍 Usage Examples
+**Install**: `productivity-tools@claude-extensions`
 
-After installation, extensions are immediately available:
+
+## Installation
+
+### Add the Marketplace
+
+First, add this collection to your Claude Code marketplaces:
 
 ```bash
-# Create a new specialized agent
-/create-agent
-
-# Review your current code changes
-/code-review
-
-# Brainstorm new features for your project
-/feature-brainstorm
-
-# Generate comprehensive documentation
-/generate-documentation api
-
-# Refactor code for better performance
-/refactor-code src/main.py
+/plugin marketplace add .
 ```
 
-## ⚙️ Configuration
+### Install Individual Plugins
 
-Most extensions work out-of-the-box. Some may need additional setup:
+Install only the plugins you need:
 
-- **API Keys**: For external services and integrations
-- **Git Access**: For repository-based operations
-- **MCP Servers**: For protocol integrations
-- **Development Tools**: For building and testing workflows
+```bash
+# Example installations
+/plugin install claude-code-development@claude-extensions
+/plugin install bash-scripting@claude-extensions
+/plugin install documentation-generation@claude-extensions
+```
 
-## 🤝 Contributing
+### Browse Available Plugins
 
-Found an issue or have a suggestion?
+```bash
+/plugin
+# Select "Browse Plugins" from claude-extensions marketplace
+# Install desired plugins
+```
 
-- 🐛 [Report Issues](https://github.com/rigerc/claudecode/issues)
-- 💡 [Request Features](https://github.com/rigerc/claudecode/discussions)
-- 🔧 [Submit Pull Requests](https://github.com/rigerc/claudecode/pulls)
+## Plugin Structure
 
-## 📄 License
+Each plugin follows the standard Claude Code plugin structure:
 
-MIT License - see [LICENSE](LICENSE) for details.
+```
+plugin-name/
+├── .claude-plugin/
+│   └── plugin.json          # Plugin metadata
+├── commands/                 # Custom slash commands (optional)
+├── agents/                   # Custom agents (optional)
+├── skills/                   # Agent Skills (optional)
+└── README.md                 # Plugin documentation
+```
+
+## Development
+
+This collection is automatically generated from the `plugins/` directory. When adding or modifying plugins:
+
+1. Create/modify plugin directories in `plugins/`
+2. Run the build script: `python scripts/build-marketplace.py`
+3. Commit the generated `.claude-plugin/marketplace.json` and `README.md`
+
+### Building
+
+```bash
+# Build marketplace and README
+python scripts/build-marketplace.py
+
+# The script will:
+# - Scan plugins/ directory
+# - Generate .claude-plugin/marketplace.json
+# - Update this README.md
+```
+
+### Plugin Categories
+
+- **Development Tools**: For extending Claude Code and development workflows
+- **Language Specific**: Targeted tools for specific programming languages
+- **Documentation**: Comprehensive documentation generation and writing tools
+- **Quality & Review**: Code analysis, review, and improvement tools
+- **Productivity**: General productivity enhancement tools
+- **Specialized**: Domain-specific tools for particular use cases
+
+## License
+
+All plugins in this collection are licensed under MIT License.
 
 ---
 
-*Last updated: Automatically generated*
+*This README is automatically generated. Do not edit manually - run `python scripts/build-marketplace.py` to update.*

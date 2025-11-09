@@ -5,24 +5,24 @@
   },
   "plugins": [
     {
-      "name": "claude-code-development",
-      "source": "./plugins/claude-code-development",
-      "description": "Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks"
-    },
-    {
       "name": "bash-scripting",
       "source": "./plugins/bash-scripting",
       "description": "Expert tools for Bash scripting, automation, and testing with bats-core framework"
     },
     {
-      "name": "documentation-generation",
-      "source": "./plugins/documentation-generation",
-      "description": "Comprehensive tools for generating API documentation, technical docs, and project documentation"
+      "name": "claude-code-development",
+      "source": "./plugins/claude-code-development",
+      "description": "Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks"
     },
     {
       "name": "code-quality",
       "source": "./plugins/code-quality",
       "description": "Code review, refactoring, and quality analysis tools for improving code maintainability and security"
+    },
+    {
+      "name": "documentation-generation",
+      "source": "./plugins/documentation-generation",
+      "description": "Comprehensive tools for generating API documentation, technical docs, and project documentation"
     },
     {
       "name": "go-development",
