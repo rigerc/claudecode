@@ -6,65 +6,37 @@
   "plugins": [
     {
       "name": "bash-scripting",
-      "source": {
-        "source": "github",
-        "repo": "rigerc/claudecode",
-        "path": "./plugins/bash-scripting"
-      },
+      "source": "./plugins/bash-scripting",
       "description": "Expert tools for Bash scripting, automation, and testing with bats-core framework"
     },
     {
       "name": "claude-code-development",
-      "source": {
-        "source": "github",
-        "repo": "rigerc/claudecode",
-        "path": "./plugins/claude-code-development"
-      },
+      "source": "./plugins/claude-code-development",
       "description": "Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks"
     },
     {
       "name": "code-quality",
-      "source": {
-        "source": "github",
-        "repo": "rigerc/claudecode",
-        "path": "./plugins/code-quality"
-      },
+      "source": "./plugins/code-quality",
       "description": "Code review, refactoring, and quality analysis tools for improving code maintainability and security"
     },
     {
       "name": "documentation-generation",
-      "source": {
-        "source": "github",
-        "repo": "rigerc/claudecode",
-        "path": "./plugins/documentation-generation"
-      },
+      "source": "./plugins/documentation-generation",
       "description": "Comprehensive tools for generating API documentation, technical docs, and project documentation"
     },
     {
       "name": "go-development",
-      "source": {
-        "source": "github",
-        "repo": "rigerc/claudecode",
-        "path": "./plugins/go-development"
-      },
+      "source": "./plugins/go-development",
       "description": "Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns"
     },
     {
       "name": "music-management",
-      "source": {
-        "source": "github",
-        "repo": "rigerc/claudecode",
-        "path": "./plugins/music-management"
-      },
+      "source": "./plugins/music-management",
       "description": "Comprehensive music library management system guidance using the beets music organization tool"
     },
     {
       "name": "productivity-tools",
-      "source": {
-        "source": "github",
-        "repo": "rigerc/claudecode",
-        "path": "./plugins/productivity-tools"
-      },
+      "source": "./plugins/productivity-tools",
       "description": "Productivity enhancement tools including feature brainstorming and dotfile management"
     }
   ]

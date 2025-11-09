@@ -15,14 +15,10 @@ def extract_plugin_info(plugin_dir: Path) -> Dict[str, Any]:
     plugin_json_path = plugin_dir / ".claude-plugin" / "plugin.json"
     readme_path = plugin_dir / "README.md"
 
-    # Default plugin info with GitHub source
+    # Default plugin info with relative path
     plugin_info = {
         "name": plugin_name,
-        "source": {
-            "source": "github",
-            "repo": f"rigerc/claudecode",
-            "path": f"./plugins/{plugin_name}"
-        },
+        "source": f"./plugins/{plugin_name}",
         "description": f"Plugin: {plugin_name.replace('-', ' ').title()}"
     }
 
@@ -218,7 +214,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 First, add this collection to your Claude Code marketplaces:
 
 ```bash
-/plugin marketplace add rigerc/claudecode
+/plugin marketplace add .
 ```
 
 ### Install Individual Plugins
