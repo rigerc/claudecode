@@ -47,13 +47,12 @@
         "researcher"
       ],
       "skills": [
-        "api-docs-generator",
-        "bats-tester",
         "beets",
         "working-with-claude-code",
         "developing-claude-code-plugins",
+        "api-docs-generator",
         "generate-documentation",
-        "working-with-claude-code"
+        "bats-tester"
       ],
       "tags": [
         "extensions",

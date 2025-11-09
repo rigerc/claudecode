@@ -4,14 +4,10 @@
 
 ## 🚀 Quick Installation
 
-Add this marketplace and install extensions in Claude Code:
+Install this marketplace in Claude Code:
 
 ```bash
-# Add the marketplace
-/plugin marketplace add rigerc/claudecode
-
-# Install the complete extension collection
-/plugin install claudecode-extensions@claudecode-marketplace
+/plugin install rigerc/claudecode
 ```
 
 ## 📦 Available Extensions
