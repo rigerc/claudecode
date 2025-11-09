@@ -1,0 +1,194 @@
+name: Documentation Quality
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'plugins/**/*.md'
+      - '.github/workflows/docs-quality.yml'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'plugins/**/*.md'
+      - '.github/workflows/docs-quality.yml'
+
+jobs:
+  markdown-lint:
+    runs-on: ubuntu-latest
+    name: Markdown Lint
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: Install markdownlint-cli2
+      run: npm install -g markdownlint-cli2
+
+    - name: Lint markdown files
+      run: |
+        echo "Linting markdown files in plugins/ directory..."
+        markdownlint-cli2 "plugins/**/*.md" "#plugins/**/node_modules"
+
+  markdown-link-check:
+    runs-on: ubuntu-latest
+    name: Check Links
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+        cache: 'npm'
+
+    - name: Install markdown-link-check
+      run: npm install -g markdown-link-check
+
+    - name: Check links in README files
+      run: |
+        echo "Checking links in markdown files..."
+        find plugins/ -name "README.md" -exec markdown-link-check {} \; || true
+
+  spell-check:
+    runs-on: ubuntu-latest
+    name: Spell Check
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.11'
+
+    - name: Install pyspellchecker
+      run: pip install pyspellchecker
+
+    - name: Create spell check script
+      run: |
+        cat > spell_check.py << 'EOF'
+        import os
+        import re
+        from spellchecker import SpellChecker
+
+        def check_spelling_in_file(filepath):
+            spell = SpellChecker()
+            # Add technical terms to dictionary
+            technical_words = [
+                'claude', 'github', 'golang', 'beets', 'chezmoi', 'bash', 'json',
+                'yaml', 'markdown', 'api', 'mcp', 'plugin', 'plugins', 'repos',
+                'workflow', 'workflows', 'git', 'npm', 'node', 'js', 'ts', 'tsx',
+                'frontend', 'backend', 'devops', 'ci', 'cd', 'ide', 'cli', 'gui',
+                'stdlib', 'goroutines', 'channels', 'concurrency', 'async', 'sync',
+                'metadata', 'automated', 'tooling', 'namespace', 'namespaced',
+                'argparse', 'subprocess', 'regex', 'env', 'dirname', 'basename',
+                'importlib', 'configparser', 'typechecking', 'linting', 'refactor'
+            ]
+
+            for word in technical_words:
+                spell.word_frequency.load_words([word.lower()])
+
+            errors = []
+
+            with open(filepath, 'r', encoding='utf-8') as f:
+                content = f.read()
+
+            # Remove code blocks
+            content = re.sub(r'```.*?```', '', content, flags=re.DOTALL)
+            # Remove inline code
+            content = re.sub(r'`[^`]*`', '', content)
+            # Remove URLs
+            content = re.sub(r'https?://[^\s]+', '', content)
+            # Remove file paths
+            content = re.sub(r'[\w\-./]+', '', content)
+
+            words = re.findall(r'[a-zA-Z]+', content.lower())
+            misspelled = spell.unknown(words)
+
+            for word in misspelled:
+                if len(word) > 2:  # Ignore very short words
+                    errors.append(word)
+
+            return sorted(set(errors))
+
+        def main():
+            plugin_dir = 'plugins'
+            all_errors = {}
+
+            for root, dirs, files in os.walk(plugin_dir):
+                for file in files:
+                    if file.endswith('.md'):
+                        filepath = os.path.join(root, file)
+                        errors = check_spelling_in_file(filepath)
+                        if errors:
+                            all_errors[filepath] = errors
+
+            if all_errors:
+                print("Spelling errors found:")
+                for filepath, errors in all_errors.items():
+                    print(f"\n{filepath}:")
+                    for error in errors[:10]:  # Limit to first 10 errors per file
+                        print(f"  - {error}")
+                    if len(errors) > 10:
+                        print(f"  ... and {len(errors) - 10} more")
+                return 1
+            else:
+                print("No spelling errors found!")
+                return 0
+
+        if __name__ == "__main__":
+            exit(main())
+        EOF
+
+    - name: Run spell check
+      run: python spell_check.py
+
+  file-structure-check:
+    runs-on: ubuntu-latest
+    name: Check Plugin Structure
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Check plugin structure
+      run: |
+        echo "Checking plugin structure..."
+
+        for plugin_dir in plugins/*/; do
+          if [ -d "$plugin_dir" ]; then
+            plugin_name=$(basename "$plugin_dir")
+            echo "Checking plugin: $plugin_name"
+
+            # Check for required plugin.json
+            if [ ! -f "$plugin_dir/.claude-plugin/plugin.json" ]; then
+              echo "❌ Missing: $plugin_dir/.claude-plugin/plugin.json"
+              exit 1
+            fi
+
+            # Check for README.md
+            if [ ! -f "$plugin_dir/README.md" ]; then
+              echo "❌ Missing: $plugin_dir/README.md"
+              exit 1
+            fi
+
+            # Validate plugin.json
+            if ! jq empty "$plugin_dir/.claude-plugin/plugin.json" 2>/dev/null; then
+              echo "❌ Invalid JSON in: $plugin_dir/.claude-plugin/plugin.json"
+              exit 1
+            fi
+
+            echo "✅ Plugin $plugin_name structure is valid"
+          fi
+        done
+
+        echo "All plugin structures are valid!"

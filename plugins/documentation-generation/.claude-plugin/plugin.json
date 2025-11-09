@@ -1,0 +1,12 @@
+{
+  "name": "documentation-generation",
+  "version": "1.0.0",
+  "description": "Comprehensive tools for generating API documentation, technical docs, and project documentation",
+  "author": {
+    "name": "Claude Extensions"
+  },
+  "homepage": "https://github.com/rigerc/claudecode",
+  "repository": "https://github.com/rigerc/claudecode",
+  "license": "MIT",
+  "keywords": ["documentation", "api-docs", "technical-writing", "readme", "docs"]
+}

@@ -1,0 +1,113 @@
+# Audiophile Beets Configuration
+# Optimized for high-quality audio collections
+
+# Core settings
+directory: ~/Music
+library: ~/.config/beets/library.db
+
+# Performance settings
+threaded: true
+librarythreads: 8
+
+# Comprehensive plugins
+plugins:
+  - fetchart
+  - lyrics
+  - lastgenre
+  - embedart
+  - badfiles
+  - replaygain
+  - scrub
+  - mbsync
+
+# Import settings
+import:
+  copy: true              # Copy files to preserve originals
+  write: true             # Write high-quality metadata
+  autotag: true           # Match to MusicBrainz
+  quiet: false            # Show detailed progress
+  detail: true            # Show import details
+  incremental: true       # Skip already imported
+  timid: false            # Don't ask for confirmation
+  delete: false           # Keep original files
+
+# High-quality path formats
+paths:
+  default: $albumartist/$year - $album [$format] [$bitrate]/$discnumber - $tracknumber - $title
+  singleton: Singletons/$artist [$format] - $title
+  comp: Compilations/$year - $album [$format] [$bitrate]/$track - $title
+
+# Advanced plugin settings
+fetchart:
+  auto: true
+  minwidth: 1000         # High-resolution artwork
+  maxwidth: 2000
+  quality: 2             # Best quality
+  sources:
+    - filesystem
+    - amazon
+    - albumart
+    - google
+    - fanarttv
+  enforce_ratio: true    # Enforce aspect ratio
+
+embedart:
+  auto: true
+  maxwidth: 800          # Embedded art size limit
+  compare_threshold: 0   # Always embed if art exists
+
+replaygain:
+  auto: true
+  backend: bs1770gain    # Professional loudness measurement
+  targetlevel: 89        # Standard reference level
+  r128: false            # Use ReplayGain standard
+  albumgain: true        # Calculate album gain
+  trackgain: true        # Calculate track gain
+  overwrite: false       # Don't overwrite existing values
+
+badfiles:
+  check_on_import: true  # Validate audio files
+  commands:
+    mp3: ['mp3val', '-f']
+    ogg: ['oggz-validate']
+    flac: ['flac', '-t']
+    m4a: ['mp4file', '--validate']
+
+lastgenre:
+  auto: true
+  source: album          # Prefer album-level genres
+  force: true            # Overwrite existing genres
+  count: 2               # Multiple genres
+  canonical: true        # Use canonical genre tree
+  whitelist: true        # Use genre whitelist
+  separator: ', '
+
+lyrics:
+  auto: true
+  sources:
+    - google
+    - lyricwiki
+    - musixmatch
+    - genius
+  fallback: false        # Don't use built-in lyrics
+  force: false           # Don't refetch existing lyrics
+
+# Audio quality preferences
+format: FLAC             # Prefer FLAC format
+bitrate: 1000000         # High bitrate preference
+
+# File organization
+per_disc_numbering: true  # Number tracks per disc
+original_date: true      # Use original release date
+id3v23: true            # Use ID3v2.3 for compatibility
+
+# Duplicate handling
+duplicate_action: skip   # Skip duplicates during import
+
+# MusicBrainz settings
+match:
+  strong_rec_thresh: 0.04    # Strict matching
+  medium_rec_thresh: 0.25
+  rec_gap_thresh: 0.25
+  track_length_grace: 10     # 10 second grace period
+  track_length_max: 30       # Max track length difference

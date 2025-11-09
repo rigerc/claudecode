@@ -1,0 +1,12 @@
+{
+  "name": "productivity-tools",
+  "version": "1.0.0",
+  "description": "Productivity enhancement tools including feature brainstorming and dotfile management",
+  "author": {
+    "name": "Claude Extensions"
+  },
+  "homepage": "https://github.com/rigerc/claudecode",
+  "repository": "https://github.com/rigerc/claudecode",
+  "license": "MIT",
+  "keywords": ["productivity", "brainstorming", "dotfiles", "chezmoi", "features"]
+}

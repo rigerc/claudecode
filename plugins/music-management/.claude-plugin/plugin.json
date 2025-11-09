@@ -1,0 +1,12 @@
+{
+  "name": "music-management",
+  "version": "1.0.0",
+  "description": "Comprehensive music library management system guidance using the beets music organization tool",
+  "author": {
+    "name": "Claude Extensions"
+  },
+  "homepage": "https://github.com/rigerc/claudecode",
+  "repository": "https://github.com/rigerc/claudecode",
+  "license": "MIT",
+  "keywords": ["music", "beets", "library", "management", "metadata", "organization"]
+}

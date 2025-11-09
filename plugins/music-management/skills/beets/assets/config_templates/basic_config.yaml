@@ -1,0 +1,40 @@
+# Basic Beets Configuration
+# Perfect for beginners or simple music libraries
+
+# Core settings
+directory: ~/Music
+library: ~/.config/beets/library.db
+
+# Essential plugins
+plugins:
+  - fetchart
+  - lyrics
+  - lastgenre
+
+# Import settings
+import:
+  copy: true              # Copy files to library
+  write: true             # Write metadata to files
+  autotag: true           # Automatic tagging
+  quiet: false            # Show progress
+  detail: false           # Don't show details
+  incremental: true       # Skip already imported
+
+# Simple path format
+paths:
+  default: $albumartist/$album/$track $title
+  singleton: $artist/$title
+  comp: Compilations/$album/$track $title
+
+# Basic plugin settings
+fetchart:
+  auto: true             # Automatically fetch album art
+  minwidth: 300         # Minimum image size
+  sources: filesystem   # Only use existing art
+
+lyrics:
+  auto: true            # Automatically fetch lyrics
+
+lastgenre:
+  auto: true            # Automatically fetch genres
+  count: 1              # One genre per track

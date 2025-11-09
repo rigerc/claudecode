@@ -1,0 +1,12 @@
+{
+  "name": "code-quality",
+  "version": "1.0.0",
+  "description": "Code review, refactoring, and quality analysis tools for improving code maintainability and security",
+  "author": {
+    "name": "Claude Extensions"
+  },
+  "homepage": "https://github.com/rigerc/claudecode",
+  "repository": "https://github.com/rigerc/claudecode",
+  "license": "MIT",
+  "keywords": ["code-review", "refactoring", "quality", "security", "analysis"]
+}

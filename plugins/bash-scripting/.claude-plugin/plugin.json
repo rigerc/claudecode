@@ -1,0 +1,12 @@
+{
+  "name": "bash-scripting",
+  "version": "1.0.0",
+  "description": "Expert tools for Bash scripting, automation, and testing with bats-core framework",
+  "author": {
+    "name": "Claude Extensions"
+  },
+  "homepage": "https://github.com/rigerc/claudecode",
+  "repository": "https://github.com/rigerc/claudecode",
+  "license": "MIT",
+  "keywords": ["bash", "scripting", "automation", "testing", "bats", "shell"]
+}

@@ -1,0 +1,12 @@
+{
+  "name": "go-development",
+  "version": "1.0.0",
+  "description": "Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns",
+  "author": {
+    "name": "Claude Extensions"
+  },
+  "homepage": "https://github.com/rigerc/claudecode",
+  "repository": "https://github.com/rigerc/claudecode",
+  "license": "MIT",
+  "keywords": ["go", "golang", "development", "goroutines", "channels", "concurrency"]
+}

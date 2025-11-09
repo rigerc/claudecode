@@ -1,0 +1,153 @@
+# DJ Beets Configuration
+# Optimized for DJ workflows and performance
+
+# Core settings
+directory: ~/DJ Music
+library: ~/.config/beets/dj_library.db
+
+# Performance settings
+threaded: true
+librarythreads: 4
+
+# DJ-focused plugins
+plugins:
+  - fetchart
+  - lyrics
+  - lastgenre
+  - bpm
+  - key
+  - embedart
+  - replaygain
+  - convert
+
+# Import settings
+import:
+  copy: true              # Copy files to library
+  write: true             # Write metadata including BPM/key
+  autotag: true           # Automatic tagging
+  quiet: false            # Show progress
+  detail: false           # Keep output concise
+  incremental: true       # Skip already imported
+  timid: false            # Don't ask for confirmation
+
+# DJ-optimized path formats
+paths:
+  default: $genre/$albumartist/$album/$track - $artist - $title
+  singleton: $genre/$artist - $title
+  comp: Compilations/$genre/$album/$track - $title
+
+# BPM and Key detection
+bpm:
+  auto: true              # Automatically detect BPM
+
+key:
+  auto: true              # Automatically detect musical key
+
+# Plugin settings for DJ work
+fetchart:
+  auto: true
+  minwidth: 500
+  sources:
+    - filesystem
+    - amazon
+    - albumart
+    - google
+
+lastgenre:
+  auto: true
+  source: album
+  force: true
+  count: 1               # Single genre for organization
+  whitelist: true
+  canonical: true
+
+replaygain:
+  auto: true
+  backend: bs1770gain
+  targetlevel: 89         # Standard for DJ mixing
+  albumgain: true
+  trackgain: true
+
+embedart:
+  auto: true
+  maxwidth: 600          # Moderate size for DJ software
+
+# Conversion settings for DJ gear
+convert:
+  auto: false             # Don't auto-convert
+  command: ffmpeg
+  extension: mp3
+  copy_album_art: true
+  embed: true
+  quiet: false
+
+# DJ-specific custom fields
+item_fields:
+  energy:                 # Energy level 1-10
+  key_open:               # Camelot notation
+  mood:                   # DJ mood tagging
+  intro_length:           # Intro length in seconds
+  outro_length:           # Outro length in seconds
+
+# Path formats with custom fields
+paths:
+  # Organize by energy level
+  energy:8: High Energy/$genre/$artist - $title
+  energy:6: Medium Energy/$genre/$artist - $title
+  energy:4: Low Energy/$genre/$artist - $title
+
+  # Organize by key for harmonic mixing
+  key:Am: A Minor/$artist - $title
+  key:C: C Major/$artist - $title
+
+# Export settings for DJ software
+export:
+  item:                  # Individual track export
+    path: $artist - $title
+    fields: artist title bpm key genre year
+
+# BPM-based queries example (for scripts)
+# Fast tempo (>128 BPM)
+fast_tempo: bpm:>128
+
+# Medium tempo (100-128 BPM)
+medium_tempo: bpm:100..128
+
+# Slow tempo (<100 BPM)
+slow_tempo: bpm:<100
+
+# Harmonic mixing preparation
+# Same key for mixing
+same_key: key:C
+
+# Compatible keys (circle of fifths)
+compatible_keys: key:Am OR key:C OR key:F OR key:G
+
+# Genre-based organization for DJ sets
+electronic: genre:(House OR Techno OR Trance OR Dubstep)
+hip_hop: genre:(Hip Hop OR Rap OR Trap)
+rock: genre:(Rock OR Alternative OR Indie)
+funk: genre:(Funk OR Soul OR Disco)
+
+# Duplicate settings for avoiding same tracks in sets
+duplicate_action: skip
+
+# Library optimization for quick searches
+threaded: true
+librarythreads: 6
+
+# Metadata consistency for DJ software
+id3v23: true
+original_date: false     # Use release date, not original date
+
+# Audio quality preferences
+format: MP3              # Standard for DJ software
+bitrate: 320000          # High quality MP3
+
+# Performance monitoring
+# Add custom fields for track popularity
+item_fields:
+  play_count:             # Track popularity
+  last_played:            # When last played
+  rating:                 # 1-5 star rating
+  tags:                   # Custom tags for sets
