@@ -138,3 +138,4 @@ All plugins in this collection are licensed under MIT License.
 ---
 
 *This README is automatically generated. Do not edit manually - run `python scripts/build-marketplace.py` to update.*
+# Test change
