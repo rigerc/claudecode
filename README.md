@@ -1,4 +1,4 @@
-# Claude Code Extensions
+# Claude Code Extensionss
 
 > **⚡ Auto-generated marketplace from .claude directory**
 > *Last updated: Automatically generated on change*
