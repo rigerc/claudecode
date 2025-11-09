@@ -66,7 +66,7 @@ Productivity enhancement tools including feature brainstorming and dotfile manag
 First, add this collection to your Claude Code marketplaces:
 
 ```bash
-/plugin marketplace add .
+/plugin marketplace add rigerc/claudecode
 ```
 
 ### Install Individual Plugins

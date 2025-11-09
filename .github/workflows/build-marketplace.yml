@@ -64,6 +64,11 @@ jobs:
         echo "- README.md"
 
         echo ""
+        echo "Marketplace version info:"
+        jq -r '.metadata.version // "1.0.0"' .claude-plugin/marketplace.json | xargs -I {} echo "Version: {}"
+        jq -r '.metadata.lastUpdated // "unknown"' .claude-plugin/marketplace.json | xargs -I {} echo "Last Updated: {}"
+
+        echo ""
         echo "Marketplace preview:"
         cat .claude-plugin/marketplace.json | jq .
 
@@ -179,6 +184,10 @@ jobs:
       run: |
         echo "Committing generated files..."
 
+        # Get version info for commit message
+        NEW_VERSION=$(jq -r '.metadata.version // "unknown"' .claude-plugin/marketplace.json)
+        PLUGIN_COUNT=$(jq '.plugins | length' .claude-plugin/marketplace.json)
+
         # Configure git
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
@@ -192,12 +201,13 @@ jobs:
 
         # Check if there's anything to commit
         if [ -n "$(git diff --cached --name-only)" ]; then
-          # Commit changes
-          git commit -m "🤖 Auto-update marketplace and README from plugin changes"
+          # Commit changes with version info
+          git commit -m "🤖 Auto-update marketplace v${NEW_VERSION} (${PLUGIN_COUNT} plugins)
 
           # Push changes
           git push
           echo "Changes committed and pushed successfully"
+          echo "Marketplace updated to version ${NEW_VERSION}"
         else
           echo "No changes to commit"
         fi
@@ -215,14 +225,26 @@ jobs:
           echo "ℹ️ **Status**: No changes needed" >> $GITHUB_STEP_SUMMARY
         fi
 
+        # Get marketplace info
         plugin_count=$(jq '.plugins | length' .claude-plugin/marketplace.json 2>/dev/null || echo "0")
+        marketplace_version=$(jq -r '.metadata.version // "1.0.0"' .claude-plugin/marketplace.json 2>/dev/null || echo "1.0.0")
+        last_updated=$(jq -r '.metadata.lastUpdated // "unknown"' .claude-plugin/marketplace.json 2>/dev/null || echo "unknown")
+
         echo "" >> $GITHUB_STEP_SUMMARY
-        echo "📦 **Plugin Count**: $plugin_count" >> $GITHUB_STEP_SUMMARY
+        echo "📦 **Marketplace Info**:" >> $GITHUB_STEP_SUMMARY
+        echo "- **Version**: \`$marketplace_version\`" >> $GITHUB_STEP_SUMMARY
+        echo "- **Plugin Count**: $plugin_count" >> $GITHUB_STEP_SUMMARY
+        echo "- **Last Updated**: \`$last_updated\`" >> $GITHUB_STEP_SUMMARY
 
         if [ "$plugin_count" -gt 0 ]; then
           echo "" >> $GITHUB_STEP_SUMMARY
           echo "🔌 **Available Plugins**:" >> $GITHUB_STEP_SUMMARY
           jq -r '.plugins[] | "- \(.name)"' .claude-plugin/marketplace.json 2>/dev/null >> $GITHUB_STEP_SUMMARY || echo "No plugins found"
+        fi
+
+        if [ "${{ steps.changes.outputs.changed }}" == "true" ]; then
+          echo "" >> $GITHUB_STEP_SUMMARY
+          echo "🚀 **Deployment**: Marketplace version \`$marketplace_version\` is now live!" >> $GITHUB_STEP_SUMMARY
         fi
 
   # Job to validate the generated files on PRs

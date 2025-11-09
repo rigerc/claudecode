@@ -3,6 +3,11 @@
   "owner": {
     "name": "rigerc's Claude personal marketplace"
   },
+  "metadata": {
+    "version": "1.0.2",
+    "description": "A curated collection of specialized plugins for Claude Code, organized by functionality to provide focused tools for specific development tasks.",
+    "lastUpdated": "2025-11-09T18:09:30.809047Z"
+  },
   "plugins": [
     {
       "name": "bash-scripting",

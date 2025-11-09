@@ -8,6 +8,7 @@ import os
 import re
 from pathlib import Path
 from typing import Dict, List, Any
+from datetime import datetime, timezone
 
 def extract_plugin_info(plugin_dir: Path) -> Dict[str, Any]:
     """Extract plugin information from plugin directory."""
@@ -82,8 +83,32 @@ def count_components(plugin_dir: Path) -> Dict[str, int]:
 
     return counts
 
-def build_marketplace_json(plugins_dir: Path) -> Dict[str, Any]:
-    """Build marketplace.json from plugins directory."""
+def get_current_version(marketplace_file: Path) -> str:
+    """Get current version from existing marketplace file or return initial version."""
+    if marketplace_file.exists():
+        try:
+            with open(marketplace_file, 'r', encoding='utf-8') as f:
+                marketplace = json.load(f)
+                current_version = marketplace.get("metadata", {}).get("version", "1.0.0")
+                return current_version
+        except (json.JSONDecodeError, FileNotFoundError):
+            pass
+    return "1.0.0"
+
+def increment_version(version: str) -> str:
+    """Increment patch version (x.y.z -> x.y.z+1)."""
+    try:
+        parts = version.split('.')
+        if len(parts) == 3:
+            major, minor, patch = map(int, parts)
+            return f"{major}.{minor}.{patch + 1}"
+    except (ValueError, IndexError):
+        pass
+    # Fallback to new version if parsing fails
+    return "1.0.1"
+
+def build_marketplace_json(plugins_dir: Path, marketplace_file: Path) -> Dict[str, Any]:
+    """Build marketplace.json from plugins directory with version management."""
     plugins = []
 
     if not plugins_dir.exists():
@@ -104,10 +129,21 @@ def build_marketplace_json(plugins_dir: Path) -> Dict[str, Any]:
     # Sort plugins by name
     plugins.sort(key=lambda x: x["name"])
 
+    # Get current version and increment
+    current_version = get_current_version(marketplace_file)
+    new_version = increment_version(current_version)
+
+    print(f"Version: {current_version} -> {new_version}")
+
     marketplace = {
         "name": "rigerc-claude",
         "owner": {
             "name": "rigerc's Claude personal marketplace"
+        },
+        "metadata": {
+            "version": new_version,
+            "description": "A curated collection of specialized plugins for Claude Code, organized by functionality to provide focused tools for specific development tasks.",
+            "lastUpdated": datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
         },
         "plugins": plugins
     }
@@ -303,8 +339,8 @@ def main():
     print("Building marketplace configuration and README...")
 
     # Build marketplace.json
-    marketplace = build_marketplace_json(plugins_dir)
     marketplace_file = marketplace_dir / "marketplace.json"
+    marketplace = build_marketplace_json(plugins_dir, marketplace_file)
 
     with open(marketplace_file, 'w', encoding='utf-8') as f:
         json.dump(marketplace, f, indent=2, ensure_ascii=False)
