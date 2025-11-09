@@ -97,7 +97,7 @@ Use strategic emphasis:
    - API patterns: @docs/api-patterns.md        # Keep critical patterns inline
    - Testing guide: @docs/testing.md            # Keep validation commands inline
    ```
-   
+
    **CRITICAL**: Only modularize truly excessive detail. Keep all actionable instructions inline.
 
 ### Phase 3: Structure Optimization

@@ -157,10 +157,10 @@ These custom attributes will be included in all metrics and events, allowing you
 
   The `OTEL_RESOURCE_ATTRIBUTES` environment variable follows the [W3C Baggage specification](https://www.w3.org/TR/baggage/), which has strict formatting requirements:
 
-  * **No spaces allowed**: Values cannot contain spaces. For example, `user.organizationName=My Company` is invalid
-  * **Format**: Must be comma-separated key=value pairs: `key1=value1,key2=value2`
-  * **Allowed characters**: Only US-ASCII characters excluding control characters, whitespace, double quotes, commas, semicolons, and backslashes
-  * **Special characters**: Characters outside the allowed range must be percent-encoded
+* **No spaces allowed**: Values cannot contain spaces. For example, `user.organizationName=My Company` is invalid
+* **Format**: Must be comma-separated key=value pairs: `key1=value1,key2=value2`
+* **Allowed characters**: Only US-ASCII characters excluding control characters, whitespace, double quotes, commas, semicolons, and backslashes
+* **Special characters**: Characters outside the allowed range must be percent-encoded
 
   **Examples:**
 

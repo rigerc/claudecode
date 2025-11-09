@@ -67,16 +67,37 @@ jobs:
         echo "Marketplace preview:"
         cat .claude-plugin/marketplace.json | jq .
 
-    - name: Lint markdown files
+    - name: Autofix and lint markdown files
       run: |
-        echo "📝 Linting markdown files..."
+        echo "🔧 Autofixing and linting markdown files..."
 
-        # Lint all markdown files in plugins directory
-        echo "Linting plugin markdown files..."
+        # Configure git for potential commits
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+
+        # Fix and lint plugin markdown files
+        echo "Fixing plugin markdown files..."
         if [ -d "plugins" ]; then
+          # Run autofix first
+          echo "Running autofix on plugin files..."
+          markdownlint-cli2 --fix "plugins/**/*.md" || {
+            echo "⚠️  Some plugin files had unfixable issues"
+          }
+
+          # Check if any files were changed
+          if git diff --name-only --diff-filter=ACMRT | grep -q "\.md$"; then
+            echo "📝 Markdown fixes detected in plugin files"
+            git add "plugins/**/*.md"
+            git commit -m "🔧 Auto-fix markdown formatting issues in plugins" || {
+              echo "No changes to commit (files might already be clean)"
+            }
+          fi
+
+          # Now lint to verify all issues are resolved
+          echo "Linting plugin markdown files..."
           markdownlint-cli2 "plugins/**/*.md" || {
-            echo "❌ Markdown linting failed in plugins"
-            echo "Please fix the markdown linting issues above"
+            echo "❌ Markdown linting failed in plugins after autofix"
+            echo "Some issues require manual intervention"
             exit 1
           }
           echo "✅ Plugin markdown files linted successfully"
@@ -84,12 +105,29 @@ jobs:
           echo "⚠️  No plugins directory found"
         fi
 
-        # Lint generated README.md
-        echo "Linting generated README.md..."
+        # Fix and lint generated README.md
+        echo "Fixing generated README.md..."
         if [ -f "README.md" ]; then
+          # Run autofix on README.md
+          echo "Running autofix on README.md..."
+          markdownlint-cli2 --fix "README.md" || {
+            echo "⚠️  README.md had some unfixable issues"
+          }
+
+          # Check if README.md was changed
+          if git diff --name-only --diff-filter=ACMRT | grep -q "README.md"; then
+            echo "📝 Markdown fixes detected in README.md"
+            git add "README.md"
+            git commit -m "🔧 Auto-fix markdown formatting issues in README.md" || {
+              echo "No changes to commit (README.md might already be clean)"
+            }
+          fi
+
+          # Lint to verify all issues are resolved
+          echo "Linting generated README.md..."
           markdownlint-cli2 "README.md" || {
-            echo "❌ README.md linting failed"
-            echo "Please fix the markdown linting issues in README.md"
+            echo "❌ README.md linting failed after autofix"
+            echo "Some issues require manual intervention"
             exit 1
           }
           echo "✅ README.md linted successfully"
