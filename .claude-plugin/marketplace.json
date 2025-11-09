@@ -1,15 +1,15 @@
 {
-  "name": "claudecode-marketplace",
+  "name": "rigerc-claudecode",
   "owner": {
-    "name": "Rigert"
+    "name": "rigerc"
   },
   "plugins": [
     {
-      "name": "claudecode-extensions",
+      "name": "full-suite",
       "description": "A comprehensive collection of Claude Code extensions including commands, skills, and agents for enhanced development workflow",
       "version": "1.0.0",
       "author": {
-        "name": "Rigert"
+        "name": "Rigerc"
       },
       "category": "Development",
       "keywords": [
@@ -23,36 +23,36 @@
       "license": "MIT",
       "source": "./.claude",
       "commands": [
-        "./.claude/commands/feature-brainstorm.md",
-        "./.claude/commands/create-command.md",
-        "./.claude/commands/create-skill.md",
-        "./.claude/commands/create-documentation.md",
-        "./.claude/commands/code-review.md",
-        "./.claude/commands/create-hook.md",
-        "./.claude/commands/create-skill-from-documentation.md",
-        "./.claude/commands/create-agent.md",
-        "./.claude/commands/refactor-code.md"
+        "./commands/feature-brainstorm.md",
+        "./commands/create-command.md",
+        "./commands/create-skill.md",
+        "./commands/create-documentation.md",
+        "./commands/code-review.md",
+        "./commands/create-hook.md",
+        "./commands/create-skill-from-documentation.md",
+        "./commands/create-agent.md",
+        "./commands/refactor-code.md"
       ],
       "agents": [
-        "./.claude/agents/code-reviewer.md",
-        "./.claude/agents/meta-agent.md",
-        "./.claude/agents/mcp-expert.md",
-        "./.claude/agents/claude-optimizer.md",
-        "./.claude/agents/bash-scripting-expert.md",
-        "./.claude/agents/context-manager.md",
-        "./.claude/agents/chezmoi.md",
-        "./.claude/agents/technical-docs-writer.md",
-        "./.claude/agents/readme-writer.md",
-        "./.claude/agents/golang-pro.md",
-        "./.claude/agents/researcher.md"
+        "./agents/code-reviewer.md",
+        "./agents/meta-agent.md",
+        "./agents/mcp-expert.md",
+        "./agents/claude-optimizer.md",
+        "./agents/bash-scripting-expert.md",
+        "./agents/context-manager.md",
+        "./agents/chezmoi.md",
+        "./agents/technical-docs-writer.md",
+        "./agents/readme-writer.md",
+        "./agents/golang-pro.md",
+        "./agents/researcher.md"
       ],
       "skills": [
-        "./.claude/skills/beets",
-        "./.claude/skills/working-with-claude-code",
-        "./.claude/skills/developing-claude-code-plugins",
-        "./.claude/skills/api-docs-generator",
-        "./.claude/skills/generate-documentation",
-        "./.claude/skills/bats-tester"
+        "./skills/beets",
+        "./skills/working-with-claude-code",
+        "./skills/developing-claude-code-plugins",
+        "./skills/api-docs-generator",
+        "./skills/generate-documentation",
+        "./skills/bats-tester"
       ],
       "tags": [
         "extensions",
