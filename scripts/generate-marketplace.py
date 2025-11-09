@@ -179,121 +179,38 @@ def discover_extensions() -> Dict[str, Any]:
     return extensions
 
 def categorize_extensions(extensions: Dict[str, Any]) -> List[Dict[str, Any]]:
-    """Automatically categorize extensions into logical plugins"""
-    plugins = []
+    """Create a single plugin that contains all extensions"""
 
-    # Plugin 1: Development Toolkit (commands for creating things)
-    dev_commands = [cmd for cmd in extensions["commands"]
-                   if any(keyword in cmd["name"].lower()
-                         for keyword in ["create", "code", "refactor", "brainstorm", "documentation"])]
+    plugin = {
+        "name": "claudecode-extensions",
+        "description": "A comprehensive collection of Claude Code extensions including commands, skills, and agents for enhanced development workflow",
+        "version": "1.0.0",
+        "author": {
+            "name": "Rigert"
+        },
+        "category": "Development",
+        "keywords": ["extensions", "claude-code", "development", "productivity"],
+        "homepage": "https://github.com/rigerc/claudecode",
+        "repository": "https://github.com/rigerc/claudecode",
+        "license": "MIT",
+        "source": "./.claude",
+        "commands": [cmd["name"] for cmd in extensions["commands"]],
+        "agents": [agent["name"] for agent in extensions["agents"]],
+        "skills": [skill["name"] for skill in extensions["skills"]],
+        "tags": ["extensions", "automation", "tools"],
+        "strict": False
+    }
 
-    if dev_commands:
-        plugins.append({
-            "name": "development-toolkit",
-            "description": "Essential tools for creating, reviewing, and managing code and documentation",
-            "version": "1.0.0",
-            "author": "Rigert",
-            "category": "Development",
-            "keywords": ["development", "tools", "productivity"],
-            "commands": [cmd["name"] for cmd in dev_commands],
-            "tags": ["development", "tools", "automation"]
-        })
-
-    # Plugin 2: Specialist Agents (all agents)
-    if extensions["agents"]:
-        plugins.append({
-            "name": "specialist-agents",
-            "description": "Collection of specialized agents for domain-specific expertise",
-            "version": "1.0.0",
-            "author": "Rigert",
-            "category": "Agents",
-            "keywords": ["agents", "expertise", "specialization"],
-            "agents": [agent["name"] for agent in extensions["agents"]],
-            "tags": ["agents", "expertise", "automation"]
-        })
-
-    # Plugin 3: Documentation Tools (skills and commands for docs)
-    doc_skills = [skill for skill in extensions["skills"]
-                  if any(keyword in skill["name"].lower()
-                        for keyword in ["api", "docs", "documentation", "readme"])]
-    doc_commands = [cmd for cmd in extensions["commands"]
-                   if "documentation" in cmd["name"].lower()]
-
-    if doc_skills or doc_commands:
-        plugins.append({
-            "name": "documentation-tools",
-            "description": "Comprehensive tools for generating and managing documentation",
-            "version": "1.0.0",
-            "author": "Rigert",
-            "category": "Documentation",
-            "keywords": ["documentation", "writing", "api"],
-            "skills": [skill["name"] for skill in doc_skills],
-            "commands": [cmd["name"] for cmd in doc_commands],
-            "tags": ["documentation", "writing", "productivity"]
-        })
-
-    # Plugin 4: Testing & Quality (remaining skills)
-    quality_skills = [skill for skill in extensions["skills"]
-                     if skill not in doc_skills]
-
-    if quality_skills:
-        plugins.append({
-            "name": "quality-tools",
-            "description": "Tools for testing, validation, and code quality assurance",
-            "version": "1.0.0",
-            "author": "Rigert",
-            "category": "Development",
-            "keywords": ["testing", "quality", "validation"],
-            "skills": [skill["name"] for skill in quality_skills],
-            "tags": ["testing", "quality", "development"]
-        })
-
-    # Plugin 5: Specialized Tools (unique extensions)
-    special_skills = [skill for skill in extensions["skills"]
-                     if any(keyword in skill["name"].lower()
-                           for keyword in ["beets", "media", "claude", "working"])]
-
-    if special_skills:
-        plugins.append({
-            "name": "specialized-tools",
-            "description": "Specialized tools for specific domains and workflows",
-            "version": "1.0.0",
-            "author": "Rigert",
-            "category": "Tools",
-            "keywords": ["specialized", "workflow", "automation"],
-            "skills": [skill["name"] for skill in special_skills],
-            "tags": ["tools", "specialization", "workflow"]
-        })
-
-    return plugins
+    return [plugin]
 
 def generate_marketplace_json(plugins: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Generate the marketplace.json configuration"""
     return {
         "name": "claudecode-marketplace",
-        "version": "1.0.0",
-        "description": "Automatically generated marketplace for Claude Code extensions",
-        "autoGenerated": True,
-        "generatedAt": str(Path.cwd()),
         "owner": {
-            "name": "Rigert",
-            "url": "https://github.com/rigerc"
+            "name": "Rigert"
         },
-        "homepage": "https://github.com/rigerc/claudecode",
-        "license": "MIT",
-        "plugins": plugins,
-        "installation": {
-            "commands": {
-                "install": "/plugin install <plugin-name>",
-                "list": "/plugin list",
-                "update": "/plugin update"
-            }
-        },
-        "automation": {
-            "regenerateCommand": "./scripts/generate-marketplace.py",
-            "sourceDirectory": ".claude",
-            "autoDiscovery": True
-        }
+        "plugins": plugins
     }
 
 def generate_readme(extensions: Dict[str, Any], plugins: List[Dict[str, Any]]) -> str:
