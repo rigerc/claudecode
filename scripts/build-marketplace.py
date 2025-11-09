@@ -21,7 +21,7 @@ def extract_plugin_info(plugin_dir: Path) -> Dict[str, Any]:
         "source": {
             "source": "github",
             "repo": f"rigerc/claudecode",
-            "path": f"plugins/{plugin_name}"
+            "path": f"./plugins/{plugin_name}"
         },
         "description": f"Plugin: {plugin_name.replace('-', ' ').title()}"
     }
