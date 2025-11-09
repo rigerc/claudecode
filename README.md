@@ -4,10 +4,10 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 
 ## Overview
 
-- **7 Specialized Plugins**
+- **8 Specialized Plugins**
 - **9 Custom Commands**
 - **11 Expert Agents**
-- **6 Specialized Skills**
+- **7 Specialized Skills**
 
 ## Available Plugins
 
@@ -18,6 +18,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 | **Code Quality** | 2 | 1 | 0 | Code review |
 | **Documentation Generation** | 1 | 3 | 2 | Technical writing |
 | **Go Development** | 0 | 1 | 0 | Go programming |
+| **Home Assistant** | 0 | 0 | 1 | General |
 | **Music Management** | 0 | 0 | 1 | Beets tool |
 | **Productivity Tools** | 1 | 1 | 0 | Workflow enhancement |
 
@@ -47,6 +48,11 @@ Comprehensive tools for generating API documentation, technical docs, and projec
 Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns
 
 **Install**: `go-development@rigerc-claude`
+
+### Home Assistant
+Home Assistant development tools and automation skills for creating add-ons, integrations, and smart home workflows
+
+**Install**: `home-assistant@rigerc-claude`
 
 ### Music Management
 Comprehensive music library management system guidance using the beets music organization tool
