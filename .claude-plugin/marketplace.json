@@ -1,7 +1,7 @@
 {
-  "name": "claude-extensions",
+  "name": "rigerc-claude",
   "owner": {
-    "name": "Claude Extensions Collection"
+    "name": "rigerc's Claude personal marketplace"
   },
   "plugins": [
     {
