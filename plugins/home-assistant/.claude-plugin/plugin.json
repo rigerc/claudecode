@@ -2,7 +2,10 @@
   "name": "home-assistant",
   "version": "1.0.0",
   "description": "Home Assistant development tools and automation skills for creating add-ons, integrations, and smart home workflows",
-  "author": "rigerc",
+  "author": {
+    "name": "rigerc",
+    "email": "noreply@claude.com"
+  },
   "license": "MIT",
   "keywords": [
     "home-assistant",
