@@ -38,43 +38,16 @@ jobs:
       run: |
         python -m pip install --upgrade pip
 
-    - name: Validate plugin structure
+    - name: Comprehensive plugin validation
       run: |
-        echo "Validating plugin structure..."
-        plugins_dir="plugins"
-
-        if [ ! -d "$plugins_dir" ]; then
-          echo "❌ plugins directory not found"
+        echo "🔍 Running comprehensive plugin validation..."
+        python scripts/validate-plugins.py --format json > validation-results.json || {
+          echo "❌ Plugin validation failed"
+          cat validation-results.json
           exit 1
-        fi
+        }
 
-        for plugin_dir in "$plugins_dir"/*/; do
-          if [ -d "$plugin_dir" ]; then
-            plugin_name=$(basename "$plugin_dir")
-            echo "Validating plugin: $plugin_name"
-
-            # Check for required plugin.json
-            if [ ! -f "$plugin_dir/.claude-plugin/plugin.json" ]; then
-              echo "⚠️  Warning: Missing $plugin_dir/.claude-plugin/plugin.json"
-            else
-              # Validate JSON syntax
-              if ! jq empty "$plugin_dir/.claude-plugin/plugin.json" 2>/dev/null; then
-                echo "❌ Invalid JSON in: $plugin_dir/.claude-plugin/plugin.json"
-                exit 1
-              fi
-              echo "✅ Plugin JSON valid for $plugin_name"
-            fi
-
-            # Check for README.md
-            if [ ! -f "$plugin_dir/README.md" ]; then
-              echo "⚠️  Warning: Missing $plugin_dir/README.md"
-            else
-              echo "✅ README found for $plugin_name"
-            fi
-          fi
-        done
-
-        echo "Plugin structure validation complete!"
+        echo "✅ Plugin validation passed!"
 
     - name: Build marketplace and README
       run: |
@@ -91,20 +64,18 @@ jobs:
 
     - name: Validate generated marketplace.json
       run: |
-        echo "Validating generated marketplace.json..."
+        echo "🔍 Validating generated marketplace.json..."
         if ! jq empty .claude-plugin/marketplace.json 2>/dev/null; then
           echo "❌ Generated marketplace.json is invalid JSON"
           exit 1
         fi
 
-        # Check required fields
-        required_fields=("name" "owner" "plugins")
-        for field in "${required_fields[@]}"; do
-          if ! jq -e ".$field" .claude-plugin/marketplace.json > /dev/null; then
-            echo "❌ Missing required field: $field"
-            exit 1
-          fi
-        done
+        # Run final validation on generated files
+        echo "Running final validation on generated marketplace..."
+        python scripts/validate-plugins.py --marketplace .claude-plugin/marketplace.json || {
+          echo "❌ Generated marketplace validation failed"
+          exit 1
+        }
 
         # Validate plugin entries
         plugin_count=$(jq '.plugins | length' .claude-plugin/marketplace.json)

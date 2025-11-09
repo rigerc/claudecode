@@ -1,18 +1,23 @@
 # Makefile for Claude Extensions Plugin Collection
 
-.PHONY: help build clean lint test validate
+.PHONY: help build clean lint test test-strict validate validate-strict validate-json check setup-hooks
 
 # Default target
 help:
 	@echo "Claude Extensions Plugin Collection"
 	@echo ""
 	@echo "Available targets:"
-	@echo "  build     - Build marketplace.json and README.md from plugins/"
-	@echo "  validate  - Validate plugin structure and generated files"
-	@echo "  lint      - Lint markdown files in plugins/"
-	@echo "  test      - Run all tests and validations"
-	@echo "  clean     - Clean generated files"
-	@echo "  help      - Show this help message"
+	@echo "  build          - Build marketplace.json and README.md from plugins/"
+	@echo "  validate       - Run comprehensive plugin and marketplace validation"
+	@echo "  validate-strict- Strict validation (treat warnings as errors)"
+	@echo "  validate-json  - JSON validation output for CI/CD"
+	@echo "  check          - Quick validation of required files"
+	@echo "  lint           - Lint markdown files in plugins/"
+	@echo "  test           - Run all tests and validations"
+	@echo "  test-strict    - Run strict validation tests"
+	@echo "  setup-hooks    - Install pre-commit hooks"
+	@echo "  clean          - Clean generated files"
+	@echo "  help           - Show this help message"
 
 # Build marketplace configuration and README
 build:
@@ -22,13 +27,39 @@ build:
 
 # Validate plugin structure and generated files
 validate:
-	@echo "🔍 Validating plugin structure..."
-	@python scripts/build-marketplace.py > /dev/null 2>&1
-	@echo "✅ Plugin structure valid!"
-	@echo ""
-	@echo "🔍 Validating generated files..."
+	@echo "🔍 Running comprehensive validation..."
+	@python scripts/validate-plugins.py
+
+# Strict validation (treat warnings as errors)
+validate-strict:
+	@echo "🔍 Running strict validation..."
+	@python scripts/validate-plugins.py --strict
+
+# JSON validation output for CI/CD
+validate-json:
+	@echo "🔍 Running validation with JSON output..."
+	@python scripts/validate-plugins.py --format json
+
+# Quick validation of required files
+check:
+	@echo "🔍 Quick validation check..."
+	@echo "  Checking marketplace.json..."
 	@jq empty .claude-plugin/marketplace.json || (echo "❌ Invalid marketplace.json" && exit 1)
-	@echo "✅ Generated files valid!"
+	@echo "  Checking plugin directories..."
+	@for plugin_dir in plugins/*/; do \
+		if [ -d "$$plugin_dir" ]; then \
+			plugin_name=$$(basename "$$plugin_dir"); \
+			if [ ! -f "$$plugin_dir/.claude-plugin/plugin.json" ]; then \
+				echo "❌ Missing: $$plugin_dir/.claude-plugin/plugin.json"; \
+				exit 1; \
+			fi; \
+			if ! jq empty "$$plugin_dir/.claude-plugin/plugin.json" 2>/dev/null; then \
+				echo "❌ Invalid JSON in: $$plugin_dir/.claude-plugin/plugin.json"; \
+				exit 1; \
+			fi; \
+		fi; \
+	done
+	@echo "✅ Quick validation passed!"
 
 # Lint markdown files
 lint:
@@ -44,6 +75,11 @@ lint:
 test: validate lint
 	@echo ""
 	@echo "🎉 All tests passed!"
+
+# Full test suite with strict validation
+test-strict: validate-strict lint
+	@echo ""
+	@echo "🎉 All tests passed (strict mode)!"
 
 # Clean generated files
 clean:
@@ -64,3 +100,8 @@ stats:
 	echo "Commands: $$commands"; \
 	echo "Agents: $$agents"; \
 	echo "Skills: $$skills";
+
+# Setup pre-commit hooks
+setup-hooks:
+	@echo "🔧 Setting up pre-commit hooks..."
+	@bash scripts/setup-pre-commit.sh
