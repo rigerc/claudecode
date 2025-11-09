@@ -194,9 +194,9 @@ def categorize_extensions(extensions: Dict[str, Any]) -> List[Dict[str, Any]]:
         "repository": "https://github.com/rigerc/claudecode",
         "license": "MIT",
         "source": "./.claude",
-        "commands": [cmd["name"] for cmd in extensions["commands"]],
-        "agents": [agent["name"] for agent in extensions["agents"]],
-        "skills": [skill["name"] for skill in extensions["skills"]],
+        "commands": [f"./.claude/{cmd['path']}" for cmd in extensions["commands"]],
+        "agents": [f"./.claude/{agent['path']}" for agent in extensions["agents"]],
+        "skills": [f"./.claude/{skill['path']}" for skill in extensions["skills"]],
         "tags": ["extensions", "automation", "tools"],
         "strict": False
     }
@@ -247,7 +247,13 @@ def generate_readme(extensions: Dict[str, Any], plugins: List[Dict[str, Any]]) -
 Install this marketplace in Claude Code:
 
 ```bash
-/plugin install rigerc/claudecode
+/plugin marketplace add rigerc/claudecode
+```
+
+Then install the extensions:
+
+```bash
+/plugin install claudecode-extensions
 ```
 
 ## 📦 Available Extensions
