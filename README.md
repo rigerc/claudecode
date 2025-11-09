@@ -1,4 +1,4 @@
-# Claude Code Extensionss
+# Claude Code Extensions
 
 > **⚡ Auto-generated marketplace from .claude directory**
 > *Last updated: Automatically generated on change*
@@ -28,31 +28,31 @@ Extensions are automatically discovered from your `.claude` directory. To add ne
 Essential tools for creating, reviewing, and managing code.
 
 **Commands**:
-- `code-review`: ---
-- `create-agent`: ---
+- `feature-brainstorm`: ---
 - `create-command`: ---
+- `create-skill`: ---
 - `create-documentation`: ---
+- `code-review`: ---
 - `create-hook`: ---
 - `create-skill-from-documentation`: ---
-- `create-skill`: ---
-- `feature-brainstorm`: ---
+- `create-agent`: ---
 - `refactor-code`: # Intelligently Refactor and Improve Code Quality
 
 ### 🤖 Specialist Agents
 Domain-specific expert agents for specialized tasks.
 
 **Agents**:
-- `bash-scripting-expert`: ---
-- `chezmoi`: ---
-- `claude-optimizer`: ---
 - `code-reviewer`: ---
-- `context-manager`: ---
-- `golang-pro`: ---
-- `mcp-expert`: ---
 - `meta-agent`: ---
-- `readme-writer`: ---
-- `researcher`: ---
+- `mcp-expert`: ---
+- `claude-optimizer`: ---
+- `bash-scripting-expert`: ---
+- `context-manager`: ---
+- `chezmoi`: ---
 - `technical-docs-writer`: ---
+- `readme-writer`: ---
+- `golang-pro`: ---
+- `researcher`: ---
 
 ### 📚 Documentation Tools
 Tools for generating and managing documentation.
@@ -72,8 +72,8 @@ Domain-specific tools for particular workflows.
 
 **Skills**:
 - `beets`: ---
-- `developing-claude-code-plugins`: ---
 - `working-with-claude-code`: ---
+- `developing-claude-code-plugins`: ---
 
 ## 🔧 Automation
 
