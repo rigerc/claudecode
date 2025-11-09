@@ -182,11 +182,11 @@ def categorize_extensions(extensions: Dict[str, Any]) -> List[Dict[str, Any]]:
     """Create a single plugin that contains all extensions"""
 
     plugin = {
-        "name": "claudecode-extensions",
+        "name": "full-suite",
         "description": "A comprehensive collection of Claude Code extensions including commands, skills, and agents for enhanced development workflow",
         "version": "1.0.0",
         "author": {
-            "name": "Rigert"
+            "name": "Rigerc"
         },
         "category": "Development",
         "keywords": ["extensions", "claude-code", "development", "productivity"],
@@ -194,9 +194,9 @@ def categorize_extensions(extensions: Dict[str, Any]) -> List[Dict[str, Any]]:
         "repository": "https://github.com/rigerc/claudecode",
         "license": "MIT",
         "source": "./.claude",
-        "commands": [f"./.claude/{cmd['path']}" for cmd in extensions["commands"]],
-        "agents": [f"./.claude/{agent['path']}" for agent in extensions["agents"]],
-        "skills": [f"./.claude/{skill['path']}" for skill in extensions["skills"]],
+        "commands": [f"./{cmd['path']}" for cmd in extensions["commands"]],
+        "agents": [f"./{agent['path']}" for agent in extensions["agents"]],
+        "skills": [f"./{skill['path']}" for skill in extensions["skills"]],
         "tags": ["extensions", "automation", "tools"],
         "strict": False
     }
@@ -206,9 +206,9 @@ def categorize_extensions(extensions: Dict[str, Any]) -> List[Dict[str, Any]]:
 def generate_marketplace_json(plugins: List[Dict[str, Any]]) -> Dict[str, Any]:
     """Generate the marketplace.json configuration"""
     return {
-        "name": "claudecode-marketplace",
+        "name": "rigerc-claudecode",
         "owner": {
-            "name": "Rigert"
+            "name": "rigerc"
         },
         "plugins": plugins
     }
