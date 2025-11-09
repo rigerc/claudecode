@@ -202,7 +202,7 @@ jobs:
         # Check if there's anything to commit
         if [ -n "$(git diff --cached --name-only)" ]; then
           # Commit changes with version info
-          git commit -m "🤖 Auto-update marketplace v${NEW_VERSION} (${PLUGIN_COUNT} plugins)
+          git commit -m "🤖 Auto-update marketplace v${NEW_VERSION} (${PLUGIN_COUNT} plugins)"
 
           # Push changes
           git push
