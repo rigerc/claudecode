@@ -12,6 +12,102 @@ import glob
 from pathlib import Path
 from typing import Dict, List, Any
 
+def extract_better_description(content: str, file_type: str, name: str) -> str:
+    """Extract better description from markdown content"""
+    lines = content.split('\n')
+
+    # Skip YAML frontmatter if present
+    start_idx = 0
+    if lines and lines[0].startswith('---'):
+        for i, line in enumerate(lines[1:], 1):
+            if line.strip() == '---':
+                start_idx = i + 1
+                break
+
+    # Skip empty lines and title lines
+    description_lines = []
+    for i, line in enumerate(lines[start_idx:], start_idx):
+        line = line.strip()
+
+        # Skip title lines (lines that start with #)
+        if line.startswith('#'):
+            continue
+
+        # Skip empty lines
+        if not line:
+            continue
+
+        # Skip lines that look like YAML or metadata
+        if any(skip in line.lower() for skip in ['---', '===', 'name:', 'description:', 'tools:', 'use proactively', 'must be used', 'allowed-tools:', 'color:']):
+            continue
+
+        # Skip lines that are clearly field names
+        if line.endswith(':') and len(line) < 50:
+            continue
+
+        # Skip very short lines that are likely field names
+        if len(line) < 10:
+            continue
+
+        description_lines.append(line)
+
+        # Take first meaningful line
+        if len(description_lines) >= 1 and len(description_lines[0]) > 20:
+            break
+        elif len(description_lines) >= 2:
+            break
+
+    if description_lines:
+        description = ' '.join(description_lines[:1])
+        # Clean up common patterns
+        description = description.replace('Use PROACTIVELY when', '').replace('Use when', '')
+        description = description.replace('MUST BE USED for', '').strip()
+        # Remove leading bullets/asterisks and clean up
+        description = description.lstrip('*- ').strip()
+        # Remove any trailing special characters
+        description = description.rstrip('.:;')
+
+        if len(description) > 10:
+            return description
+
+    # Fallback descriptions based on file type and name
+    fallback_descriptions = {
+        'commands': {
+            'create-agent': 'Create specialized Claude agents for specific tasks',
+            'create-command': 'Create custom slash commands for your workflow',
+            'create-skill': 'Create new skills for Claude to use autonomously',
+            'create-hook': 'Create event hooks for automation workflows',
+            'code-review': 'Automated code review with confidence scoring and best practices',
+            'feature-brainstorm': 'Brainstorm feature ideas and improvements for your projects',
+            'refactor-code': 'Intelligent code refactoring suggestions and improvements',
+            'create-documentation': 'Generate documentation from code and examples',
+            'create-skill-from-documentation': 'Create skills from existing documentation'
+        },
+        'skills': {
+            'api-docs-generator': 'Generate comprehensive API documentation from code and specs',
+            'generate-documentation': 'Complete documentation creation for projects and features',
+            'bats-tester': 'Bash script testing framework with BATS automation',
+            'developing-claude-code-plugins': 'Tools for developing Claude Code extensions',
+            'working-with-claude-code': 'Claude Code best practices and workflow guidance',
+            'beets': 'Music library management, organization, and metadata automation'
+        },
+        'agents': {
+            'bash-scripting-expert': 'Shell scripting automation, security, and best practices',
+            'chezmoi': 'Dotfile management system for configuration synchronization',
+            'claude-optimizer': 'Optimize Claude Code performance and settings',
+            'code-reviewer': 'Comprehensive code analysis, security, and quality review',
+            'context-manager': 'Conversation context and memory management for long sessions',
+            'golang-pro': 'Go development expert with concurrency and best practices',
+            'mcp-expert': 'MCP (Model Context Protocol) server development and integration',
+            'meta-agent': 'Create new Claude Code sub-agents automatically',
+            'readme-writer': 'Professional README and documentation generation',
+            'researcher': 'Research and information gathering from documentation and APIs',
+            'technical-docs-writer': 'Technical documentation, API docs, and user guides'
+        }
+    }
+
+    return fallback_descriptions.get(file_type, {}).get(name, f"{file_type.title()} extension for {name}")
+
 def discover_extensions() -> Dict[str, Any]:
     """Discover all extensions in the .claude directory"""
     base_path = Path(".claude")
@@ -29,8 +125,7 @@ def discover_extensions() -> Dict[str, Any]:
             cmd_name = cmd_file.stem
             with open(cmd_file, 'r', encoding='utf-8') as f:
                 content = f.read()
-                # Extract first line as description
-                description = content.split('\n')[0].strip() if content else ""
+                description = extract_better_description(content, "commands", cmd_name)
             extensions["commands"].append({
                 "name": cmd_name,
                 "description": description,
@@ -46,7 +141,7 @@ def discover_extensions() -> Dict[str, Any]:
                 if skill_file.exists():
                     with open(skill_file, 'r', encoding='utf-8') as f:
                         content = f.read()
-                        description = content.split('\n')[0].strip() if content else ""
+                        description = extract_better_description(content, "skills", skill_dir.name)
                     extensions["skills"].append({
                         "name": skill_dir.name,
                         "description": description,
@@ -60,7 +155,7 @@ def discover_extensions() -> Dict[str, Any]:
             agent_name = agent_file.stem
             with open(agent_file, 'r', encoding='utf-8') as f:
                 content = f.read()
-                description = content.split('\n')[0].strip() if content else ""
+                description = extract_better_description(content, "agents", agent_name)
             extensions["agents"].append({
                 "name": agent_name,
                 "description": description,
@@ -74,7 +169,7 @@ def discover_extensions() -> Dict[str, Any]:
             hook_name = hook_file.stem
             with open(hook_file, 'r', encoding='utf-8') as f:
                 content = f.read()
-                description = content.split('\n')[0].strip() if content else ""
+                description = extract_better_description(content, "hooks", hook_name)
             extensions["hooks"].append({
                 "name": hook_name,
                 "description": description,
@@ -208,138 +303,114 @@ def generate_readme(extensions: Dict[str, Any], plugins: List[Dict[str, Any]]) -
     total_agents = len(extensions["agents"])
     total_hooks = len(extensions["hooks"])
 
-    readme = f"""# Claude Code Extensions
+    # Get development commands
+    dev_commands = [cmd for cmd in extensions["commands"]
+                   if any(keyword in cmd["name"].lower()
+                         for keyword in ["create", "code", "refactor", "brainstorm", "documentation"])]
 
-> **⚡ Auto-generated marketplace from .claude directory**
-> *Last updated: Automatically generated on change*
+    # Get documentation skills
+    doc_skills = [skill for skill in extensions["skills"]
+                  if any(keyword in skill["name"].lower()
+                        for keyword in ["api", "docs", "documentation", "readme"])]
 
-A curated collection of Claude Code extensions that enhance your development workflow.
+    # Get quality/testing skills
+    quality_skills = [skill for skill in extensions["skills"]
+                     if skill not in doc_skills and skill["name"] not in ["beets"]]
 
-## 📊 Extension Statistics
+    # Get specialized tools
+    specialized_skills = [skill for skill in extensions["skills"]
+                          if skill["name"] in ["beets"]]
 
-- **Commands**: {total_commands}
-- **Skills**: {total_skills}
-- **Agents**: {total_agents}
-- **Hooks**: {total_hooks}
-- **Total Extensions**: {total_commands + total_skills + total_agents + total_hooks}
+    readme = f"""# Claude Code Extension Marketplace
 
-## 🚀 Quick Start
+> A curated collection of Claude Code extensions to enhance your development workflow
 
-Extensions are automatically discovered from your `.claude` directory. To add new extensions:
+## 🚀 Quick Installation
 
-1. **Add Commands**: Place `.md` files in `.claude/commands/`
-2. **Add Skills**: Create directories with `SKILL.md` in `.claude/skills/`
-3. **Add Agents**: Place `.md` files in `.claude/agents/`
-4. **Add Hooks**: Place `.md` files in `.claude/hooks/`
+Install this marketplace in Claude Code:
+
+```bash
+/plugin install rigerc/claudecode
+```
 
 ## 📦 Available Extensions
 
-### 🔧 Development Toolkit
-Essential tools for creating, reviewing, and managing code.
+### 🔧 Development Tools
+Commands for creating, reviewing, and managing code:
 
-**Commands**:
-{chr(10).join(f"- `{cmd['name']}`: {cmd['description']}" for cmd in extensions['commands'] if any(k in cmd['name'].lower() for k in ['create', 'code', 'refactor', 'brainstorm']))}
+{chr(10).join(f"- **`{cmd['name']}`** - {cmd['description']}" for cmd in dev_commands)}
 
 ### 🤖 Specialist Agents
-Domain-specific expert agents for specialized tasks.
+Domain-specific expert agents:
 
-**Agents**:
-{chr(10).join(f"- `{agent['name']}`: {agent['description']}" for agent in extensions['agents'])}
+{chr(10).join(f"- **`{agent['name']}`** - {agent['description']}" for agent in extensions['agents'])}
 
 ### 📚 Documentation Tools
-Tools for generating and managing documentation.
+Generate and manage documentation:
 
-**Skills & Commands**:
-{chr(10).join(f"- `{skill['name']}`: {skill['description']}" for skill in extensions['skills'] if any(k in skill['name'].lower() for k in ['api', 'docs', 'documentation', 'readme']))}
+{chr(10).join(f"- **`{skill['name']}`** - {skill['description']}" for skill in doc_skills)}
 
-### 🛠️ Quality & Testing Tools
-Tools for testing, validation, and quality assurance.
+### 🛠️ Testing & Quality
+Tools for testing, validation, and quality assurance:
 
-**Skills**:
-{chr(10).join(f"- `{skill['name']}`: {skill['description']}" for skill in extensions['skills'] if not any(k in skill['name'].lower() for k in ['api', 'docs', 'documentation', 'readme', 'beets', 'claude']))}
+{chr(10).join(f"- **`{skill['name']}`** - {skill['description']}" for skill in quality_skills)}
 
 ### 🎵 Specialized Tools
-Domain-specific tools for particular workflows.
+Domain-specific utilities:
 
-**Skills**:
-{chr(10).join(f"- `{skill['name']}`: {skill['description']}" for skill in extensions['skills'] if any(k in skill['name'].lower() for k in ['beets', 'claude', 'working']))}
+{chr(10).join(f"- **`{skill['name']}`** - {skill['description']}" for skill in specialized_skills)}
 
-## 🔧 Automation
+## 📊 Statistics
 
-This marketplace is **automatically generated** from your `.claude` directory:
+- **{total_commands + total_skills + total_agents + total_hooks} Extensions**: {total_commands} commands, {total_skills} skills, {total_agents} agents
+- **5 Categories**: Development, Agents, Documentation, Testing, Tools
+- **Auto-updated**: Extensions are maintained and updated automatically
+
+## 🔍 Usage Examples
+
+After installation, extensions are immediately available:
 
 ```bash
-# Regenerate marketplace (run after adding new extensions)
-python3 scripts/generate-marketplace.py
+# Create a new specialized agent
+/create-agent
 
-# The script will:
-# 1. ✅ Discover all extensions in .claude/
-# 2. ✅ Categorize them automatically
-# 3. ✅ Update marketplace.json
-# 4. ✅ Update this README
+# Review your current code changes
+/code-review
+
+# Brainstorm new features for your project
+/feature-brainstorm
+
+# Generate comprehensive documentation
+/generate-documentation api
+
+# Refactor code for better performance
+/refactor-code src/main.py
 ```
 
-## 📁 Directory Structure
+## ⚙️ Configuration
 
-```
-.claude/
-├── commands/          # Slash commands (.md files)
-├── skills/            # Agent skills (directories with SKILL.md)
-├── agents/            # Subagents (.md files)
-├── hooks/             # Event hooks (.md files)
-└── marketplace.json   # Auto-generated
+Most extensions work out-of-the-box. Some may need additional setup:
 
-scripts/
-└── generate-marketplace.py  # This generator
-```
+- **API Keys**: For external services and integrations
+- **Git Access**: For repository-based operations
+- **MCP Servers**: For protocol integrations
+- **Development Tools**: For building and testing workflows
 
-## 🎯 Adding New Extensions
+## 🤝 Contributing
 
-### Commands
-Create `.claude/commands/my-command.md`:
-```markdown
-# My Command
+Found an issue or have a suggestion?
 
-Description of what this command does...
+- 🐛 [Report Issues](https://github.com/rigerc/claudecode/issues)
+- 💡 [Request Features](https://github.com/rigerc/claudecode/discussions)
+- 🔧 [Submit Pull Requests](https://github.com/rigerc/claudecode/pulls)
 
-## Usage
-/my-command [args]
-```
+## 📄 License
 
-### Skills
-Create `.claude/skills/my-skill/SKILL.md`:
-```markdown
-# My Skill
-
-Description of when and how to use this skill...
-```
-
-### Agents
-Create `.claude/agents/my-agent.md`:
-```markdown
-# My Agent
-
-Description of this specialized agent...
-```
-
-### Hooks
-Create `.claude/hooks/my-hook.md`:
-```markdown
-# My Hook
-
-Description of when this hook triggers...
-```
-
-After adding extensions, just run:
-```bash
-python3 scripts/generate-marketplace.py
-```
-
-And your marketplace is updated automatically! 🎉
+MIT License - see [LICENSE](LICENSE) for details.
 
 ---
 
-**Generated with ❤️ by automation - No manual maintenance required!**
+*Last updated: Automatically generated*
 """
 
     return readme
