@@ -1,0 +1,234 @@
+name: Marketplace Validation
+
+on:
+  push:
+    branches: [ main, develop ]
+  pull_request:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  validate-marketplace:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install jq
+
+    - name: Validate marketplace.json
+      run: |
+        echo "🔍 Validating marketplace.json..."
+        if ! python -m json.tool .claude-plugin/marketplace.json > /dev/null 2>&1; then
+          echo "❌ marketplace.json is not valid JSON"
+          exit 1
+        fi
+        echo "✅ marketplace.json is valid JSON"
+
+    - name: Validate all plugins
+      run: |
+        chmod +x scripts/marketplace-ci.sh
+        ./scripts/marketplace-ci.sh
+
+    - name: Validate plugin structure
+      run: |
+        echo "🔍 Checking plugin directory structure..."
+
+        plugins=($(jq -r '.plugins[].name' .claude-plugin/marketplace.json))
+
+        for plugin in "${plugins[@]}"; do
+          plugin_path="plugins/$plugin"
+          echo "Checking $plugin..."
+
+          # Check if plugin directory exists
+          if [[ ! -d "$plugin_path" ]]; then
+            echo "❌ Plugin directory $plugin_path not found"
+            exit 1
+          fi
+
+          # Check for required files
+          required_files=("$plugin_path/.claude-plugin/plugin.json" "$plugin_path/README.md")
+          for file in "${required_files[@]}"; do
+            if [[ ! -f "$file" ]]; then
+              echo "❌ Required file $file not found"
+              exit 1
+            fi
+          done
+
+          echo "✅ $plugin structure is valid"
+        done
+
+    - name: Check plugin manifest consistency
+      run: |
+        echo "🔍 Checking plugin manifest consistency..."
+
+        plugins=($(jq -r '.plugins[].name' .claude-plugin/marketplace.json))
+
+        for plugin in "${plugins[@]}"; do
+          plugin_path="plugins/$plugin"
+          manifest_path="$plugin_path/.claude-plugin/plugin.json"
+
+          # Check if plugin name matches directory name
+          plugin_name=$(jq -r '.name' "$manifest_path")
+          if [[ "$plugin_name" != "$plugin" ]]; then
+            echo "⚠️ Plugin name '$plugin_name' doesn't match directory name '$plugin'"
+          fi
+
+          # Check if source path matches
+          source_path=$(jq -r '.source' "$manifest_path" 2>/dev/null || echo "")
+          if [[ -n "$source_path" ]] && [[ "$source_path" != "./plugins/$plugin" ]]; then
+            echo "⚠️ Source path '$source_path' doesn't match expected path './plugins/$plugin'"
+          fi
+
+          echo "✅ $plugin manifest consistency checked"
+        done
+
+  security-scan:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Run security scan
+      run: |
+        echo "🔒 Running security scan..."
+
+        # Check for common security issues
+        echo "Checking for hardcoded credentials..."
+        if grep -r -i "password\|secret\|token\|key" plugins/ --include="*.sh" --include="*.json" --include="*.md" | grep -v "example\|test\|your_" | head -5; then
+          echo "⚠️ Potential hardcoded credentials found"
+        fi
+
+        echo "Checking for suspicious executables..."
+        if find plugins/ -name "*.exe" -o -name "*.bin" -o -name "*.sh" | head -5; then
+          echo "ℹ️ Executable files found - manual review recommended"
+        fi
+
+        echo "✅ Security scan completed"
+
+  documentation-check:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Check documentation quality
+      run: |
+        echo "📚 Checking documentation quality..."
+
+        plugins=($(jq -r '.plugins[].name' .claude-plugin/marketplace.json))
+
+        for plugin in "${plugins[@]}"; do
+          readme_path="plugins/$plugin/README.md"
+
+          if [[ -f "$readme_path" ]]; then
+            # Check README size
+            readme_size=$(stat -c%s "$readme_path")
+            if [[ "$readme_size" -lt 500 ]]; then
+              echo "⚠️ $plugin README.md seems too short ($readme_size bytes)"
+            fi
+
+            # Check for required sections
+            required_sections=("## Overview" "## Installation" "## Usage")
+            for section in "${required_sections[@]}"; do
+              if ! grep -q "$section" "$readme_path"; then
+                echo "⚠️ $plugin README.md missing section: $section"
+              fi
+            done
+
+            echo "✅ $plugin documentation checked"
+          else
+            echo "❌ $plugin README.md not found"
+          fi
+        done
+
+  market-place-sync:
+    runs-on: ubuntu-latest
+    if: github.ref == 'refs/heads/main'
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Check marketplace sync
+      run: |
+        echo "🔄 Checking marketplace synchronization..."
+
+        # Get plugins from marketplace.json
+        marketplace_plugins=($(jq -r '.plugins[].name' .claude-plugin/marketplace.json | sort))
+
+        # Get actual plugin directories
+        actual_plugins=($(ls -1 plugins/ | grep -v "^_" | sort))
+
+        # Compare lists
+        if [[ "${marketplace_plugins[*]}" == "${actual_plugins[*]}" ]]; then
+          echo "✅ Marketplace.json is in sync with plugin directories"
+        else
+          echo "❌ Marketplace.json is not in sync with plugin directories"
+          echo "Plugins in marketplace.json:"
+          printf '%s\n' "${marketplace_plugins[@]}"
+          echo "Actual plugin directories:"
+          printf '%s\n' "${actual_plugins[@]}"
+          exit 1
+        fi
+
+  build-summary:
+    runs-on: ubuntu-latest
+    needs: [validate-marketplace, security-scan, documentation-check, market-place-sync]
+    if: always()
+
+    steps:
+    - name: Build Summary
+      run: |
+        echo "## 🏪 Marketplace Validation Summary" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+
+        # Check results from previous jobs
+        if [[ "${{ needs.validate-marketplace.result }}" == "success" ]]; then
+          echo "✅ **Marketplace Validation**: Passed" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ **Marketplace Validation**: Failed" >> $GITHUB_STEP_SUMMARY
+        fi
+
+        if [[ "${{ needs.security-scan.result }}" == "success" ]]; then
+          echo "✅ **Security Scan**: Completed" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ **Security Scan**: Failed" >> $GITHUB_STEP_SUMMARY
+        fi
+
+        if [[ "${{ needs.documentation-check.result }}" == "success" ]]; then
+          echo "✅ **Documentation Check**: Passed" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ **Documentation Check**: Failed" >> $GITHUB_STEP_SUMMARY
+        fi
+
+        if [[ "${{ needs.market-place-sync.result }}" == "success" ]]; then
+          echo "✅ **Marketplace Sync**: Passed" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ **Marketplace Sync**: Failed" >> $GITHUB_STEP_SUMMARY
+        fi
+
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "### 📊 Plugin Statistics" >> $GITHUB_STEP_SUMMARY
+        plugin_count=$(jq '.plugins | length' .claude-plugin/marketplace.json)
+        echo "- **Total Plugins**: $plugin_count" >> $GITHUB_STEP_SUMMARY
+
+        # Count component types
+        commands_count=$(jq '[.plugins[].components.commands[]? ] | length' .claude-plugin/marketplace.json 2>/dev/null || echo "0")
+        skills_count=$(jq '[.plugins[].components.skills[]? ] | length' .claude-plugin/marketplace.json 2>/dev/null || echo "0")
+        agents_count=$(jq '[.plugins[].components.agents[]? ] | length' .claude-plugin/marketplace.json 2>/dev/null || echo "0")
+
+        echo "- **Commands**: $commands_count" >> $GITHUB_STEP_SUMMARY
+        echo "- **Skills**: $skills_count" >> $GITHUB_STEP_SUMMARY
+        echo "- **Agents**: $agents_count" >> $GITHUB_STEP_SUMMARY

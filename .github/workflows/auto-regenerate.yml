@@ -1,0 +1,55 @@
+name: Auto-Regenerate Marketplace
+
+on:
+  push:
+    paths:
+      - '.claude/**'
+      - 'scripts/generate-marketplace.py'
+  pull_request:
+    paths:
+      - '.claude/**'
+      - 'scripts/generate-marketplace.py'
+  workflow_dispatch:
+
+jobs:
+  regenerate:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.9'
+
+    - name: Generate marketplace
+      run: |
+        python3 scripts/generate-marketplace.py
+
+    - name: Validate generated marketplace
+      run: |
+        make validate
+
+    - name: Show statistics
+      run: |
+        make stats
+
+    - name: Check for changes
+      id: verify-changed-files
+      run: |
+        if [ -n "$(git status --porcelain)" ]; then
+          echo "changed=true" >> $GITHUB_OUTPUT
+        else
+          echo "changed=false" >> $GITHUB_OUTPUT
+        fi
+
+    - name: Commit and push changes
+      if: steps.verify-changed-files.outputs.changed == 'true'
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add .claude-plugin/marketplace.json README.md
+        git commit -m "🤖 Auto-regenerate marketplace from .claude changes"
+        git push
