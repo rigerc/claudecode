@@ -416,7 +416,7 @@ def validate_plugin_sources(marketplace_path: Path, plugins_dir: Path) -> List[V
     """Validate that all plugin sources in marketplace actually exist."""
     errors = []
 
-    if not marketplace_path.exists() or not plugins_dir.exists():
+    if not marketplace_path.exists():
         return errors
 
     try:
@@ -431,7 +431,7 @@ def validate_plugin_sources(marketplace_path: Path, plugins_dir: Path) -> List[V
             source = plugin.get("source", "")
 
             if isinstance(source, str) and source.startswith("./"):
-                # Relative path - check if it exists
+                # Relative path - check if it exists locally
                 plugin_path = plugins_dir.parent / source
                 if not plugin_path.exists():
                     errors.append(ValidationError(
@@ -443,6 +443,63 @@ def validate_plugin_sources(marketplace_path: Path, plugins_dir: Path) -> List[V
                         str(marketplace_path),
                         f"Plugin '{plugin_name}' missing plugin.json at: {source}"
                     ))
+            elif isinstance(source, dict):
+                # GitHub or other structured source
+                source_type = source.get("source", "")
+                if source_type == "github":
+                    # For GitHub sources, validate the repository format
+                    repo = source.get("repo", "")
+                    if not repo:
+                        errors.append(ValidationError(
+                            str(marketplace_path),
+                            f"Plugin '{plugin_name}' GitHub source missing 'repo' field"
+                        ))
+                    elif "/" not in repo:
+                        errors.append(ValidationError(
+                            str(marketplace_path),
+                            f"Plugin '{plugin_name}' GitHub repo format should be 'owner/repo', got: {repo}"
+                        ))
+
+                    # If plugins_dir exists locally, validate the path exists
+                    if plugins_dir.exists():
+                        path = source.get("path", "")
+                        if path:
+                            plugin_path = plugins_dir / path.split("/")[-1]
+                            if not plugin_path.exists():
+                                errors.append(ValidationError(
+                                    str(marketplace_path),
+                                    f"Plugin '{plugin_name}' local path '{path}' not found for validation",
+                                    "warning"
+                                ))
+                            elif not (plugin_path / ".claude-plugin" / "plugin.json").exists():
+                                errors.append(ValidationError(
+                                    str(marketplace_path),
+                                    f"Plugin '{plugin_name}' missing plugin.json in local path: {path}",
+                                    "warning"
+                                ))
+
+                elif source_type == "url":
+                    # URL source - validate URL format
+                    url = source.get("url", "")
+                    if not url:
+                        errors.append(ValidationError(
+                            str(marketplace_path),
+                            f"Plugin '{plugin_name}' URL source missing 'url' field"
+                        ))
+                    else:
+                        try:
+                            from urllib.parse import urlparse
+                            parsed = urlparse(url)
+                            if not parsed.scheme or not parsed.netloc:
+                                errors.append(ValidationError(
+                                    str(marketplace_path),
+                                    f"Plugin '{plugin_name}' invalid URL format: {url}"
+                                ))
+                        except:
+                            errors.append(ValidationError(
+                                str(marketplace_path),
+                                f"Plugin '{plugin_name}' invalid URL format: {url}"
+                            ))
 
     except (json.JSONDecodeError, KeyError):
         # JSON errors are handled elsewhere

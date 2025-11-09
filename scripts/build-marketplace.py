@@ -15,10 +15,14 @@ def extract_plugin_info(plugin_dir: Path) -> Dict[str, Any]:
     plugin_json_path = plugin_dir / ".claude-plugin" / "plugin.json"
     readme_path = plugin_dir / "README.md"
 
-    # Default plugin info
+    # Default plugin info with GitHub source
     plugin_info = {
         "name": plugin_name,
-        "source": f"./plugins/{plugin_name}",
+        "source": {
+            "source": "github",
+            "repo": f"rigerc/claudecode",
+            "path": f"plugins/{plugin_name}"
+        },
         "description": f"Plugin: {plugin_name.replace('-', ' ').title()}"
     }
 
@@ -172,7 +176,7 @@ def generate_plugin_list(plugin_dirs: List[Path]) -> str:
                     pass
 
             list_items.append(f"### {plugin_name}\n{description}\n")
-            list_items.append(f"**Install**: `{plugin_key}@claude-extensions`\n")
+            list_items.append(f"**Install**: `{plugin_key}@rigerc-claude`\n")
 
     return '\n'.join(list_items)
 
@@ -214,7 +218,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 First, add this collection to your Claude Code marketplaces:
 
 ```bash
-/plugin marketplace add .
+/plugin marketplace add rigerc/claudecode
 ```
 
 ### Install Individual Plugins
@@ -223,16 +227,16 @@ Install only the plugins you need:
 
 ```bash
 # Example installations
-/plugin install claude-code-development@claude-extensions
-/plugin install bash-scripting@claude-extensions
-/plugin install documentation-generation@claude-extensions
+/plugin install claude-code-development@rigerc-claude
+/plugin install bash-scripting@rigerc-claude
+/plugin install documentation-generation@rigerc-claude
 ```
 
 ### Browse Available Plugins
 
 ```bash
 /plugin
-# Select "Browse Plugins" from claude-extensions marketplace
+# Select "Browse Plugins" from rigerc-claude marketplace
 # Install desired plugins
 ```
 

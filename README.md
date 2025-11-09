@@ -26,37 +26,37 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 ### Bash Scripting
 Expert tools for Bash scripting, automation, and testing with bats-core framework
 
-**Install**: `bash-scripting@claude-extensions`
+**Install**: `bash-scripting@rigerc-claude`
 
 ### Claude Code Development
 Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks
 
-**Install**: `claude-code-development@claude-extensions`
+**Install**: `claude-code-development@rigerc-claude`
 
 ### Code Quality
 Code review, refactoring, and quality analysis tools for improving code maintainability and security
 
-**Install**: `code-quality@claude-extensions`
+**Install**: `code-quality@rigerc-claude`
 
 ### Documentation Generation
 Comprehensive tools for generating API documentation, technical docs, and project documentation
 
-**Install**: `documentation-generation@claude-extensions`
+**Install**: `documentation-generation@rigerc-claude`
 
 ### Go Development
 Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns
 
-**Install**: `go-development@claude-extensions`
+**Install**: `go-development@rigerc-claude`
 
 ### Music Management
 Comprehensive music library management system guidance using the beets music organization tool
 
-**Install**: `music-management@claude-extensions`
+**Install**: `music-management@rigerc-claude`
 
 ### Productivity Tools
 Productivity enhancement tools including feature brainstorming and dotfile management
 
-**Install**: `productivity-tools@claude-extensions`
+**Install**: `productivity-tools@rigerc-claude`
 
 
 ## Installation
@@ -66,7 +66,7 @@ Productivity enhancement tools including feature brainstorming and dotfile manag
 First, add this collection to your Claude Code marketplaces:
 
 ```bash
-/plugin marketplace add .
+/plugin marketplace add rigerc/claudecode
 ```
 
 ### Install Individual Plugins
@@ -75,16 +75,16 @@ Install only the plugins you need:
 
 ```bash
 # Example installations
-/plugin install claude-code-development@claude-extensions
-/plugin install bash-scripting@claude-extensions
-/plugin install documentation-generation@claude-extensions
+/plugin install claude-code-development@rigerc-claude
+/plugin install bash-scripting@rigerc-claude
+/plugin install documentation-generation@rigerc-claude
 ```
 
 ### Browse Available Plugins
 
 ```bash
 /plugin
-# Select "Browse Plugins" from claude-extensions marketplace
+# Select "Browse Plugins" from rigerc-claude marketplace
 # Install desired plugins
 ```
 
