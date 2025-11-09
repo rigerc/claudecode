@@ -214,7 +214,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 First, add this collection to your Claude Code marketplaces:
 
 ```bash
-/plugin marketplace add .
+/plugin marketplace add rigerc/claudecode
 ```
 
 ### Install Individual Plugins

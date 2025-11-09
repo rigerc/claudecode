@@ -1,40 +1,42 @@
 ---
 description: Command for using the generate-documentation skill
-argument-hint: [target] [type] [output-dir]
+argument-hint: "description"
 allowed-tools: Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, Task, TodoWrite, mcp__context7__resolve-library-id, mcp__context7__get-library-docs
 ---
 
 # Create Documentation
 
-Use the generate-documentation skill to create comprehensive documentation for the specified target.
+Use the generate-documentation skill to create comprehensive documentation based on a description.
 
 ## Parameters
-- **target** (required): The feature, API, component, or code to document
-- **type** (optional): Documentation type (api, getting-started, tutorial, reference, overview). Defaults to "overview"
-- **output-dir** (optional): Output directory for documentation. Defaults to "docs/"
+- **description** (required): Description of what to document (feature, API, component, code, or topic)
 
 ## Instructions
 
-1. **Analyze the target**:
-   - If `$1` is a file path, analyze that file and related components
-   - If `$1` is a feature name, search for relevant code and implementation
+1. **Analyze the description**:
+   - Parse the description to understand what needs to be documented
+   - If it's a file path, analyze that file and related components
+   - If it's a feature name, search for relevant code and implementation
+   - If it's a topic, research the subject and find relevant code/examples
    - Use `Glob` and `Grep` to find all related files and patterns
 
 2. **Determine documentation type**:
-   - If `$2` is specified, use that type
-   - If no type specified, analyze the target to determine the most appropriate documentation type
+   - Analyze the description to determine the most appropriate documentation type
+   - Choose from: api, getting-started, tutorial, reference, overview
+   - Default to "overview" if type is unclear
 
 3. **Research and analyze**:
-   - Read the relevant source files
+   - Read the relevant source files if applicable
    - Use context7 to research any libraries or frameworks used
    - Identify undocumented features or unclear code
    - Look for existing documentation to understand gaps
+   - Search for examples and best practices
 
 4. **Generate documentation**:
    - Use the appropriate template from the generate-documentation skill
    - Create comprehensive, accurate documentation
    - Include practical examples and code snippets
-   - Save to specified output directory (`$3` or "docs/")
+   - Save to "docs/" directory
 
 5. **Follow best practices**:
    - Ensure technical accuracy
@@ -45,14 +47,23 @@ Use the generate-documentation skill to create comprehensive documentation for t
 ## Examples
 
 ```bash
-# Create API documentation for a specific endpoint
-/create-documentation src/api/user.js api
+# Document a specific API endpoint
+/create-documentation "user authentication API endpoints"
 
-# Create getting started guide for the entire project
-/create-documentation . getting-started docs/guides
+# Create getting started guide for a framework
+/create-documentation "React hooks getting started guide"
 
-# Create tutorial for a specific feature
-/create-documentation authentication tutorial docs/tutorials
+# Document a feature
+/create-documentation "file upload functionality"
+
+# Create tutorial for a tool
+/create-documentation "Docker container deployment tutorial"
+
+# Document a library or package
+/create-documentation "Express.js middleware patterns"
+
+# Create overview documentation
+/create-documentation "microservices architecture overview"
 ```
 
 ## Output
