@@ -4,9 +4,9 @@
     "name": "rigerc's Claude personal marketplace"
   },
   "metadata": {
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "A curated collection of specialized plugins for Claude Code, organized by functionality to provide focused tools for specific development tasks.",
-    "lastUpdated": "2025-11-09T18:12:57.328469Z"
+    "lastUpdated": "2025-11-09T21:18:50.941824Z"
   },
   "plugins": [
     {
@@ -33,6 +33,11 @@
       "name": "go-development",
       "source": "./plugins/go-development",
       "description": "Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns"
+    },
+    {
+      "name": "home-assistant",
+      "source": "./plugins/home-assistant",
+      "description": "Home Assistant development tools and automation skills for creating add-ons, integrations, and smart home workflows"
     },
     {
       "name": "music-management",
