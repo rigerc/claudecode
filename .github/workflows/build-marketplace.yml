@@ -41,9 +41,8 @@ jobs:
     - name: Comprehensive plugin validation
       run: |
         echo "🔍 Running comprehensive plugin validation..."
-        python scripts/validate-plugins.py --format json > validation-results.json || {
+        python scripts/validate-plugins.py || {
           echo "❌ Plugin validation failed"
-          cat validation-results.json
           exit 1
         }
 
@@ -88,13 +87,17 @@ jobs:
     - name: Check for changes
       id: changes
       run: |
-        if [ -n "$(git status --porcelain)" ]; then
+        # Clean up any untracked files first
+        git clean -fd
+
+        # Check for changes in the specific files we care about
+        if [ -n "$(git status --porcelain .claude-plugin/marketplace.json README.md 2>/dev/null)" ]; then
           echo "changed=true" >> $GITHUB_OUTPUT
           echo "Changes detected:"
-          git status --porcelain
+          git status --porcelain .claude-plugin/marketplace.json README.md
         else
           echo "changed=false" >> $GITHUB_OUTPUT
-          echo "No changes detected"
+          echo "No changes detected in generated files"
         fi
 
     - name: Commit and push changes
@@ -106,18 +109,24 @@ jobs:
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
 
-        # Add changes
+        # Add specific files
         git add .claude-plugin/marketplace.json README.md
 
         # Show what will be committed
         echo "Files to be committed:"
         git diff --cached --name-only
 
-        # Commit changes
-        git commit -m "🤖 Auto-update marketplace and README from plugin changes"
+        # Check if there's anything to commit
+        if [ -n "$(git diff --cached --name-only)" ]; then
+          # Commit changes
+          git commit -m "🤖 Auto-update marketplace and README from plugin changes"
 
-        # Push changes
-        git push
+          # Push changes
+          git push
+          echo "Changes committed and pushed successfully"
+        else
+          echo "No changes to commit"
+        fi
 
     - name: Create summary
       run: |
