@@ -3,7 +3,7 @@
 # Automatic setup script for MarkdownTaskManager plugin
 # This script runs silently via hooks and only creates files if they don't exist
 
-set -e  # Exit on any error
+#set -e  # Exit on any error
 
 # Get the directory where this script is located
 SCRIPT_DIR="$CLAUDE_PLUGIN_ROOT/hooks/scripts"
