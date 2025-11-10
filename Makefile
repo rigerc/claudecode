@@ -29,6 +29,8 @@ build:
 validate:
 	@echo "🔍 Running basic validation..."
 	@make check
+	@echo "🔍 Running comprehensive component validation..."
+	@python scripts/validate_components.py --all plugins/
 
 # Strict validation (treat warnings as errors)
 validate-strict:
