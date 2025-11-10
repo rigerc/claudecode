@@ -254,7 +254,7 @@ def format_update_context(updates):
     if not updates:
         return None
 
-    context_lines = ["## 🔄 Plugin Repository Updates"]
+    context_lines = ["\n🔄 Plugin Repository Updates"]
     context_lines.append("")
 
     update_count = sum(1 for u in updates if u.get("has_update"))
@@ -277,6 +277,9 @@ def format_update_context(updates):
                 context_lines.append(f"  - Current: `{update['current_commit']}`")
                 context_lines.append(f"  - Latest: `{latest_commit['sha'][:7]}`")
                 context_lines.append(f"  - Message: {latest_commit['message'][:50]}...")
+                context_lines.append(
+                    f"  - Update with: `/plugin marketplace update {repo_name}`"
+                )
                 context_lines.append("")
             elif update.get("error"):
                 context_lines.append(f"• **{repo_name}**: ❌ {update['error']}")
