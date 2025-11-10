@@ -217,8 +217,13 @@ def check_repo_update(repo_path, repo_name):
     if not latest_commit:
         return {"has_update": False, "error": "Could not fetch latest commit"}
 
-    # Compare commits
-    has_update = current_commit != latest_commit["sha"][:7]  # Compare short hash
+    # Compare commits (compare full hashes, but display short versions)
+    has_update = current_commit != latest_commit["sha"]
+
+    # Debug logging
+    log_info(
+        f"Repo {repo_name}: current={current_commit}, latest={latest_commit['sha']}, has_update={has_update}"
+    )
 
     return {
         "has_update": has_update,
@@ -341,9 +346,7 @@ def main():
 
     if context:
         # Return JSON output for SessionStart hook
-        output = {
-            "systemMessage": context
-        }
+        output = {"systemMessage": context}
         print(json.dumps(output))
         log_info("Update context provided to user")
     else:

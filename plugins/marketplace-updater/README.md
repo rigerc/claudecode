@@ -1,24 +1,25 @@
-# Marketplace Updater Plugin
+# Plugin Repository Updater
 
-Automatically checks for marketplace updates on Claude Code startup and provides notifications when updates are available.
+Automatically checks if repositories in `~/.claude/plugins/` are up to date and informs you when updates are available.
 
 ## Features
 
-- **Automatic Updates**: Checks for marketplace updates when Claude Code starts
-- **Smart Caching**: Avoids excessive network requests with configurable check intervals
-- **User-Friendly Notifications**: Provides clear, concise update information in session context
+- **Automatic Repository Discovery**: Scans for git repositories in `~/.claude/plugins/` and `~/.claude/plugins/marketplaces/`
+- **Smart Update Detection**: Compares local commits with remote GitHub repositories
+- **Intelligent Caching**: Avoids excessive API requests with configurable check intervals
+- **User-Friendly Notifications**: Provides clear update information in session context
 - **Non-Intrusive**: Runs silently in background, only notifies when updates are available
-- **Secure**: Validates marketplace URLs and handles authentication properly
+- **Error Handling**: Gracefully handles network issues, missing remotes, and API errors
 
 ## How It Works
 
-This plugin uses Claude Code's [SessionStart hooks](https://docs.claude.com/en/docs/claude-code/hooks) to automatically check for marketplace updates when:
+This plugin uses Claude Code's [SessionStart hooks](https://docs.claude.com/en/docs/claude-code/hooks) to automatically check plugin repositories when:
 
 - Claude Code starts a new session
 - A session is resumed
 - The session is cleared or compacted
 
-The plugin reads from `~/.claude/plugins/known_marketplaces.json` to get the list of installed marketplaces and checks each one for updates using the GitHub API.
+The plugin automatically discovers git repositories in your plugins directory and checks each one for updates by comparing the local commit with the latest commit on GitHub.
 
 ## Installation
 
@@ -28,53 +29,60 @@ The plugin should be automatically available when placed in the `plugins/` direc
 
 ### Check Interval
 
-By default, the plugin checks for updates every 24 hours per marketplace. This interval can be adjusted by modifying the `DEFAULT_CHECK_INTERVAL_HOURS` constant in the script.
+By default, the plugin checks for updates every 24 hours per repository. This interval can be adjusted by modifying the `DEFAULT_CHECK_INTERVAL_HOURS` constant in the script.
 
-### Marketplaces Monitored
+### Repositories Monitored
 
-The plugin monitors all marketplaces listed in `~/.claude/plugins/known_marketplaces.json`. This file is automatically managed by Claude Code when you add or remove marketplaces.
+The plugin automatically monitors all git repositories found in:
+- `~/.claude/plugins/`
+- `~/.claude/plugins/marketplaces/`
+
+Only repositories with GitHub remotes are checked for updates.
 
 ## Cache Management
 
-The plugin caches marketplace data in `~/.claude/cache/marketplace-updater/` to avoid excessive API calls. Cache files are automatically refreshed based on the configured check interval.
+The plugin caches repository data in `~/.claude/cache/plugin-updater/` to avoid excessive API calls. Cache files are automatically refreshed based on the configured check interval.
 
-## Supported Marketplace Types
+## Supported Repository Types
 
-- **GitHub Repositories**: Automatically checks for new commits
-- **Git-based Sources**: Uses GitHub API for version comparison
-- **Local Marketplaces**: Skipped (no remote to check)
+- **GitHub Repositories**: Automatically checks for new commits via GitHub API
+- **Git Repositories**: Scans for `.git` directories to identify repositories
+- **Non-Git Repositories**: Skipped (no version control to check)
+- **Non-GitHub Remotes**: Skipped with error message
 
 ## User Experience
 
 When updates are available, you'll see a notification in your Claude Code session context:
 
 ```
-## 🔄 Marketplace Updates
+## 🔄 Plugin Repository Updates
 
-⚠️ 1 marketplace has updates available:
+⚠️ 1 plugin repository has updates available:
 
-• **rigerc-claude**: New commit available
-  - Commit: `a1b2c3d`
-  - Message: Fix marketplace updater configuration...
+• **rigerc-claude**: Updates available
+  - Current: `411a3ae`
+  - Latest: `8c5052e`
+  - Message: 🤖 Auto-update marketplace v1.0.29 (11 plugins)...
 
+• **astrorepo**: ❌ Could not fetch latest commit
 ```
 
 When no updates are available, the plugin runs silently without interrupting your workflow.
 
 ## Troubleshooting
 
-### No Updates Shown
-- Check that `~/.claude/plugins/known_marketplaces.json` exists and contains marketplaces
-- Verify network connectivity
-- Check the cache interval setting
+### No Repositories Found
+- Ensure you have git repositories in `~/.claude/plugins/` or `~/.claude/plugins/marketplaces/`
+- Verify repositories have `.git` directories
+- Check that repositories have GitHub remotes configured
 
 ### Errors in Hook Execution
 - Ensure the script has execute permissions (`chmod +x`)
-- Check that Python 3 is available
+- Check that Python 3 and git are available
 - Review error messages in Claude Code debug output (`claude --debug`)
 
-### GitHub API Rate Limits
-The plugin includes delays between requests to avoid rate limiting. If you encounter rate limit issues, the plugin will log error messages but continue functioning.
+### GitHub API Issues
+The plugin includes delays between requests to avoid rate limiting. If you encounter API issues, the plugin will log error messages but continue functioning with other repositories.
 
 ## Development
 
@@ -88,9 +96,7 @@ plugins/marketplace-updater/
 │   ├── hooks.json              # Hook configuration
 │   └── scripts/
 │       └── update-marketplaces.py  # Main update script
-├── README.md
-└── config/
-    └── default-marketplaces.json
+└── README.md
 ```
 
 ### Hook Configuration
@@ -99,7 +105,7 @@ The plugin uses a SessionStart hook defined in `hooks/hooks.json`:
 
 ```json
 {
-  "description": "Automatically checks and updates marketplace metadata at session start",
+  "description": "Automatically checks plugin repositories for updates at session start",
   "hooks": {
     "SessionStart": [
       {
@@ -122,17 +128,25 @@ The plugin uses a SessionStart hook defined in `hooks/hooks.json`:
 The main script (`update-marketplaces.py`) implements:
 
 1. **Hook Input Processing**: Reads JSON input from Claude Code
-2. **Marketplace Discovery**: Reads known marketplaces from configuration
-3. **Update Checking**: Uses GitHub API to compare versions
-4. **Caching**: Stores results to avoid excessive API calls
-5. **User Notification**: Returns formatted context for SessionStart hook
+2. **Repository Discovery**: Scans plugins directories for git repositories
+3. **Remote URL Parsing**: Extracts GitHub owner/repo from git remote URLs
+4. **Update Checking**: Uses GitHub API to compare local vs remote commits
+5. **Caching**: Stores results to avoid excessive API calls
+6. **User Notification**: Returns formatted context for SessionStart hook
+
+### Key Functions
+
+- `find_plugin_repos()`: Discovers git repositories in plugins directories
+- `check_repo_update()`: Compares local commit with GitHub API data
+- `parse_github_url()`: Extracts owner/repo from various GitHub URL formats
+- `format_update_context()`: Creates user-friendly update notifications
 
 ## Security Considerations
 
-- Validates all marketplace URLs before fetching
-- Uses secure HTTPS connections only
-- Handles authentication for private repositories
-- Sanitizes file paths to prevent directory traversal
+- Validates all git repository paths before processing
+- Uses secure HTTPS connections for GitHub API calls
+- Implements timeouts for all git and network operations
+- Handles subprocess execution safely with proper error handling
 - Implements rate limiting to avoid API abuse
 
 ## License
