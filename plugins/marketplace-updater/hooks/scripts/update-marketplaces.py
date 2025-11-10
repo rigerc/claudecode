@@ -220,11 +220,6 @@ def check_repo_update(repo_path, repo_name):
     # Compare commits (compare full hashes, but display short versions)
     has_update = current_commit != latest_commit["sha"]
 
-    # Debug logging
-    log_info(
-        f"Repo {repo_name}: current={current_commit}, latest={latest_commit['sha']}, has_update={has_update}"
-    )
-
     return {
         "has_update": has_update,
         "current_commit": current_commit[:7],
@@ -322,19 +317,8 @@ def main():
     for repo_name, repo_path in repos:
         log_info(f"Checking repository: {repo_name}")
 
-        # Check if we should update based on cache
-        if not should_check_repo(repo_name):
-            # Use cached data
-            cached_data = get_cached_repo_data(repo_name)
-            if cached_data:
-                updates.append({"name": repo_name, **cached_data})
-                continue
-
-        # Check for updates
+        # Check for updates (no caching)
         update_info = check_repo_update(repo_path, repo_name)
-
-        # Cache the result
-        cache_repo_data(repo_name, update_info)
 
         updates.append({"name": repo_name, **update_info})
 
