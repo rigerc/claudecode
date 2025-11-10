@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """
-Marketplace Updater Hook Script for Claude Code
+Plugin Repository Updater Hook Script for Claude Code
 
-This script runs on Claude Code startup to check for marketplace updates.
-It reads from ~/.claude/plugins/known_marketplaces.json and provides
-update information to the user via SessionStart hook context.
+This script runs on Claude Code startup to check if repositories in
+~/.claude/plugins/ are up to date, and informs the user if not.
+It scans for git repositories and checks for updates via GitHub API.
 """
 
 import json
@@ -19,21 +19,19 @@ import urllib.error
 import urllib.parse
 
 # Configuration
-KNOWN_MARKETPLACES_FILE = (
-    Path.home() / ".claude" / "plugins" / "known_marketplaces.json"
-)
-CACHE_DIR = Path.home() / ".claude" / "cache" / "marketplace-updater"
+PLUGINS_DIR = Path.home() / ".claude" / "plugins"
+CACHE_DIR = Path.home() / ".claude" / "cache" / "plugin-updater"
 DEFAULT_CHECK_INTERVAL_HOURS = 24
 
 
 def log_error(message):
     """Log error to stderr"""
-    print(f"[Marketplace Updater] Error: {message}", file=sys.stderr)
+    print(f"[Plugin Updater] Error: {message}", file=sys.stderr)
 
 
 def log_info(message):
     """Log info to stderr for debugging"""
-    print(f"[Marketplace Updater] {message}", file=sys.stderr)
+    print(f"[Plugin Updater] {message}", file=sys.stderr)
 
 
 def read_hook_input():
@@ -46,36 +44,15 @@ def read_hook_input():
         return None
 
 
-def read_known_marketplaces():
-    """Read known marketplaces from Claude Code configuration"""
-    if not KNOWN_MARKETPLACES_FILE.exists():
-        log_error(f"Known marketplaces file not found: {KNOWN_MARKETPLACES_FILE}")
-        return {}
-
-    try:
-        with open(KNOWN_MARKETPLACES_FILE, "r") as f:
-            data = json.load(f)
-            # Handle both formats: with and without "marketplaces" wrapper
-            if "marketplaces" in data:
-                return data["marketplaces"]
-            else:
-                return data
-    except (json.JSONDecodeError, IOError) as e:
-        log_error(f"Failed to read known marketplaces: {e}")
-        return {}
-
-
-def get_cache_file(marketplace_name):
-    """Get cache file path for a marketplace"""
+def get_cache_file(repo_name):
+    """Get cache file path for a repository"""
     CACHE_DIR.mkdir(parents=True, exist_ok=True)
-    return CACHE_DIR / f"{marketplace_name}.json"
+    return CACHE_DIR / f"{repo_name}.json"
 
 
-def should_check_marketplace(
-    marketplace_name, check_interval_hours=DEFAULT_CHECK_INTERVAL_HOURS
-):
-    """Check if we should check this marketplace based on cache timestamp"""
-    cache_file = get_cache_file(marketplace_name)
+def should_check_repo(repo_name, check_interval_hours=DEFAULT_CHECK_INTERVAL_HOURS):
+    """Check if we should check this repository based on cache timestamp"""
+    cache_file = get_cache_file(repo_name)
 
     if not cache_file.exists():
         return True
@@ -90,9 +67,9 @@ def should_check_marketplace(
         return True  # If cache is corrupted, check again
 
 
-def cache_marketplace_data(marketplace_name, data):
-    """Cache marketplace data with timestamp"""
-    cache_file = get_cache_file(marketplace_name)
+def cache_repo_data(repo_name, data):
+    """Cache repository data with timestamp"""
+    cache_file = get_cache_file(repo_name)
 
     cache_data = {"last_check": datetime.now().isoformat(), "data": data}
 
@@ -100,12 +77,12 @@ def cache_marketplace_data(marketplace_name, data):
         with open(cache_file, "w") as f:
             json.dump(cache_data, f, indent=2)
     except IOError as e:
-        log_error(f"Failed to cache data for {marketplace_name}: {e}")
+        log_error(f"Failed to cache data for {repo_name}: {e}")
 
 
-def get_cached_marketplace_data(marketplace_name):
-    """Get cached marketplace data"""
-    cache_file = get_cache_file(marketplace_name)
+def get_cached_repo_data(repo_name):
+    """Get cached repository data"""
+    cache_file = get_cache_file(repo_name)
 
     if not cache_file.exists():
         return None
@@ -118,29 +95,73 @@ def get_cached_marketplace_data(marketplace_name):
         return None
 
 
-def get_github_repo_info(owner, repo):
-    """Get repository information from GitHub API"""
+def is_git_repo(path):
+    """Check if a directory is a git repository"""
+    git_dir = path / ".git"
+    return git_dir.exists() or git_dir.is_dir()
+
+
+def get_git_remote_url(repo_path):
+    """Get the remote URL for a git repository"""
     try:
-        # GitHub API for repo information
-        url = f"https://api.github.com/repos/{owner}/{repo}"
-
-        # Create request with user agent
-        req = urllib.request.Request(url)
-        req.add_header("User-Agent", "Claude-Code-Marketplace-Updater/1.0")
-
-        with urllib.request.urlopen(req, timeout=10) as response:
-            if response.status == 200:
-                return json.loads(response.read().decode())
-            else:
-                log_error(f"GitHub API returned status {response.status}")
-                return None
-
-    except urllib.error.URLError as e:
-        log_error(f"Failed to fetch GitHub repo info: {e}")
+        result = subprocess.run(
+            ["git", "config", "--get", "remote.origin.url"],
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        if result.returncode == 0:
+            return result.stdout.strip()
         return None
-    except Exception as e:
-        log_error(f"Unexpected error fetching GitHub repo info: {e}")
+    except (subprocess.TimeoutExpired, subprocess.SubprocessError, FileNotFoundError):
         return None
+
+
+def get_git_current_commit(repo_path):
+    """Get the current commit hash for a git repository"""
+    try:
+        result = subprocess.run(
+            ["git", "rev-parse", "HEAD"],
+            cwd=repo_path,
+            capture_output=True,
+            text=True,
+            timeout=10,
+        )
+        if result.returncode == 0:
+            return result.stdout.strip()
+        return None
+    except (subprocess.TimeoutExpired, subprocess.SubprocessError, FileNotFoundError):
+        return None
+
+
+def parse_github_url(url):
+    """Parse GitHub URL to extract owner and repo"""
+    if not url:
+        return None, None
+
+    # Handle various GitHub URL formats:
+    # https://github.com/owner/repo.git
+    # git@github.com:owner/repo.git
+    # https://github.com/owner/repo
+
+    if "github.com" not in url:
+        return None, None
+
+    # Remove protocol and git@ prefix
+    url = url.replace("https://", "").replace("http://", "").replace("git@", "")
+
+    # Remove .git suffix
+    url = url.replace(".git", "")
+
+    # Split by / and take last two parts
+    parts = url.split("/")
+    if len(parts) >= 2:
+        owner = parts[-2]
+        repo = parts[-1]
+        return owner, repo
+
+    return None, None
 
 
 def get_github_latest_commit(owner, repo, branch="main"):
@@ -150,7 +171,7 @@ def get_github_latest_commit(owner, repo, branch="main"):
         url = f"https://api.github.com/repos/{owner}/{repo}/commits/{branch}"
 
         req = urllib.request.Request(url)
-        req.add_header("User-Agent", "Claude-Code-Marketplace-Updater/1.0")
+        req.add_header("User-Agent", "Claude-Code-Plugin-Updater/1.0")
 
         with urllib.request.urlopen(req, timeout=10) as response:
             if response.status == 200:
@@ -161,47 +182,71 @@ def get_github_latest_commit(owner, repo, branch="main"):
                     "message": data["commit"]["message"],
                 }
             else:
-                log_error(f"GitHub API returned status {response.status} for commits")
+                log_error(
+                    f"GitHub API returned status {response.status} for {owner}/{repo}"
+                )
                 return None
 
+    except urllib.error.URLError as e:
+        log_error(f"Failed to fetch latest commit for {owner}/{repo}: {e}")
+        return None
     except Exception as e:
-        log_error(f"Failed to fetch latest commit: {e}")
+        log_error(f"Unexpected error fetching latest commit for {owner}/{repo}: {e}")
         return None
 
 
-def check_marketplace_update(marketplace_name, marketplace_info):
-    """Check if a marketplace has updates"""
-    source_info = marketplace_info.get("source", {})
+def check_repo_update(repo_path, repo_name):
+    """Check if a repository has updates"""
+    # Get remote URL
+    remote_url = get_git_remote_url(repo_path)
+    if not remote_url:
+        return {"has_update": False, "error": "No remote URL found"}
 
-    # Handle git-based sources (GitHub repositories)
-    if "repo" in source_info:
-        repo_url = source_info["repo"]
-        # Parse GitHub URL: github.com/owner/repo
-        if "github.com" in repo_url:
-            parts = repo_url.strip("/").split("/")
-            if len(parts) >= 2:
-                owner = parts[-2]
-                repo = parts[-1].replace(".git", "")
+    # Parse GitHub URL
+    owner, repo = parse_github_url(remote_url)
+    if not owner or not repo:
+        return {"has_update": False, "error": "Not a GitHub repository"}
 
-                # Get latest commit info
-                latest_commit = get_github_latest_commit(owner, repo)
-                if latest_commit:
-                    # Compare with last updated timestamp
-                    last_updated = marketplace_info.get("lastUpdated", 0)
-                    commit_date = datetime.fromisoformat(
-                        latest_commit["date"].replace("Z", "+00:00")
-                    )
-                    commit_timestamp = int(commit_date.timestamp())
+    # Get current commit
+    current_commit = get_git_current_commit(repo_path)
+    if not current_commit:
+        return {"has_update": False, "error": "Could not get current commit"}
 
-                    has_update = commit_timestamp > last_updated
-                    return {
-                        "has_update": has_update,
-                        "latest_commit": latest_commit,
-                        "last_updated": last_updated,
-                        "commit_timestamp": commit_timestamp,
-                    }
+    # Get latest commit from GitHub
+    latest_commit = get_github_latest_commit(owner, repo)
+    if not latest_commit:
+        return {"has_update": False, "error": "Could not fetch latest commit"}
 
-    return {"has_update": False}
+    # Compare commits
+    has_update = current_commit != latest_commit["sha"][:7]  # Compare short hash
+
+    return {
+        "has_update": has_update,
+        "current_commit": current_commit[:7],
+        "latest_commit": latest_commit,
+        "remote_url": remote_url,
+        "owner": owner,
+        "repo": repo,
+    }
+
+
+def find_plugin_repos():
+    """Find all git repositories in the plugins directory"""
+    repos = []
+
+    # Check both plugins directory and marketplaces subdirectory
+    search_dirs = [PLUGINS_DIR, PLUGINS_DIR / "marketplaces"]
+
+    for search_dir in search_dirs:
+        if not search_dir.exists():
+            log_info(f"Directory not found: {search_dir}")
+            continue
+
+        for item in search_dir.iterdir():
+            if item.is_dir() and is_git_repo(item):
+                repos.append((item.name, item))
+
+    return repos
 
 
 def format_update_context(updates):
@@ -209,29 +254,34 @@ def format_update_context(updates):
     if not updates:
         return None
 
-    context_lines = ["## 🔄 Marketplace Updates"]
+    context_lines = ["## 🔄 Plugin Repository Updates"]
     context_lines.append("")
 
     update_count = sum(1 for u in updates if u.get("has_update"))
+    error_count = sum(1 for u in updates if u.get("error"))
 
-    if update_count == 0:
-        context_lines.append("✅ All marketplaces are up to date")
+    if update_count == 0 and error_count == 0:
+        context_lines.append("✅ All plugin repositories are up to date")
     else:
-        context_lines.append(
-            f"⚠️ {update_count} marketplace{'s' if update_count > 1 else ''} have updates available:"
-        )
-        context_lines.append("")
+        if update_count > 0:
+            context_lines.append(
+                f"⚠️ {update_count} plugin repositor{'y has' if update_count == 1 else 'ies have'} updates available:"
+            )
+            context_lines.append("")
 
         for update in updates:
-            marketplace_name = update["name"]
+            repo_name = update["name"]
             if update.get("has_update"):
                 latest_commit = update["latest_commit"]
-                context_lines.append(f"• **{marketplace_name}**: New commit available")
-                context_lines.append(f"  - Commit: `{latest_commit['sha'][:7]}`")
+                context_lines.append(f"• **{repo_name}**: Updates available")
+                context_lines.append(f"  - Current: `{update['current_commit']}`")
+                context_lines.append(f"  - Latest: `{latest_commit['sha'][:7]}`")
                 context_lines.append(f"  - Message: {latest_commit['message'][:50]}...")
                 context_lines.append("")
+            elif update.get("error"):
+                context_lines.append(f"• **{repo_name}**: ❌ {update['error']}")
             else:
-                context_lines.append(f"• **{marketplace_name}**: ✅ Up to date")
+                context_lines.append(f"• **{repo_name}**: ✅ Up to date")
 
     return "\n".join(context_lines)
 
@@ -253,35 +303,35 @@ def main():
         log_info(f"Skipping hook event: {hook_event}")
         sys.exit(0)
 
-    # Read known marketplaces
-    marketplaces = read_known_marketplaces()
-    if not marketplaces:
-        log_info("No marketplaces configured")
+    # Find plugin repositories
+    repos = find_plugin_repos()
+    if not repos:
+        log_info("No plugin repositories found")
         sys.exit(0)
 
-    log_info(f"Found {len(marketplaces)} marketplaces to check")
+    log_info(f"Found {len(repos)} plugin repositories to check")
 
     updates = []
 
-    # Check each marketplace for updates
-    for marketplace_name, marketplace_info in marketplaces.items():
-        log_info(f"Checking marketplace: {marketplace_name}")
+    # Check each repository for updates
+    for repo_name, repo_path in repos:
+        log_info(f"Checking repository: {repo_name}")
 
         # Check if we should update based on cache
-        if not should_check_marketplace(marketplace_name):
+        if not should_check_repo(repo_name):
             # Use cached data
-            cached_data = get_cached_marketplace_data(marketplace_name)
+            cached_data = get_cached_repo_data(repo_name)
             if cached_data:
-                updates.append({"name": marketplace_name, **cached_data})
+                updates.append({"name": repo_name, **cached_data})
                 continue
 
         # Check for updates
-        update_info = check_marketplace_update(marketplace_name, marketplace_info)
+        update_info = check_repo_update(repo_path, repo_name)
 
         # Cache the result
-        cache_marketplace_data(marketplace_name, update_info)
+        cache_repo_data(repo_name, update_info)
 
-        updates.append({"name": marketplace_name, **update_info})
+        updates.append({"name": repo_name, **update_info})
 
         # Small delay to avoid rate limiting
         time.sleep(0.5)
@@ -292,10 +342,7 @@ def main():
     if context:
         # Return JSON output for SessionStart hook
         output = {
-            "hookSpecificOutput": {
-                "hookEventName": "SessionStart",
-                "additionalContext": context,
-            }
+            "systemMessage": context
         }
         print(json.dumps(output))
         log_info("Update context provided to user")
