@@ -9,7 +9,12 @@ set -e  # Exit on any error
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ASSETS_DIR="$SCRIPT_DIR/../assets"
 
-PROJECT_ROOT=$CLAUDE_PROJECT_DIR
+PROJECT_ROOT="${CLAUDE_PROJECT_DIR}"
+
+# Check if PROJECT_ROOT is set and not empty
+if [[ -z "$PROJECT_ROOT" ]]; then
+    exit 1
+fi
 
 # Function to copy file if it doesn't exist (silent version)
 copy_if_not_exists_silent() {
