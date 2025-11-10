@@ -4,9 +4,9 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 
 ## Overview
 
-- **11 Specialized Plugins**
+- **10 Specialized Plugins**
 - **9 Custom Commands**
-- **11 Expert Agents**
+- **10 Expert Agents**
 - **8 Specialized Skills**
 
 ## Available Plugins
@@ -22,8 +22,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 | **Home Assistant** | 0 | 0 | 1 | General |
 | **Marketplace Updater** | 0 | 0 | 0 | General |
 | **Music Management** | 0 | 0 | 1 | Beets tool |
-| **Productivity Tools** | 1 | 1 | 0 | Workflow enhancement |
-| **Skills Auto Discovery** | 0 | 0 | 0 | General |
+| **Productivity Tools** | 1 | 0 | 0 | Workflow enhancement |
 
 ## Plugin Details
 
@@ -76,11 +75,6 @@ Comprehensive music library management system guidance using the beets music org
 Productivity enhancement tools including feature brainstorming and dotfile management
 
 **Install**: `productivity-tools@rigerc-claude`
-
-### Skills Auto Discovery
-Automatically discovers and injects all available skills into session context at startup
-
-**Install**: `skills-auto-discovery@rigerc-claude`
 
 
 ## Installation
