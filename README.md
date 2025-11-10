@@ -6,7 +6,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 
 - **10 Specialized Plugins**
 - **9 Custom Commands**
-- **10 Expert Agents**
+- **11 Expert Agents**
 - **8 Specialized Skills**
 
 ## Available Plugins
@@ -15,7 +15,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 |--------|----------|---------|---------|-------|
 | **Markdowntaskmanager** | 0 | 0 | 1 | General |
 | **Bash Scripting** | 0 | 1 | 1 | Shell automation |
-| **Claude Code Development** | 5 | 4 | 2 | Extending Claude Code |
+| **Claude Code Development** | 5 | 5 | 2 | Extending Claude Code |
 | **Code Quality** | 2 | 1 | 0 | Code review |
 | **Documentation Generation** | 1 | 3 | 2 | Technical writing |
 | **Go Development** | 0 | 1 | 0 | Go programming |
