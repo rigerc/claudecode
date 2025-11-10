@@ -1,0 +1,9 @@
+{
+  "name": "skills-auto-discovery",
+  "version": "1.0.0",
+  "description": "Automatically discovers and injects all available skills into session context at startup",
+  "author": "end-user-plugin",
+  "license": "MIT",
+  "type": "plugin",
+  "keywords": ["skills", "discovery", "context", "session", "automation"]
+}

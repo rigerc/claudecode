@@ -1,0 +1,10 @@
+{
+  "name": "marketplace-updater",
+  "version": "1.0.0",
+  "description": "Automatic marketplace metadata updater that checks for updates on Claude Code startup",
+  "author": "rigerc",
+  "license": "MIT",
+  "hooks": {
+    "path": "hooks"
+  }
+}

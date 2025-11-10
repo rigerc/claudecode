@@ -1,0 +1,17 @@
+{
+  "description": "Automatically discovers and injects all available skills into session context at startup",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup|resume|clear|compact",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PLUGIN_ROOT}/scripts/discover-skills.py",
+            "timeout": 15
+          }
+        ]
+      }
+    ]
+  }
+}

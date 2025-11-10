@@ -4,9 +4,9 @@
     "name": "rigerc's Claude personal marketplace"
   },
   "metadata": {
-    "version": "1.0.21",
+    "version": "1.0.23",
     "description": "A curated collection of specialized plugins for Claude Code, organized by functionality to provide focused tools for specific development tasks.",
-    "lastUpdated": "2025-11-10T18:47:41.943134Z"
+    "lastUpdated": "2025-11-10T19:36:27.449108Z"
   },
   "plugins": [
     {
@@ -45,6 +45,11 @@
       "description": "Home Assistant development tools and automation skills for creating add-ons, integrations, and smart home workflows"
     },
     {
+      "name": "marketplace-updater",
+      "source": "./plugins/marketplace-updater",
+      "description": "Automatic marketplace metadata updater that checks for updates on Claude Code startup"
+    },
+    {
       "name": "music-management",
       "source": "./plugins/music-management",
       "description": "Comprehensive music library management system guidance using the beets music organization tool"
@@ -53,6 +58,11 @@
       "name": "productivity-tools",
       "source": "./plugins/productivity-tools",
       "description": "Productivity enhancement tools including feature brainstorming and dotfile management"
+    },
+    {
+      "name": "skills-auto-discovery",
+      "source": "./plugins/skills-auto-discovery",
+      "description": "Automatically discovers and injects all available skills into session context at startup"
     }
   ]
 }
