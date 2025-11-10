@@ -8,8 +8,5 @@
   },
   "license": "MIT",
   "keywords": ["task-management", "kanban", "markdown", "workflow", "productivity"],
-  "hooks": "./hooks.json",
-  "skills": [
-      "./markdown-task-manager"
-    ]
+  "hooks": "./hooks/hooks.json"
 }
