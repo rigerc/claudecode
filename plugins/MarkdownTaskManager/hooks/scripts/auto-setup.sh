@@ -6,10 +6,10 @@
 set -e  # Exit on any error
 
 # Get the directory where this script is located
-SCRIPT_DIR="${CLAUDE_PLUGIN_ROOT}/hooks/scripts"
-ASSETS_DIR="${CLAUDE_PLUGIN_ROOT}/hooks/assets"
+SCRIPT_DIR="$CLAUDE_PLUGIN_ROOT/hooks/scripts"
+ASSETS_DIR="$CLAUDE_PLUGIN_ROOT/hooks/assets"
 
-PROJECT_ROOT="${CLAUDE_PROJECT_DIR}"
+PROJECT_ROOT="$CLAUDE_PROJECT_DIR"
 
 echo "Script dir: $SCRIPT_DIR"
 echo "Asset dir: $ASSETS_DIR"
