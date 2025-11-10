@@ -1,12 +1,12 @@
 {
   "name": "rigerc-claude",
   "owner": {
-    "name": "rigerc's personal plugins marketplace"
+    "name": "rigerc's Claude personal marketplace"
   },
   "metadata": {
-    "version": "1.0.31",
+    "version": "1.0.32",
     "description": "A curated collection of specialized plugins for Claude Code, organized by functionality to provide focused tools for specific development tasks.",
-    "lastUpdated": "2025-11-10T21:19:20.224647Z"
+    "lastUpdated": "2025-11-10T21:23:46.925889Z"
   },
   "plugins": [
     {
