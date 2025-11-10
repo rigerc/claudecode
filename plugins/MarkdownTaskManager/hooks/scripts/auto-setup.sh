@@ -9,14 +9,47 @@
 SCRIPT_DIR="$CLAUDE_PLUGIN_ROOT/hooks/scripts"
 ASSETS_DIR="$CLAUDE_PLUGIN_ROOT/hooks/assets"
 
-PROJECT_ROOT="$CLAUDE_PROJECT_DIR"
+# Function to detect project directory with multiple fallback methods
+detect_project_root() {
+    local project_root=""
 
-echo "Script dir: $SCRIPT_DIR"
-echo "Asset dir: $ASSETS_DIR"
-echo "Project dir: $PROJECT_ROOT"
-# Check if PROJECT_ROOT is set and not empty
-if [[ -z "$PROJECT_ROOT" ]]; then
-    echo "No project root found. Exiting."
+    # Primary: Use CLAUDE_PROJECT_DIR if set and not empty
+    if [[ -n "$CLAUDE_PROJECT_DIR" ]]; then
+        project_root="$CLAUDE_PROJECT_DIR"
+    fi
+
+    # Secondary: Try to get cwd from hook JSON input
+    if [[ -z "$project_root" ]] && [[ -t 0 ]]; then
+        # Read from stdin if hook input is available
+        local hook_input=""
+        if read -r hook_input; then
+            # Extract cwd field using basic string parsing (avoid jq dependency)
+            local cwd_match=$(echo "$hook_input" | grep -o '"cwd"[[:space:]]*:[[:space:]]*"[^"]*"' | cut -d'"' -f4)
+            if [[ -n "$cwd_match" ]]; then
+                project_root="$cwd_match"
+            fi
+        fi
+    fi
+
+    # Tertiary: Use current working directory
+    if [[ -z "$project_root" ]]; then
+        project_root="$(pwd)"
+    fi
+
+    # Validate the detected directory
+    if [[ -n "$project_root" ]] && [[ -d "$project_root" ]]; then
+        echo "$project_root"
+        return 0
+    else
+        return 1
+    fi
+}
+
+PROJECT_ROOT=$(detect_project_root)
+
+# Check if PROJECT_ROOT was detected successfully
+if [[ $? -ne 0 ]] || [[ -z "$PROJECT_ROOT" ]]; then
+    echo "Error: Could not detect project directory. CLAUDE_PROJECT_DIR was empty and fallback methods failed." >&2
     exit 1
 fi
 
