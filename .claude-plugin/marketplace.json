@@ -4,9 +4,9 @@
     "name": "rigerc's Claude personal marketplace"
   },
   "metadata": {
-    "version": "1.0.34",
+    "version": "1.0.35",
     "description": "A curated collection of specialized plugins for Claude Code, organized by functionality to provide focused tools for specific development tasks.",
-    "lastUpdated": "2025-11-10T21:48:07.731781Z"
+    "lastUpdated": "2025-11-10T21:51:30.682857Z"
   },
   "plugins": [
     {
