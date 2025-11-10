@@ -5,8 +5,8 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 ## Overview
 
 - **10 Specialized Plugins**
-- **9 Custom Commands**
-- **10 Expert Agents**
+- **10 Custom Commands**
+- **11 Expert Agents**
 - **8 Specialized Skills**
 
 ## Available Plugins
@@ -15,64 +15,64 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 |--------|----------|---------|---------|-------|
 | **Markdowntaskmanager** | 0 | 0 | 1 | General |
 | **Bash Scripting** | 0 | 1 | 1 | Shell automation |
-| **Claude Code Development** | 5 | 4 | 2 | Extending Claude Code |
+| **Claude Code Development** | 5 | 5 | 2 | Extending Claude Code |
 | **Code Quality** | 2 | 1 | 0 | Code review |
 | **Documentation Generation** | 1 | 3 | 2 | Technical writing |
 | **Go Development** | 0 | 1 | 0 | Go programming |
 | **Home Assistant** | 0 | 0 | 1 | General |
 | **Marketplace Updater** | 0 | 0 | 0 | General |
 | **Music Management** | 0 | 0 | 1 | Beets tool |
-| **Productivity Tools** | 1 | 0 | 0 | Workflow enhancement |
+| **Productivity Tools** | 2 | 0 | 0 | Workflow enhancement |
 
 ## Plugin Details
 
 ### Markdowntaskmanager
-Kanban task management system using local Markdown files with comprehensive task lifecycle management
+A comprehensive AI-driven task management system that brings discipline and transparency to your development workflow. This plugin implements a Kanban-style task management system using local Markd...
 
 **Install**: `MarkdownTaskManager@rigerc-claude`
 
 ### Bash Scripting
-Expert tools for Bash scripting, automation, and testing with bats-core framework
+Expert tools for Bash scripting, automation, and testing with bats-core framework.
 
 **Install**: `bash-scripting@rigerc-claude`
 
 ### Claude Code Development
-Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks
+Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks.
 
 **Install**: `claude-code-development@rigerc-claude`
 
 ### Code Quality
-Code review, refactoring, and quality analysis tools for improving code maintainability and security
+Code review, refactoring, and quality analysis tools for improving code maintainability and security.
 
 **Install**: `code-quality@rigerc-claude`
 
 ### Documentation Generation
-Comprehensive tools for generating API documentation, technical docs, and project documentation
+Comprehensive tools for generating API documentation, technical docs, and project documentation.
 
 **Install**: `documentation-generation@rigerc-claude`
 
 ### Go Development
-Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns
+Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns.
 
 **Install**: `go-development@rigerc-claude`
 
 ### Home Assistant
-Home Assistant development tools and automation skills for creating add-ons, integrations, and smart home workflows
+A comprehensive Claude Code plugin for Home Assistant development, providing tools and skills for creating add-ons, integrations, and smart home automation workflows.
 
 **Install**: `home-assistant@rigerc-claude`
 
 ### Marketplace Updater
-Automatic marketplace metadata updater that checks for updates on Claude Code startup
+Automatically checks if repositories in `~/.claude/plugins/` are up to date and informs you when updates are available.
 
 **Install**: `marketplace-updater@rigerc-claude`
 
 ### Music Management
-Comprehensive music library management system guidance using the beets music organization tool
+Comprehensive music library management system guidance using the beets music organization tool.
 
 **Install**: `music-management@rigerc-claude`
 
 ### Productivity Tools
-Productivity enhancement tools including feature brainstorming and dotfile management
+Productivity enhancement tools including feature brainstorming, prompt enhancement, and dotfile management.
 
 **Install**: `productivity-tools@rigerc-claude`
 

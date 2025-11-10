@@ -10,6 +10,57 @@ from pathlib import Path
 from typing import Dict, List, Any
 from datetime import datetime, timezone
 
+def extract_plugin_description(plugin_dir: Path) -> str:
+    """Extract description from plugin README.md - text after first heading and before second heading."""
+    readme_path = plugin_dir / "README.md"
+
+    if not readme_path.exists():
+        return "Specialized tools for enhanced development workflows"
+
+    try:
+        with open(readme_path, 'r', encoding='utf-8') as f:
+            readme_content = f.read()
+            lines = readme_content.split('\n')
+
+            description_lines = []
+            in_description = False
+            heading_count = 0
+
+            for line in lines:
+                line = line.strip()
+
+                # Count headings to find boundaries
+                if line.startswith('#'):
+                    heading_count += 1
+                    if heading_count == 1:
+                        # Skip the first heading, start collecting after this
+                        in_description = True
+                        continue
+                    elif heading_count == 2:
+                        # Stop at second heading
+                        break
+
+                # Collect description text between first and second headings
+                if in_description and line:
+                    if not line.startswith('#'):
+                        description_lines.append(line)
+                elif in_description and not line and description_lines:
+                    # Stop if we hit an empty line after collecting some content
+                    continue
+
+            if description_lines:
+                description = ' '.join(description_lines)
+                # Clean up and limit length
+                description = re.sub(r'\s+', ' ', description).strip()
+                if len(description) > 200:
+                    description = description[:197] + "..."
+                return description
+
+    except (FileNotFoundError, UnicodeDecodeError) as e:
+        print(f"Warning: Could not read {readme_path}: {e}")
+
+    return "Specialized tools for enhanced development workflows"
+
 def extract_plugin_info(plugin_dir: Path) -> Dict[str, Any]:
     """Extract plugin information from plugin directory."""
     plugin_name = plugin_dir.name
@@ -32,33 +83,8 @@ def extract_plugin_info(plugin_dir: Path) -> Dict[str, Any]:
         except (json.JSONDecodeError, FileNotFoundError) as e:
             print(f"Warning: Could not parse {plugin_json_path}: {e}")
 
-    # Extract description from README if plugin.json description is generic
-    if plugin_info["description"].startswith("Plugin:"):
-        if readme_path.exists():
-            try:
-                with open(readme_path, 'r', encoding='utf-8') as f:
-                    readme_content = f.read()
-                    # Extract first paragraph after title
-                    lines = readme_content.split('\n')
-                    description_lines = []
-                    in_description = False
-
-                    for line in lines:
-                        line = line.strip()
-                        if line.startswith('# '):
-                            in_description = True
-                            continue
-                        elif in_description and line:
-                            if line.startswith('#'):
-                                break
-                            description_lines.append(line)
-                        elif in_description and not line and description_lines:
-                            break
-
-                    if description_lines:
-                        plugin_info["description"] = ' '.join(description_lines[:2])
-            except (FileNotFoundError, UnicodeDecodeError) as e:
-                print(f"Warning: Could not read {readme_path}: {e}")
+    # Extract description from README.md (text after first heading and before second heading)
+    plugin_info["description"] = extract_plugin_description(plugin_dir)
 
     # Truncate long descriptions
     if len(plugin_info["description"]) > 200:
@@ -195,17 +221,8 @@ def generate_plugin_list(plugin_dirs: List[Path]) -> str:
             plugin_name = plugin_dir.name.replace('-', ' ').title()
             plugin_key = plugin_dir.name
 
-            # Load plugin.json for description
-            plugin_json = plugin_dir / ".claude-plugin" / "plugin.json"
-            description = "Specialized tools for enhanced development workflows"
-
-            if plugin_json.exists():
-                try:
-                    with open(plugin_json, 'r', encoding='utf-8') as f:
-                        plugin_data = json.load(f)
-                        description = plugin_data.get("description", description)
-                except (json.JSONDecodeError, FileNotFoundError):
-                    pass
+            # Extract description from README.md
+            description = extract_plugin_description(plugin_dir)
 
             list_items.append(f"### {plugin_name}\n{description}\n")
             list_items.append(f"**Install**: `{plugin_key}@rigerc-claude`\n")

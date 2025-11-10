@@ -4,60 +4,60 @@
     "name": "rigerc's Claude personal marketplace"
   },
   "metadata": {
-    "version": "1.0.36",
+    "version": "1.0.37",
     "description": "A curated collection of specialized plugins for Claude Code, organized by functionality to provide focused tools for specific development tasks.",
-    "lastUpdated": "2025-11-10T21:57:30.891195Z"
+    "lastUpdated": "2025-11-10T22:46:04.058049Z"
   },
   "plugins": [
     {
       "name": "MarkdownTaskManager",
       "source": "./plugins/MarkdownTaskManager",
-      "description": "Kanban task management system using local Markdown files with comprehensive task lifecycle management"
+      "description": "A comprehensive AI-driven task management system that brings discipline and transparency to your development workflow. This plugin implements a Kanban-style task management system using local Markd..."
     },
     {
       "name": "bash-scripting",
       "source": "./plugins/bash-scripting",
-      "description": "Expert tools for Bash scripting, automation, and testing with bats-core framework"
+      "description": "Expert tools for Bash scripting, automation, and testing with bats-core framework."
     },
     {
       "name": "claude-code-development",
       "source": "./plugins/claude-code-development",
-      "description": "Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks"
+      "description": "Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks."
     },
     {
       "name": "code-quality",
       "source": "./plugins/code-quality",
-      "description": "Code review, refactoring, and quality analysis tools for improving code maintainability and security"
+      "description": "Code review, refactoring, and quality analysis tools for improving code maintainability and security."
     },
     {
       "name": "documentation-generation",
       "source": "./plugins/documentation-generation",
-      "description": "Comprehensive tools for generating API documentation, technical docs, and project documentation"
+      "description": "Comprehensive tools for generating API documentation, technical docs, and project documentation."
     },
     {
       "name": "go-development",
       "source": "./plugins/go-development",
-      "description": "Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns"
+      "description": "Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns."
     },
     {
       "name": "home-assistant",
       "source": "./plugins/home-assistant",
-      "description": "Home Assistant development tools and automation skills for creating add-ons, integrations, and smart home workflows"
+      "description": "A comprehensive Claude Code plugin for Home Assistant development, providing tools and skills for creating add-ons, integrations, and smart home automation workflows."
     },
     {
       "name": "marketplace-updater",
       "source": "./plugins/marketplace-updater",
-      "description": "Automatic marketplace metadata updater that checks for updates on Claude Code startup"
+      "description": "Automatically checks if repositories in `~/.claude/plugins/` are up to date and informs you when updates are available."
     },
     {
       "name": "music-management",
       "source": "./plugins/music-management",
-      "description": "Comprehensive music library management system guidance using the beets music organization tool"
+      "description": "Comprehensive music library management system guidance using the beets music organization tool."
     },
     {
       "name": "productivity-tools",
       "source": "./plugins/productivity-tools",
-      "description": "Productivity enhancement tools including feature brainstorming and dotfile management"
+      "description": "Productivity enhancement tools including feature brainstorming, prompt enhancement, and dotfile management."
     }
   ]
 }
