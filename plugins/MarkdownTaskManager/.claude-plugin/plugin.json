@@ -1,0 +1,14 @@
+{
+  "name": "MarkdownTaskManager",
+  "version": "1.0.0",
+  "description": "Kanban task management system using local Markdown files with comprehensive task lifecycle management",
+  "author": "rigerc",
+  "license": "MIT",
+  "keywords": ["task-management", "kanban", "markdown", "workflow", "productivity"],
+  "hooks": "hooks/hooks.json",
+  "components": {
+    "skills": [
+      "markdown-task-manager"
+    ]
+  }
+}

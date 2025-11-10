@@ -4,15 +4,16 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 
 ## Overview
 
-- **8 Specialized Plugins**
+- **9 Specialized Plugins**
 - **9 Custom Commands**
 - **11 Expert Agents**
-- **7 Specialized Skills**
+- **8 Specialized Skills**
 
 ## Available Plugins
 
 | Plugin | Commands | Agents | Skills | Focus |
 |--------|----------|---------|---------|-------|
+| **Markdowntaskmanager** | 0 | 0 | 1 | General |
 | **Bash Scripting** | 0 | 1 | 1 | Shell automation |
 | **Claude Code Development** | 5 | 4 | 2 | Extending Claude Code |
 | **Code Quality** | 2 | 1 | 0 | Code review |
@@ -23,6 +24,11 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 | **Productivity Tools** | 1 | 1 | 0 | Workflow enhancement |
 
 ## Plugin Details
+
+### Markdowntaskmanager
+Kanban task management system using local Markdown files with comprehensive task lifecycle management
+
+**Install**: `MarkdownTaskManager@rigerc-claude`
 
 ### Bash Scripting
 Expert tools for Bash scripting, automation, and testing with bats-core framework

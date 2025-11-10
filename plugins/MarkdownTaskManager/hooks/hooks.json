@@ -1,0 +1,17 @@
+{
+  "description": "MarkdownTaskManager plugin hooks for automatic file setup",
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "startup",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "${CLAUDE_PROJECT_DIR}/.claude/hooks/scripts/auto-setup.sh",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
