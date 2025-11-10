@@ -20,15 +20,6 @@
   "repository": "https://github.com/rigerc/claude-code-marketplace",
   "homepage": "https://github.com/rigerc/claude-code-marketplace/tree/main/plugins/home-assistant",
   "skills": [
-    "ha-addon"
-  ],
-  "dependencies": [],
-  "claude_code_version": ">=1.0.0",
-  "tags": [
-    "home-automation",
-    "iot-development",
-    "docker-containers",
-    "yaml-configuration",
-    "api-integration"
+    "./ha-addon"
   ]
 }
