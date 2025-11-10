@@ -16,8 +16,7 @@
     "integrations",
     "docker"
   ],
-  "category": "development",
-  "repository": "https://github.com/rigerc/claude-code-marketplace",
+  "repository": "https://github.com/rigerc/claudecode",
   "homepage": "https://github.com/rigerc/claude-code-marketplace/tree/main/plugins/home-assistant",
   "skills": [
     "./ha-addon"
