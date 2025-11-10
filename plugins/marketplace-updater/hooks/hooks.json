@@ -1,5 +1,5 @@
 {
-  "description": "Automatically checks and updates marketplace metadata at session start",
+  "description": "Automatically checks and updates marketplace metadata at session start.",
   "hooks": {
     "SessionStart": [
       {
