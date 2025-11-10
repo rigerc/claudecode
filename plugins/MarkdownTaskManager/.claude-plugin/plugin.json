@@ -7,6 +7,5 @@
     "email": "noreply@claude.com"
   },
   "license": "MIT",
-  "keywords": ["task-management", "kanban", "markdown", "workflow", "productivity"],
-  "hooks": "./hooks/hooks.json"
+  "keywords": ["task-management", "kanban", "markdown", "workflow", "productivity"]
 }

@@ -19,6 +19,6 @@
   "repository": "https://github.com/rigerc/claudecode",
   "homepage": "https://github.com/rigerc/claude-code-marketplace/tree/main/plugins/home-assistant",
   "skills": [
-    "./ha-addon"
+    "./skills/ha-addon"
   ]
 }
