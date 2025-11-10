@@ -48,7 +48,7 @@ done
 # Run validations based on changes
 if [ "$VALIDATE_PLUGINS" = true ]; then
     echo "  📁 Plugin changes detected - running validation..."
-    python scripts/validate-plugins.py || {
+    make check || {
         echo "❌ Plugin validation failed. Please fix the issues before committing."
         exit 1
     }

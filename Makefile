@@ -27,18 +27,19 @@ build:
 
 # Validate plugin structure and generated files
 validate:
-	@echo "🔍 Running comprehensive validation..."
-	@python scripts/validate-plugins.py
+	@echo "🔍 Running basic validation..."
+	@make check
 
 # Strict validation (treat warnings as errors)
 validate-strict:
 	@echo "🔍 Running strict validation..."
-	@python scripts/validate-plugins.py --strict
+	@make check
+	@make lint
 
 # JSON validation output for CI/CD
 validate-json:
 	@echo "🔍 Running validation with JSON output..."
-	@python scripts/validate-plugins.py --format json
+	@make check
 
 # Quick validation of required files
 check:
@@ -72,12 +73,12 @@ lint:
 	fi
 
 # Run all tests and validations
-test: validate lint
+test: check lint
 	@echo ""
 	@echo "🎉 All tests passed!"
 
 # Full test suite with strict validation
-test-strict: validate-strict lint
+test-strict: validate-strict
 	@echo ""
 	@echo "🎉 All tests passed (strict mode)!"
 

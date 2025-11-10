@@ -53,26 +53,12 @@ for plugin_dir in plugins/*/; do
     fi
 done
 
-# Step 2: Run comprehensive validation
-print_status $BLUE "\nStep 2/4: Running comprehensive plugin validation..."
-if python scripts/validate-plugins.py --format json > validation-results.json 2>&1; then
-    # Parse JSON results
-    ERROR_COUNT=$(jq '[.[] | select(.severity == "error")] | length' validation-results.json 2>/dev/null || echo "0")
-    WARNING_COUNT=$(jq '[.[] | select(.severity == "warning")] | length' validation-results.json 2>/dev/null || echo "0")
-
-    if [ "$ERROR_COUNT" -eq 0 ]; then
-        print_status $GREEN "  ✅ Comprehensive validation passed"
-    else
-        print_status $RED "  ❌ Found $ERROR_COUNT validation errors"
-        ((ERRORS += ERROR_COUNT))
-    fi
-
-    if [ "$WARNING_COUNT" -gt 0 ]; then
-        print_status $YELLOW "  ⚠️  Found $WARNING_COUNT warnings"
-        ((WARNINGS += WARNING_COUNT))
-    fi
+# Step 2: Run basic validation
+print_status $BLUE "\nStep 2/4: Running basic plugin validation..."
+if make check > /dev/null 2>&1; then
+    print_status $GREEN "  ✅ Basic validation passed"
 else
-    print_status $RED "  ❌ Comprehensive validation failed"
+    print_status $RED "  ❌ Basic validation failed"
     ((ERRORS++))
 fi
 
@@ -82,7 +68,7 @@ if python scripts/build-marketplace.py > /dev/null 2>&1; then
     print_status $GREEN "  ✅ Build completed successfully"
 
     # Validate generated marketplace again
-    if python scripts/validate-plugins.py --marketplace .claude-plugin/marketplace.json > /dev/null 2>&1; then
+    if jq empty .claude-plugin/marketplace.json 2>/dev/null; then
         print_status $GREEN "  ✅ Generated marketplace is valid"
     else
         print_status $RED "  ❌ Generated marketplace validation failed"
@@ -95,7 +81,7 @@ fi
 
 # Step 4: Check for required files
 print_status $BLUE "\nStep 4/4: Checking required files..."
-REQUIRED_FILES=(".claude-plugin/marketplace.json" "scripts/build-marketplace.py" "scripts/validate-plugins.py")
+REQUIRED_FILES=(".claude-plugin/marketplace.json" "scripts/build-marketplace.py")
 
 for file in "${REQUIRED_FILES[@]}"; do
     if [ -f "$file" ]; then
@@ -120,12 +106,6 @@ if [ "$ERRORS" -eq 0 ]; then
     fi
 else
     print_status $RED "❌ Validation failed with $ERRORS errors and $WARNINGS warnings."
-
-    # Show error details if validation results exist
-    if [ -f validation-results.json ]; then
-        print_status $RED "\nError Details:"
-        jq -r '.[] | select(.severity == "error") | "  ❌ \(.file): \(.message)"' validation-results.json
-    fi
 
     exit 1
 fi

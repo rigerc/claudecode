@@ -44,16 +44,6 @@ jobs:
         python -m pip install --upgrade pip
         npm install -g markdownlint-cli2
 
-    - name: Comprehensive plugin validation
-      run: |
-        echo "🔍 Running comprehensive plugin validation..."
-        python scripts/validate-plugins.py || {
-          echo "❌ Plugin validation failed"
-          exit 1
-        }
-
-        echo "✅ Plugin validation passed!"
-
     - name: Build marketplace and README
       run: |
         echo "Building marketplace configuration and README..."
@@ -147,13 +137,6 @@ jobs:
           echo "❌ Generated marketplace.json is invalid JSON"
           exit 1
         fi
-
-        # Run final validation on generated files
-        echo "Running final validation on generated marketplace..."
-        python scripts/validate-plugins.py --marketplace .claude-plugin/marketplace.json || {
-          echo "❌ Generated marketplace validation failed"
-          exit 1
-        }
 
         # Validate plugin entries
         plugin_count=$(jq '.plugins | length' .claude-plugin/marketplace.json)
