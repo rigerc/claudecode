@@ -4,9 +4,9 @@
     "name": "rigerc's Claude personal marketplace"
   },
   "metadata": {
-    "version": "1.0.35",
+    "version": "1.0.36",
     "description": "A curated collection of specialized plugins for Claude Code, organized by functionality to provide focused tools for specific development tasks.",
-    "lastUpdated": "2025-11-10T21:51:30.682857Z"
+    "lastUpdated": "2025-11-10T21:57:30.891195Z"
   },
   "plugins": [
     {
@@ -58,11 +58,6 @@
       "name": "productivity-tools",
       "source": "./plugins/productivity-tools",
       "description": "Productivity enhancement tools including feature brainstorming and dotfile management"
-    },
-    {
-      "name": "skills-auto-discovery",
-      "source": "./plugins/skills-auto-discovery",
-      "description": "Automatically discovers and injects all available skills into session context at startup"
     }
   ]
 }
