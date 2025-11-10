@@ -296,10 +296,11 @@ def main():
 
     # Output as JSON for hook
     output = {
+        "systemMessage": f"The following skills have been auto-discovered and are available for use: {overview}",
         "hookSpecificOutput": {
             "hookEventName": "SessionStart",
             "additionalContext": overview,
-        }
+        },
     }
 
     print(json.dumps(output))
