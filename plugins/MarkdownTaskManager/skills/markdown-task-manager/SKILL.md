@@ -1,8 +1,8 @@
-# 📋 Markdown Task Manager Skill
-
-## Description
-
-This skill manages a Kanban task system based on local Markdown files (`kanban.md` and `archive.md`). It follows a strict format compatible with the task-manager.html web application.
+---
+name: Markdown Task Manager Skill
+description: This skill manages a Kanban task system based on local Markdown files (`kanban.md` and `archive.md`). It follows a strict format compatible with the task-manager.html web application.
+allowed-tools: Read, Write, Edit
+---
 
 ## When to Use This Skill
 

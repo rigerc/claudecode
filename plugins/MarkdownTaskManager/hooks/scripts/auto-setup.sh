@@ -86,11 +86,13 @@ setup_claude_md_silent() {
 
 # Check if assets directory exists
 if [[ ! -d "$ASSETS_DIR" ]]; then
+    echo "Assets directory not found: $ASSETS_DIR"
     exit 1
 fi
 
 # Only run setup if we haven't already set up the basic files
 if [[ -f "$PROJECT_ROOT/kanban.md" && -f "$PROJECT_ROOT/archive.md" && -f "$PROJECT_ROOT/AI_WORKFLOW.md" ]]; then
+    echo "Basic files already exist. No setup needed."
     exit 0  # Already set up, exit successfully
 fi
 
