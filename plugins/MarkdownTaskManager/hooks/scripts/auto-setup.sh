@@ -6,12 +6,14 @@
 set -e  # Exit on any error
 
 # Get the directory where this script is located
-PLUGIN_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/../.." && pwd)"
-SCRIPT_DIR="$PLUGIN_DIR/hooks/scripts"
-ASSETS_DIR="$PLUGIN_DIR/hooks/assets"
+SCRIPT_DIR="${CLAUDE_PLUGIN_ROOT}/hooks/scripts"
+ASSETS_DIR="${CLAUDE_PLUGIN_ROOT}/hooks/assets"
 
-PROJECT_ROOT="${CLAUDE_PROJECT_ROOT:-$(pwd)}"
+PROJECT_ROOT="${CLAUDE_PROJECT_DIR}"
 
+echo "Script dir: $SCRIPT_DIR"
+echo "Asset dir: $ASSETS_DIR"
+echo "Project dir: $PROJECT_ROOT"
 # Check if PROJECT_ROOT is set and not empty
 if [[ -z "$PROJECT_ROOT" ]]; then
     echo "No project root found. Exiting."
