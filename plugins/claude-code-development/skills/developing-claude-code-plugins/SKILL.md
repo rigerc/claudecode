@@ -1,6 +1,14 @@
 ---
 name: developing-claude-code-plugins
 description: Use when working on Claude Code plugins (creating, modifying, testing, releasing, or maintaining) - provides streamlined workflows, patterns, and examples for the complete plugin lifecycle
+allowed-tools:
+  - Read
+  - Write
+  - Edit
+  - Glob
+  - Grep
+  - Bash
+  - TodoWrite
 ---
 
 # Developing Claude Code Plugins
@@ -267,6 +275,223 @@ For deep dives into official documentation, use the `working-with-claude-code` s
 4. **Follow conventions** - Match style of existing plugins
 5. **Document everything** - Clear README helps users and future you
 6. **Version properly** - Use semantic versioning (major.minor.patch)
+
+## Troubleshooting
+
+### Plugin Installation Issues
+
+**Problem**: Plugin not appearing after installation
+- **Cause**: Missing or incorrect `plugin.json` manifest
+- **Solution**: Verify JSON syntax and required fields (name, version, description)
+- **Check**: `jq . plugin.json` to validate JSON format
+
+**Problem**: Plugin installs but skills/commands don't work
+- **Cause**: Incorrect directory structure or file paths
+- **Solution**: Ensure components are at plugin root, not in `.claude-plugin/`
+- **Check**: Tree structure matches `references/plugin-structure.md`
+
+**Problem**: Installation fails with "plugin not found"
+- **Cause**: Marketplace configuration error or source URL incorrect
+- **Solution**: Verify marketplace.json format and source URLs
+- **Test**: Access the repository URL directly in browser
+
+### Runtime Errors
+
+**Problem**: Skills not triggering for relevant tasks
+- **Cause**: Skill description doesn't match user request patterns
+- **Solution**: Review skill descriptions and add common keyword variations
+- **Test**: Use exact phrases from skill descriptions
+
+**Problem**: Commands appearing with "command is running" but no response
+- **Cause**: Script execution errors or missing required permissions
+- **Solution**: Check script permissions (`chmod +x`) and test manually
+- **Debug**: Run command script directly to see error output
+
+**Problem**: MCP server not starting or tools not available
+- **Cause**: Server configuration errors or missing dependencies
+- **Solution**: Verify `${CLAUDE_PLUGIN_ROOT}` variable usage and executable paths
+- **Test**: Run MCP server manually to check startup errors
+
+### Development Workflow Issues
+
+**Problem**: Changes not reflected after modification
+- **Cause**: Claude Code cache or plugin not reloaded
+- **Solution**: Always restart Claude Code after plugin changes
+- **Verify**: Check plugin version with `/plugin list`
+
+**Problem**: Git hooks not working in plugin development
+- **Cause**: Hook scripts not executable or incorrect paths
+- **Solution**: Use absolute paths or `${CLAUDE_PLUGIN_ROOT}` variable
+- **Test**: Run hook script manually with sample input
+
+### Performance Issues
+
+**Problem**: Plugin loading slowly or causing timeouts
+- **Cause**: Large binary dependencies or inefficient startup scripts
+- **Solution**: Optimize startup time and lazy-load heavy dependencies
+- **Monitor**: Use timing logs to identify bottlenecks
+
+**Problem**: Memory usage increasing over time
+- **Cause**: Resource leaks in long-running processes
+- **Solution**: Review MCP server code for proper resource cleanup
+- **Profile**: Monitor memory usage during extended sessions
+
+### Marketplace and Distribution Issues
+
+**Problem**: Users can't install from marketplace
+- **Cause**: Incorrect marketplace.json format or missing plugin metadata
+- **Solution**: Validate marketplace.json and verify plugin URLs are accessible
+- **Test**: Install from fresh environment (different machine/user)
+
+**Problem**: Version conflicts during updates
+- **Cause**: Improper semantic versioning or breaking changes in patches
+- **Solution**: Follow semantic versioning strictly and document breaking changes
+- **Prevent**: Use major version bumps for breaking changes
+
+### Debugging Tools and Commands
+
+```bash
+# Check plugin installation status
+/plugin list
+
+# Verify plugin manifest
+cat .claude-plugin/plugin.json | jq .
+
+# Test script permissions
+find . -name "*.sh" -exec ls -la {} \;
+
+# Check marketplace configuration
+cat .claude-plugin/marketplace.json | jq .
+
+# Monitor plugin logs (if available)
+tail -f ~/.claude/logs/claude-code.log
+```
+
+### Common Error Messages and Solutions
+
+**"Plugin not found in marketplace"**
+- Verify marketplace is added: `/plugin marketplace list`
+- Check plugin name spelling and version
+- Ensure marketplace URL is accessible
+
+**"Permission denied" for script execution**
+- Run: `chmod +x path/to/script.sh`
+- Check script shebang: `#!/bin/bash` or `#!/usr/bin/env bash`
+- Verify script is not in Windows format (use `dos2unix` if needed)
+
+**"JSON parse error" in plugin.json**
+- Validate JSON: `jq . plugin.json`
+- Check for trailing commas
+- Ensure strings are properly quoted
+
+**"Skill timeout" errors**
+- Reduce skill complexity or break into smaller steps
+- Add progress indicators for long operations
+- Check infinite loops or blocking operations
+
+### Getting Help
+
+1. **Check this skill's references**: `references/troubleshooting.md`
+2. **Review official docs**: Use `working-with-claude-code` skill
+3. **Examine working examples**: `examples/` directory
+4. **Test in isolation**: Create minimal reproduction case
+5. **Check community resources**: GitHub issues, forums, Discord
+
+## Performance Considerations
+
+### Plugin Loading Performance
+
+**Minimize Startup Time**
+- Keep plugin.json lightweight and focused
+- Avoid heavy computations in skill initialization
+- Use lazy loading for expensive resources
+- Consider caching frequently accessed data
+
+**Optimize MCP Server Startup**
+- Defer database connections and network requests until needed
+- Pre-validate configuration before starting services
+- Use connection pooling for external resources
+- Implement graceful degradation for missing dependencies
+
+### Memory Management
+
+**Monitor Resource Usage**
+- Track memory consumption in long-running MCP servers
+- Clean up temporary files and cache directories
+- Avoid memory leaks in persistent connections
+- Use weak references where appropriate for cached data
+
+**Optimize Skill Performance**
+- Break complex skills into smaller, focused subtasks
+- Use streaming for large data processing
+- Implement progress feedback for long operations
+- Consider timeout handling for external API calls
+
+### Scalability Considerations
+
+**Design for Multiple Users**
+- Use per-user configuration directories when applicable
+- Implement proper isolation between user sessions
+- Consider concurrent access patterns for shared resources
+- Design stateless operations where possible
+
+**Handle Large Codebases**
+- Implement incremental scanning and processing
+- Use file change notifications for efficient updates
+- Consider database storage for large metadata sets
+- Implement pagination for large result sets
+
+### Optimization Guidelines
+
+**Caching Strategies**
+- Cache API responses with appropriate TTL
+- Store computed results for expensive operations
+- Use file system caching for downloaded resources
+- Implement cache invalidation for dynamic content
+
+**Async Operations**
+- Use non-blocking operations for network requests
+- Implement concurrent processing for independent tasks
+- Consider worker threads for CPU-intensive operations
+- Use promises/async patterns for better responsiveness
+
+**Resource Cleanup**
+- Implement proper cleanup in MCP server shutdown
+- Remove temporary files after processing
+- Close network connections and database handles
+- Clean up background tasks and timers
+
+### Performance Monitoring
+
+**Key Metrics to Track**
+- Plugin loading time: `/usr/bin/time -v claude-code`
+- Memory usage: `ps aux | grep claude-code`
+- MCP server response times: Add timing logs
+- Skill execution duration: Log start/end times
+
+**Debugging Performance Issues**
+```bash
+# Profile plugin loading
+strace -c -p $(pgrep claude-code)
+
+# Monitor memory usage
+watch -n 1 'ps aux | grep claude-code'
+
+# Check file descriptor usage
+lsof -p $(pgrep claude-code) | wc -l
+
+# Profile MCP server
+time -v python your-mcp-server.py
+```
+
+### Best Practices for High Performance
+
+1. **Profile Early**: Measure performance before optimization
+2. **Optimize Hot Paths**: Focus on frequently used operations
+3. **Use Appropriate Data Structures**: Choose algorithms wisely
+4. **Minimize I/O Operations**: Batch file operations when possible
+5. **Implement Caching**: Cache expensive computations and results
+6. **Monitor and Iterate**: Continuously measure and improve performance
 
 ## Workflow Summary
 

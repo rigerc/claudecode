@@ -1,6 +1,12 @@
 ---
 name: working-with-claude-code
 description: Use when working with Claude Code CLI, plugins, hooks, MCP servers, skills, configuration, or any Claude Code feature - provides comprehensive official documentation for all aspects of Claude Code
+allowed-tools:
+  - Read
+  - Grep
+  - Bash
+  - WebFetch
+  - Write
 ---
 
 # Working with Claude Code
@@ -90,14 +96,14 @@ references/
 ### For Specific Questions
 
 1. Identify the relevant documentation file from the list above
-2. Use Read tool to load: `@references/filename.md`
+2. Use Read tool to load: `./references/filename.md`
 3. Find the answer in the official documentation
 4. Apply the solution
 
 **Example:**
 ```
 User: "How do I create a Claude Code plugin?"
-→ Read @references/plugins.md
+→ Read ./references/plugins.md
 → Follow the official plugin creation steps
 ```
 
@@ -116,7 +122,7 @@ Use Grep tool to search across all documentation:
 
 ```bash
 pattern: "search term"
-path: ~/.claude/skills/working-with-claude-code/references/
+path: ./references/
 ```
 
 ## Updating Documentation
@@ -129,7 +135,7 @@ Run when:
 - Official docs have been updated
 
 ```bash
-node ~/.claude/skills/working-with-claude-code/scripts/update_docs.js
+node ./scripts/update_docs.js
 ```
 
 The script:
@@ -155,6 +161,254 @@ Read `hooks.md` for overview, then `hooks-guide.md` for implementation details.
 ### Skill Creation
 
 Read `skills.md` for the complete skill authoring guide.
+
+## Troubleshooting
+
+### Documentation Access Issues
+
+**Problem**: Cannot find specific documentation
+- **Solution**: Use Grep tool to search across all reference files
+- **Command**: Search for keywords in `references/` directory
+- **Alternative**: Check `troubleshooting.md` for common issues
+
+**Problem**: Documentation seems outdated
+- **Solution**: Run the update script to fetch latest docs
+- **Command**: `node ./scripts/update_docs.js`
+- **Verify**: Check timestamps in reference files
+
+**Problem**: Reference files missing or corrupted
+- **Solution**: Re-download documentation using the update script
+- **Check**: Verify all files listed in Documentation Organization exist
+- **Recovery**: Reinstall the skill if files are persistently missing
+
+### Search and Navigation Issues
+
+**Problem**: Search results are too broad
+- **Solution**: Use more specific search terms and file filters
+- **Example**: Search `"plugin.json"` instead of `"plugin"`
+- **Pattern**: Use quotes for exact phrases, include file extensions
+
+**Problem**: Cannot locate relevant section in long documents
+- **Solution**: Use section-specific searches with headers
+- **Pattern**: Search `"## Configuration"` for configuration sections
+- **Alternative**: Scan document headers first, then search within sections
+
+### Update Script Issues
+
+**Problem**: Update script fails to run
+- **Cause**: Node.js not installed or script permissions missing
+- **Solution**: Install Node.js and ensure script is executable
+- **Alternative**: Manually download documentation from docs.claude.com
+
+**Problem**: Update reports network errors
+- **Cause**: Network connectivity issues or firewall blocking
+- **Solution**: Check internet connection and proxy settings
+- **Alternative**: Update during different network conditions
+
+**Problem**: Partial documentation update
+- **Cause**: Some docs failed to download or parse
+- **Solution**: Review update script output for failed files
+- **Recovery**: Run update script again or manually fix missing files
+
+### Integration Issues
+
+**Problem**: Documentation references features not available in current version
+- **Cause**: Documentation ahead of installed Claude Code version
+- **Solution**: Check Claude Code version and update if needed
+- **Reference**: Read `migration-guide.md` for version differences
+
+**Problem**: Examples in documentation don't work
+- **Cause**: Examples may need adaptation for specific environment
+- **Solution**: Check configuration requirements and dependencies
+- **Debug**: Use `troubleshooting.md` for example-specific issues
+
+### Common Documentation Workflows
+
+**Finding Configuration Options**
+1. Start with `settings.md` for overview
+2. Search specific option name across all files
+3. Check integration-specific docs (vs-code.md, etc.)
+4. Review `troubleshooting.md` for configuration issues
+
+**Resolving Plugin Development Issues**
+1. Read `plugins.md` for fundamentals
+2. Check `plugins-reference.md` for API details
+3. Search `troubleshooting.md` for common problems
+4. Review `common-workflows.md` for patterns
+
+**Setting Up Integrations**
+1. Read specific integration file (vs-code.md, github-actions.md)
+2. Check `network-config.md` for connectivity issues
+3. Review `security.md` for authentication requirements
+4. Consult `troubleshooting.md` for integration problems
+
+### Performance Tips
+
+**Large Documentation Sets**
+- Use targeted searches instead of browsing entire files
+- Cache frequently accessed sections locally
+- Use specific file paths when known
+
+**Efficient Search Patterns**
+- Start broad, then refine with specific terms
+- Use multiple search terms for complex topics
+- Combine search with direct file navigation
+
+## Examples
+
+### Example 1: Setting Up a New Plugin
+
+**User Request**: "How do I create a Claude Code plugin?"
+
+**Workflow**:
+1. Start with overview documentation
+2. Read detailed plugin reference
+3. Check common patterns and examples
+4. Troubleshoot any issues
+
+**Commands**:
+```bash
+# Read plugin fundamentals
+Read file="./references/plugins.md"
+
+# Get API reference details
+Read file="./references/plugins-reference.md"
+
+# Search for specific examples
+Grep pattern="example" path="./references/plugins.md"
+```
+
+### Example 2: Configuring MCP Server
+
+**User Request**: "I need to set up an MCP server for my database"
+
+**Workflow**:
+1. Read MCP integration documentation
+2. Search for database-specific examples
+3. Check configuration requirements
+4. Review security considerations
+
+**Commands**:
+```bash
+# Get MCP server setup guide
+Read file="./references/mcp.md"
+
+# Search for database examples
+Grep pattern="database" path="./references/mcp.md"
+
+# Check security requirements
+Read file="./references/security.md"
+```
+
+### Example 3: Troubleshooting Hook Issues
+
+**User Request**: "My pre-commit hook isn't working"
+
+**Workflow**:
+1. Review hooks documentation
+2. Search for common hook issues
+3. Check troubleshooting guide
+4. Look at configuration examples
+
+**Commands**:
+```bash
+# Read hooks overview
+Read file="./references/hooks.md"
+
+# Get implementation details
+Read file="./references/hooks-guide.md"
+
+# Search for hook issues
+Grep pattern="pre-commit" path="./references/troubleshooting.md"
+```
+
+### Example 4: Setting Up VS Code Integration
+
+**User Request**: "How do I integrate Claude Code with VS Code?"
+
+**Workflow**:
+1. Read VS Code integration documentation
+2. Check configuration requirements
+3. Review common workflows
+4. Troubleshoot connection issues
+
+**Commands**:
+```bash
+# Get VS Code integration guide
+Read file="./references/vs-code.md"
+
+# Check configuration requirements
+Grep pattern="configuration" path="./references/vs-code.md"
+
+# Review networking setup
+Read file="./references/network-config.md"
+```
+
+### Example 5: Finding Configuration Options
+
+**User Request**: "What settings are available for memory management?"
+
+**Workflow**:
+1. Search across all documentation for memory-related settings
+2. Review configuration reference
+3. Check specific memory documentation
+4. Look for performance optimization tips
+
+**Commands**:
+```bash
+# Search for memory configuration
+Grep pattern="memory" path="./references/settings.md"
+
+# Read memory management documentation
+Read file="./references/memory.md"
+
+# Search for performance tips
+Grep pattern="performance" path="./references/"
+```
+
+### Example 6: Resolving Version Compatibility
+
+**User Request**: "Some features aren't working after updating Claude Code"
+
+**Workflow**:
+1. Check current version documentation
+2. Review migration guide
+3. Search for breaking changes
+4. Find alternative approaches
+
+**Commands**:
+```bash
+# Check migration guide
+Read file="./references/migration-guide.md"
+
+# Search for breaking changes
+Grep pattern="breaking" path="./references/migration-guide.md"
+
+# Review troubleshooting for version issues
+Grep pattern="version" path="./references/troubleshooting.md"
+```
+
+### Example 7: Advanced CLI Usage
+
+**User Request**: "How do I use Claude Code in headless mode for automation?"
+
+**Workflow**:
+1. Read headless mode documentation
+2. Check CLI reference for automation options
+3. Review common automation workflows
+4. Look for enterprise integration patterns
+
+**Commands**:
+```bash
+# Get headless mode guide
+Read file="./references/headless.md"
+
+# Check CLI commands
+Read file="./references/cli-reference.md"
+
+# Search for automation examples
+Grep pattern="automation" path="./references/"
+```
 
 ## What This Skill Does NOT Do
 
