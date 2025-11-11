@@ -4,10 +4,10 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 
 ## Overview
 
-- **10 Specialized Plugins**
+- **11 Specialized Plugins**
 - **10 Custom Commands**
 - **11 Expert Agents**
-- **8 Specialized Skills**
+- **9 Specialized Skills**
 
 ## Available Plugins
 
@@ -20,6 +20,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 | **Documentation Generation** | 1 | 3 | 2 | Technical writing |
 | **Go Development** | 0 | 1 | 0 | Go programming |
 | **Home Assistant** | 0 | 0 | 1 | General |
+| **Library Researcher** | 0 | 0 | 1 | General |
 | **Marketplace Updater** | 0 | 0 | 0 | General |
 | **Music Management** | 0 | 0 | 1 | Beets tool |
 | **Productivity Tools** | 2 | 0 | 0 | Workflow enhancement |
@@ -60,6 +61,11 @@ Specialized tools for Go development with goroutines, channels, interfaces, and 
 A comprehensive Claude Code plugin for Home Assistant development, providing tools and skills for creating add-ons, integrations, and smart home automation workflows.
 
 **Install**: `home-assistant@rigerc-claude`
+
+### Library Researcher
+**Advanced library research and documentation analysis plugin for Claude Code** The Library Researcher plugin provides powerful tools for researching, analyzing, and documenting software libraries,...
+
+**Install**: `library-researcher@rigerc-claude`
 
 ### Marketplace Updater
 Automatically checks if repositories in `~/.claude/plugins/` are up to date and informs you when updates are available.

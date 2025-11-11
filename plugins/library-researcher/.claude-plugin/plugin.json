@@ -1,0 +1,12 @@
+{
+  "name": "library-researcher",
+  "version": "1.0.0",
+  "description": "Advanced library research skill using Context7 to analyze, compare, and document software libraries, frameworks, and development tools",
+  "author": {
+    "name": "Claude Extensions"
+  },
+  "homepage": "https://github.com/rigerc/claudecode",
+  "repository": "https://github.com/rigerc/claudecode",
+  "license": "MIT",
+  "keywords": ["research", "libraries", "documentation", "context7", "api-research", "frameworks", "development-tools"]
+}
