@@ -781,8 +781,8 @@ if issues:
 <Note>
   For `UserPromptSubmit` hooks, you can inject context using either method:
 
-  * Exit code 0 with stdout: Claude sees the context (special case for `UserPromptSubmit`)
-  * JSON output: Provides more control over the behavior
+* Exit code 0 with stdout: Claude sees the context (special case for `UserPromptSubmit`)
+* JSON output: Provides more control over the behavior
 </Note>
 
 ```python  theme={null}

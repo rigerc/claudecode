@@ -534,7 +534,7 @@ export const MCPServersTable = ({platform = "all"}) => {
           overflow-x: auto;
         }
       `}</style>
-      
+
       {categoryOrder.map(category => {
     if (!serversByCategory[category]) return null;
     return <div key={category}>
@@ -679,8 +679,8 @@ claude mcp add --transport stdio airtable --env AIRTABLE_API_KEY=YOUR_KEY \
 
   For example:
 
-  * `claude mcp add --transport stdio myserver -- npx server` → runs `npx server`
-  * `claude mcp add --transport stdio myserver --env KEY=value -- python server.py --port 8080` → runs `python server.py --port 8080` with `KEY=value` in environment
+* `claude mcp add --transport stdio myserver -- npx server` → runs `npx server`
+* `claude mcp add --transport stdio myserver --env KEY=value -- python server.py --port 8080` → runs `python server.py --port 8080` with `KEY=value` in environment
 
   This prevents conflicts between Claude's flags and the server's flags.
 </Note>
@@ -706,14 +706,14 @@ claude mcp remove github
 <Tip>
   Tips:
 
-  * Use the `--scope` flag to specify where the configuration is stored:
-    * `local` (default): Available only to you in the current project (was called `project` in older versions)
-    * `project`: Shared with everyone in the project via `.mcp.json` file
-    * `user`: Available to you across all projects (was called `global` in older versions)
-  * Set environment variables with `--env` flags (e.g., `--env KEY=value`)
-  * Configure MCP server startup timeout using the MCP\_TIMEOUT environment variable (e.g., `MCP_TIMEOUT=10000 claude` sets a 10-second timeout)
-  * Claude Code will display a warning when MCP tool output exceeds 10,000 tokens. To increase this limit, set the `MAX_MCP_OUTPUT_TOKENS` environment variable (e.g., `MAX_MCP_OUTPUT_TOKENS=50000`)
-  * Use `/mcp` to authenticate with remote servers that require OAuth 2.0 authentication
+* Use the `--scope` flag to specify where the configuration is stored:
+  * `local` (default): Available only to you in the current project (was called `project` in older versions)
+  * `project`: Shared with everyone in the project via `.mcp.json` file
+  * `user`: Available to you across all projects (was called `global` in older versions)
+* Set environment variables with `--env` flags (e.g., `--env KEY=value`)
+* Configure MCP server startup timeout using the MCP\_TIMEOUT environment variable (e.g., `MCP_TIMEOUT=10000 claude` sets a 10-second timeout)
+* Claude Code will display a warning when MCP tool output exceeds 10,000 tokens. To increase this limit, set the `MAX_MCP_OUTPUT_TOKENS` environment variable (e.g., `MAX_MCP_OUTPUT_TOKENS=50000`)
+* Use `/mcp` to authenticate with remote servers that require OAuth 2.0 authentication
 </Tip>
 
 <Warning>
@@ -975,10 +975,10 @@ Many cloud-based MCP servers require authentication. Claude Code supports OAuth 
 <Tip>
   Tips:
 
-  * Authentication tokens are stored securely and refreshed automatically
-  * Use "Clear authentication" in the `/mcp` menu to revoke access
-  * If your browser doesn't open automatically, copy the provided URL
-  * OAuth authentication works with HTTP servers
+* Authentication tokens are stored securely and refreshed automatically
+* Use "Clear authentication" in the `/mcp` menu to revoke access
+* If your browser doesn't open automatically, copy the provided URL
+* OAuth authentication works with HTTP servers
 </Tip>
 
 ## Add MCP servers from JSON configuration
@@ -1009,9 +1009,9 @@ If you have a JSON configuration for an MCP server, you can add it directly:
 <Tip>
   Tips:
 
-  * Make sure the JSON is properly escaped in your shell
-  * The JSON must conform to the MCP server configuration schema
-  * You can use `--scope user` to add the server to your user configuration instead of the project-specific one
+* Make sure the JSON is properly escaped in your shell
+* The JSON must conform to the MCP server configuration schema
+* You can use `--scope user` to add the server to your user configuration instead of the project-specific one
 </Tip>
 
 ## Import MCP servers from Claude Desktop
@@ -1021,8 +1021,8 @@ If you've already configured MCP servers in Claude Desktop, you can import them:
 <Steps>
   <Step title="Import servers from Claude Desktop">
     ```bash  theme={null}
-    # Basic syntax 
-    claude mcp add-from-claude-desktop 
+    # Basic syntax
+    claude mcp add-from-claude-desktop
     ```
   </Step>
 
@@ -1032,7 +1032,7 @@ If you've already configured MCP servers in Claude Desktop, you can import them:
 
   <Step title="Verify the servers were imported">
     ```bash  theme={null}
-    claude mcp list 
+    claude mcp list
     ```
   </Step>
 </Steps>
@@ -1040,11 +1040,11 @@ If you've already configured MCP servers in Claude Desktop, you can import them:
 <Tip>
   Tips:
 
-  * This feature only works on macOS and Windows Subsystem for Linux (WSL)
-  * It reads the Claude Desktop configuration file from its standard location on those platforms
-  * Use the `--scope user` flag to add servers to your user configuration
-  * Imported servers will have the same names as in Claude Desktop
-  * If servers with the same names already exist, they will get a numerical suffix (e.g., `server_1`)
+* This feature only works on macOS and Windows Subsystem for Linux (WSL)
+* It reads the Claude Desktop configuration file from its standard location on those platforms
+* Use the `--scope user` flag to add servers to your user configuration
+* Imported servers will have the same names as in Claude Desktop
+* If servers with the same names already exist, they will get a numerical suffix (e.g., `server_1`)
 </Tip>
 
 ## Use Claude Code as an MCP server
@@ -1101,9 +1101,9 @@ You can use this in Claude Desktop by adding this configuration to claude\_deskt
 <Tip>
   Tips:
 
-  * The server provides access to Claude's tools like View, Edit, LS, etc.
-  * In Claude Desktop, try asking Claude to read files in a directory, make edits, and more.
-  * Note that this MCP server is simply exposing Claude Code's tools to your MCP client, so your own client is responsible for implementing user confirmation for individual tool calls.
+* The server provides access to Claude's tools like View, Edit, LS, etc.
+* In Claude Desktop, try asking Claude to read files in a directory, make edits, and more.
+* Note that this MCP server is simply exposing Claude Code's tools to your MCP client, so your own client is responsible for implementing user confirmation for individual tool calls.
 </Tip>
 
 ## MCP output limits and warnings
@@ -1167,10 +1167,10 @@ MCP servers can expose resources that you can reference using @ mentions, simila
 <Tip>
   Tips:
 
-  * Resources are automatically fetched and included as attachments when referenced
-  * Resource paths are fuzzy-searchable in the @ mention autocomplete
-  * Claude Code automatically provides tools to list and read MCP resources when servers support them
-  * Resources can contain any type of content that the MCP server provides (text, JSON, structured data, etc.)
+* Resources are automatically fetched and included as attachments when referenced
+* Resource paths are fuzzy-searchable in the @ mention autocomplete
+* Claude Code automatically provides tools to list and read MCP resources when servers support them
+* Resources can contain any type of content that the MCP server provides (text, JSON, structured data, etc.)
 </Tip>
 
 ## Use MCP prompts as slash commands
@@ -1206,10 +1206,10 @@ MCP servers can expose prompts that become available as slash commands in Claude
 <Tip>
   Tips:
 
-  * MCP prompts are dynamically discovered from connected servers
-  * Arguments are parsed based on the prompt's defined parameters
-  * Prompt results are injected directly into the conversation
-  * Server and prompt names are normalized (spaces become underscores)
+* MCP prompts are dynamically discovered from connected servers
+* Arguments are parsed based on the prompt's defined parameters
+* Prompt results are injected directly into the conversation
+* Server and prompt names are normalized (spaces become underscores)
 </Tip>
 
 ## Enterprise MCP configuration
