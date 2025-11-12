@@ -45,7 +45,7 @@ For full configuration options, see the [OpenTelemetry specification](https://gi
 
 ## Administrator Configuration
 
-Administrators can configure OpenTelemetry settings for all users through the managed settings file. This allows for centralized control of telemetry settings across an organization. See the [settings precedence](/en/docs/claude-code/settings#settings-precedence) for more information about how settings are applied.
+Administrators can configure OpenTelemetry settings for all users through the managed settings file. This allows for centralized control of telemetry settings across an organization. See the [settings precedence](/en/settings#settings-precedence) for more information about how settings are applied.
 
 The managed settings file is located at:
 
@@ -157,10 +157,10 @@ These custom attributes will be included in all metrics and events, allowing you
 
   The `OTEL_RESOURCE_ATTRIBUTES` environment variable follows the [W3C Baggage specification](https://www.w3.org/TR/baggage/), which has strict formatting requirements:
 
-* **No spaces allowed**: Values cannot contain spaces. For example, `user.organizationName=My Company` is invalid
-* **Format**: Must be comma-separated key=value pairs: `key1=value1,key2=value2`
-* **Allowed characters**: Only US-ASCII characters excluding control characters, whitespace, double quotes, commas, semicolons, and backslashes
-* **Special characters**: Characters outside the allowed range must be percent-encoded
+  * **No spaces allowed**: Values cannot contain spaces. For example, `user.organizationName=My Company` is invalid
+  * **Format**: Must be comma-separated key=value pairs: `key1=value1,key2=value2`
+  * **Allowed characters**: Only US-ASCII characters excluding control characters, whitespace, double quotes, commas, semicolons, and backslashes
+  * **Special characters**: Characters outside the allowed range must be percent-encoded
 
   **Examples:**
 
@@ -295,7 +295,7 @@ Incremented after each API request.
 **Attributes**:
 
 * All [standard attributes](#standard-attributes)
-* `model`: Model identifier (e.g., "claude-3-5-sonnet-20241022")
+* `model`: Model identifier (e.g., "claude-sonnet-4-5-20250929")
 
 #### Token Counter
 
@@ -305,7 +305,7 @@ Incremented after each API request.
 
 * All [standard attributes](#standard-attributes)
 * `type`: (`"input"`, `"output"`, `"cacheRead"`, `"cacheCreation"`)
-* `model`: Model identifier (e.g., "claude-3-5-sonnet-20241022")
+* `model`: Model identifier (e.g., "claude-sonnet-4-5-20250929")
 
 #### Code Edit Tool Decision Counter
 
@@ -375,7 +375,7 @@ Logged for each API request to Claude.
 * All [standard attributes](#standard-attributes)
 * `event.name`: `"api_request"`
 * `event.timestamp`: ISO 8601 timestamp
-* `model`: Model used (e.g., "claude-3-5-sonnet-20241022")
+* `model`: Model used (e.g., "claude-sonnet-4-5-20250929")
 * `cost_usd`: Estimated cost in USD
 * `duration_ms`: Request duration in milliseconds
 * `input_tokens`: Number of input tokens
@@ -394,7 +394,7 @@ Logged when an API request to Claude fails.
 * All [standard attributes](#standard-attributes)
 * `event.name`: `"api_error"`
 * `event.timestamp`: ISO 8601 timestamp
-* `model`: Model used (e.g., "claude-3-5-sonnet-20241022")
+* `model`: Model used (e.g., "claude-sonnet-4-5-20250929")
 * `error`: Error message
 * `status_code`: HTTP status code (if applicable)
 * `duration_ms`: Request duration in milliseconds
