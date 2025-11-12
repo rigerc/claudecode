@@ -7,7 +7,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 - **12 Specialized Plugins**
 - **11 Custom Commands**
 - **10 Expert Agents**
-- **14 Specialized Skills**
+- **16 Specialized Skills**
 
 ## Available Plugins
 
@@ -19,7 +19,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 | **Claude Code Development** | 5 | 4 | 5 | Extending Claude Code |
 | **Code Quality** | 2 | 1 | 0 | Code review |
 | **Documentation Generation** | 1 | 3 | 2 | Technical writing |
-| **Go Development** | 0 | 1 | 2 | Go programming |
+| **Go Development** | 0 | 1 | 4 | Go programming |
 | **Home Assistant** | 0 | 0 | 1 | General |
 | **Library Researcher** | 0 | 0 | 1 | General |
 | **Marketplace Updater** | 0 | 0 | 0 | General |
