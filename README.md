@@ -4,8 +4,8 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 
 ## Overview
 
-- **11 Specialized Plugins**
-- **10 Custom Commands**
+- **12 Specialized Plugins**
+- **11 Custom Commands**
 - **10 Expert Agents**
 - **12 Specialized Skills**
 
@@ -13,6 +13,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 
 | Plugin | Commands | Agents | Skills | Focus |
 |--------|----------|---------|---------|-------|
+| **Flatban** | 1 | 0 | 0 | General |
 | **Markdowntaskmanager** | 0 | 0 | 1 | General |
 | **Bash Scripting** | 0 | 1 | 1 | Shell automation |
 | **Claude Code Development** | 5 | 4 | 5 | Extending Claude Code |
@@ -26,6 +27,11 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 | **Productivity Tools** | 2 | 0 | 0 | Workflow enhancement |
 
 ## Plugin Details
+
+### Flatban
+Specialized tools for enhanced development workflows
+
+**Install**: `Flatban@rigerc-claude`
 
 ### Markdowntaskmanager
 A comprehensive AI-driven task management system that brings discipline and transparency to your development workflow. This plugin implements a Kanban-style task management system using local Markd...
