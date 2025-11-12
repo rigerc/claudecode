@@ -1,12 +1,12 @@
 ---
-description: Create a new Claude Code slash command using the working-with-claude-code skill
+description: Create a new Claude Code slash command using the slash-command-creator skill
 argument-hint: [command-name] "[command-description]"
 allowed-tools: Read, Write, Bash
 ---
 
 # Create a new Slash Command
 
-This command helps you create a new Claude Code slash command using the official documentation from the working-with-claude-code skill.
+This command helps you create a new Claude Code slash command using the slash-command-creator skill.
 
 ## Command Details:
 - **Name**: /$1
@@ -14,10 +14,10 @@ This command helps you create a new Claude Code slash command using the official
 
 I'll help you create a new slash command called "/$1" with the description "$ARGUMENTS". First, let me reference the official documentation to ensure we follow best practices.
 
-Use the working-with-claude-code skill to understand how to create slash commands properly, then create the command file.
+Use the slash-command-creator skill to understand how to create slash commands properly, then create the command file.
 
 The process should be:
-1. Use the working-with-claude-code skill to get slash command creation guidance
+1. Use the slash-command-creator skill to get slash command creation guidance
 2. Ask whether they want a project-level command (`.claude/commands/`) or personal command (`~/.claude/commands/`)
 3. Create the command file at the appropriate location
 4. Include proper frontmatter with the provided description, allowed-tools, etc.

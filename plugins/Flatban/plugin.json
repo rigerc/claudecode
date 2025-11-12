@@ -1,0 +1,7 @@
+{
+  "name": "Flatban",
+  "description": "Create or update Flatban tasks with AI assistance",
+  "skills": [
+    "flatban"
+  ]
+}

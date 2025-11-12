@@ -1,12 +1,12 @@
 ---
-description: A skill to create a skill using working-with-claude-code skill from a documentation file specified by the user
+description: A skill to create a skill using skill-creator skill from a documentation file specified by the user
 argument-hint: [documentation-file] [skill-name] [project|personal]
 allowed-tools: Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, Task, TodoWrite, Skill
 ---
 
 # Create Skill from Documentation
 
-Use the working-with-claude-code skill to create a new Agent Skill based on a documentation file specified by the user.
+Use the skill-creator skill to create a new Agent Skill based on a documentation file specified by the user.
 
 ## Parameters
 - **documentation-file** (required): Path to the documentation file to analyze
