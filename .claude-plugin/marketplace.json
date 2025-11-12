@@ -4,11 +4,16 @@
     "name": "rigerc's Claude personal marketplace"
   },
   "metadata": {
-    "version": "1.0.43",
+    "version": "1.0.44",
     "description": "A curated collection of specialized plugins for Claude Code, organized by functionality to provide focused tools for specific development tasks.",
-    "lastUpdated": "2025-11-12T01:38:44.926164Z"
+    "lastUpdated": "2025-11-12T18:17:32.651215Z"
   },
   "plugins": [
+    {
+      "name": "Flatban",
+      "source": "./plugins/Flatban",
+      "description": "A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development."
+    },
     {
       "name": "MarkdownTaskManager",
       "source": "./plugins/MarkdownTaskManager",
