@@ -55,6 +55,7 @@ In Flatban mode:
 
 Tasks live under `.flatban/<column>/<id>-<slug>.md`:
 
+```markdown
 ---
 id: abc1234
 title: "Task title"
@@ -62,6 +63,7 @@ priority: high
 tags: [tag1, tag2]
 assigned: username
 ---
+```
 
 ## Description
 
