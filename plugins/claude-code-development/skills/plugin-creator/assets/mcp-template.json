@@ -1,0 +1,27 @@
+{
+  "mcpServers": {
+    "example-node-server": {
+      "command": "node",
+      "args": ["${CLAUDE_PLUGIN_ROOT}/servers/example-server.js"],
+      "env": {
+        "CONFIG_PATH": "${CLAUDE_PLUGIN_ROOT}/config.json",
+        "API_KEY": "${API_KEY}"
+      }
+    },
+    "example-python-server": {
+      "command": "python",
+      "args": ["-m", "uvx", "mcp-server-package"],
+      "env": {
+        "DATA_DIR": "${CLAUDE_PLUGIN_ROOT}/data"
+      }
+    },
+    "example-binary-server": {
+      "command": "${CLAUDE_PLUGIN_ROOT}/servers/custom-server",
+      "args": ["--config", "${CLAUDE_PLUGIN_ROOT}/config.json"],
+      "cwd": "${CLAUDE_PLUGIN_ROOT}",
+      "env": {
+        "PLUGIN_ROOT": "${CLAUDE_PLUGIN_ROOT}"
+      }
+    }
+  }
+}
