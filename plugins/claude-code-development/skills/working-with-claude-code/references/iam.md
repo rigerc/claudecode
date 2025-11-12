@@ -112,9 +112,9 @@ Some tools support more fine-grained permission controls:
 
   For more reliable URL filtering, consider:
 
-  * Using the WebFetch tool with `WebFetch(domain:github.com)` permission
-  * Instructing Claude Code about your allowed curl patterns via CLAUDE.md
-  * Using hooks for custom permission validation
+* Using the WebFetch tool with `WebFetch(domain:github.com)` permission
+* Instructing Claude Code about your allowed curl patterns via CLAUDE.md
+* Using hooks for custom permission validation
 </Warning>
 
 **Read & Edit**
@@ -153,13 +153,13 @@ Read & Edit rules both follow the [gitignore](https://git-scm.com/docs/gitignore
 
   To approve all tools from an MCP server:
 
-  * ✅ Use: `mcp__github` (approves ALL GitHub tools)
-  * ❌ Don't use: `mcp__github__*` (wildcards are not supported)
+* ✅ Use: `mcp__github` (approves ALL GitHub tools)
+* ❌ Don't use: `mcp__github__*` (wildcards are not supported)
 
   To approve specific tools only, list each one:
 
-  * ✅ Use: `mcp__github__get_issue`
-  * ✅ Use: `mcp__github__list_issues`
+* ✅ Use: `mcp__github__get_issue`
+* ✅ Use: `mcp__github__list_issues`
 </Warning>
 
 ### Additional permission control with hooks
