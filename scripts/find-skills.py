@@ -69,7 +69,7 @@ def find_skill_directories(plugins_dir: str = "./plugins") -> List[Dict[str, Any
     return skills
 
 
-def validate_skill(skill_path: str) -> bool:
+def validate_skill(skill_path: str) -> tuple[bool, dict]:
     """
     Validate a skill using npx claude-skills-cli validate.
 
@@ -77,25 +77,65 @@ def validate_skill(skill_path: str) -> bool:
         skill_path: Full path to the skill directory
 
     Returns:
-        True if validation passed, False otherwise
+        Tuple of (validation_passed, validation_data)
+        validation_data contains errors, warnings, and other info
     """
     try:
-        # Run validation using claude-skills-cli
+        # Run validation using claude-skills-cli with JSON output
         result = subprocess.run(
-            ["npx", "claude-skills-cli", "validate", skill_path, "--strict"],
+            ["npx", "claude-skills-cli", "validate", skill_path, "--format", "json"],
             capture_output=True,
             text=True,
             timeout=30,
         )
 
-        return result.returncode == 0
+        if result.returncode == 0:
+            return True, {}
+
+        # Parse JSON output for failed validation
+        try:
+            validation_data = json.loads(result.stdout)
+            return False, validation_data
+        except json.JSONDecodeError:
+            # Fallback if JSON parsing fails
+            return False, {
+                "errors": [{"message": "Failed to parse validation output"}],
+                "warnings": [],
+                "stdout": result.stdout,
+                "stderr": result.stderr,
+            }
 
     except subprocess.TimeoutExpired:
-        print(f"Validation timeout for {skill_path}")
-        return False
+        return False, {"errors": [{"message": "Validation timeout"}], "warnings": []}
     except Exception as e:
-        print(f"Error validating {skill_path}: {e}")
-        return False
+        return False, {"errors": [{"message": f"Error: {e}"}], "warnings": []}
+
+
+def doctor_skill(skill_path: str) -> tuple[bool, str]:
+    """
+    Run doctor on a skill using npx claude-skills-cli doctor.
+
+    Args:
+        skill_path: Full path to the skill directory
+
+    Returns:
+        Tuple of (success, output)
+    """
+    try:
+        # Run doctor using claude-skills-cli
+        result = subprocess.run(
+            ["npx", "claude-skills-cli", "doctor", skill_path],
+            capture_output=True,
+            text=True,
+            timeout=60,  # Doctor might take longer
+        )
+
+        return result.returncode == 0, result.stdout
+
+    except subprocess.TimeoutExpired:
+        return False, "Doctor operation timed out"
+    except Exception as e:
+        return False, f"Error running doctor: {e}"
 
 
 def main():
@@ -107,10 +147,6 @@ def main():
         default="./plugins",
         help="Path to plugins directory (default: ./plugins)",
     )
-    parser.add_argument("--json", action="store_true", help="Output as JSON")
-    parser.add_argument(
-        "--count", action="store_true", help="Only show the count of skills found"
-    )
     parser.add_argument(
         "--validate", action="store_true", help="Run validation on each found skill"
     )
@@ -118,6 +154,9 @@ def main():
         "--validate-only",
         action="store_true",
         help="Only run validation, don't list skills",
+    )
+    parser.add_argument(
+        "--doctor", action="store_true", help="Run doctor on each found skill"
     )
 
     args = parser.parse_args()
@@ -136,12 +175,22 @@ def main():
             skill_path = skill["full_path"]
             print(f"Validating: {skill['plugin']}/{skill['skill']}", end=" ... ")
 
-            if validate_skill(skill_path):
+            validation_passed, validation_data = validate_skill(skill_path)
+
+            if validation_passed:
                 print("✓ PASSED")
-                validation_results.append({**skill, "validation": "passed"})
+                validation_results.append(
+                    {**skill, "validation": "passed", "validation_data": {}}
+                )
             else:
                 print("✗ FAILED")
-                validation_results.append({**skill, "validation": "failed"})
+                validation_results.append(
+                    {
+                        **skill,
+                        "validation": "failed",
+                        "validation_data": validation_data,
+                    }
+                )
 
         # Show summary
         passed = sum(1 for r in validation_results if r["validation"] == "passed")
@@ -152,31 +201,69 @@ def main():
         print(f"  Failed: {failed}")
         print(f"  Total:  {len(validation_results)}")
 
+        # Show detailed errors for failed skills
+        if failed > 0:
+            print(f"\nFailed Skills Details:")
+            for result in validation_results:
+                if result["validation"] == "failed":
+                    print(f"\n❌ {result['plugin']}/{result['skill']}:")
+                    validation_data = result.get("validation_data", {})
+
+                    errors = validation_data.get("errors", [])
+                    warnings = validation_data.get("warnings", [])
+
+                    if errors:
+                        print("  Errors:")
+                        for error in errors:
+                            if isinstance(error, dict):
+                                print(f"    • {error.get('message', str(error))}")
+                            else:
+                                print(f"    • {error}")
+
+                    if warnings:
+                        print("  Warnings:")
+                        for warning in warnings:
+                            if isinstance(warning, dict):
+                                print(f"    • {warning.get('message', str(warning))}")
+                            else:
+                                print(f"    • {warning}")
+
         if args.validate_only:
             return
 
-    if args.count:
-        print(len(skills))
-        return
-
-    if args.json:
-        if args.validate:
-            # Include validation results in JSON output
-            validation_results = []  # Initialize in case validation wasn't run
-            print(json.dumps(validation_results, indent=2))
-        else:
-            print(json.dumps(skills, indent=2))
-    else:
+    if args.doctor:
         if not skills:
-            print("No skill directories found")
+            print("No skill directories found to doctor")
             return
 
-        print(f"Found {len(skills)} skill directories:\n")
+        print(f"Running doctor on {len(skills)} skill directories...\n")
+
         for skill in skills:
-            print(f"Plugin: {skill['plugin']}")
-            print(f"  Skill: {skill['skill']}")
-            print(f"  Path: {skill['path']}")
-            print()
+            skill_path = skill["full_path"]
+            print(f"Doctor: {skill['plugin']}/{skill['skill']}")
+            print("-" * 50)
+
+            success, output = doctor_skill(skill_path)
+            print(output)
+
+            if not success:
+                print("❌ Doctor operation failed")
+            else:
+                print("✓ Doctor completed")
+
+            print("\n" + "=" * 60 + "\n")
+        return
+
+    if not skills:
+        print("No skill directories found")
+        return
+
+    print(f"Found {len(skills)} skill directories:\n")
+    for skill in skills:
+        print(f"Plugin: {skill['plugin']}")
+        print(f"  Skill: {skill['skill']}")
+        print(f"  Path: {skill['path']}")
+        print()
 
 
 if __name__ == "__main__":
