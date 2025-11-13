@@ -14,4 +14,4 @@ python3 ./scripts/find-skills.py --doctor
 python3 ./scripts/find-skills.py --validate
 ```
 
-Analyze the output and suggest improvements and fixes for each skill that failed validation.
+Analyze the output make a plan for each skill that failed validation and suggest specific improvements and fixes so that the skill passes validation.
