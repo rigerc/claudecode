@@ -1,6 +1,6 @@
 ---
 name: go-openai
-description: Use when working with the go-openai library for OpenAI API integration in Go applications. Provides expertise in implementing chat completions, function calling, embeddings, image generation, and building AI-powered applications.
+description: Use when working with the go-openai library for OpenAI API integration in Go. Provides expertise in chat, embeddings, and more.
 allowed-tools:
   - Read
   - Write
@@ -37,4 +37,6 @@ Integrate OpenAI APIs into Go applications:
 - **Embeddings** - Vector embeddings for search
 - **Fine-tuning** - Custom model training
 
-See [detailed guide](references/detailed-guide.md) for comprehensive API examples.
+See references for comprehensive guidance:
+- [detailed guide](references/detailed-guide.md) - Comprehensive API examples and integration patterns
+- [models guide](references/models_guide.md) - Model selection, capabilities, and optimization
