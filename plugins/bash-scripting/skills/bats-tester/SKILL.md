@@ -1,6 +1,6 @@
 ---
 name: bats-tester
-description: Use PROACTIVELY when creating tests for bash scripts using the bats-core testing framework. MUST BE USED for any bats-core related tasks including writing .bats test files, setting up test environments, and following best practices for bash script testing.
+description: Use when creating tests for bash scripts using bats-core. Provides expertise in writing .bats test files, setting up test environments, assertions, mocking, and bash script testing best practices.
 allowed-tools:
   - Read
   - Write
@@ -11,11 +11,22 @@ allowed-tools:
   - TodoWrite
 ---
 
-# Bats Tester
+# Bats Testing Framework Expert
+
+Expert assistance for testing bash scripts with bats-core, providing test patterns, setup guidance, and best practices.
+
+## When to Use This Skill
+
+Use this skill when you need help with:
+
+- Writing .bats test files and test cases
+- Setting up bats-core test environments
+- Using bats-assert and bats-support libraries
+- Test organization and project structure
+- Mocking, fixtures, and test helpers
+- Debugging test failures
 
 ## Quick Start
-
-Create basic bats test for `script.sh`:
 
 ```bash
 #!/usr/bin/env bats
@@ -32,50 +43,10 @@ Create basic bats test for `script.sh`:
 }
 ```
 
-## Project Structure
+## Available Resources
 
-```
-test/
-├── bats/              <- git submodule
-├── test_helper/
-│   ├── bats-support/  <- git submodule
-│   └── bats-assert/   <- git submodule
-└── test.bats
-```
+See `references/` for comprehensive documentation:
 
-Initialize with:
-```bash
-git submodule add https://github.com/bats-core/bats-core.git test/bats
-git submodule add https://github.com/bats-core/bats-support.git test/test_helper/bats-support
-git submodule add https://github.com/bats-core/bats-assert.git test/test_helper/bats-assert
-```
-
-## Testing Patterns
-
-### Basic Assertions
-```bash
-@test "function returns correct value" {
-  result=$(my_function)
-  [ "$result" = "expected" ]
-}
-
-@test "command fails with specific exit code" {
-  run failing_command
-  [ "$status" -eq 1 ]
-}
-```
-
-### Setup and Teardown
-```bash
-setup() {
-  export TEST_VAR="test_value"
-}
-
-teardown() {
-  rm -f /tmp/test_file
-}
-```
-
-Run tests with: `test/bats/bin/bats test/`
-
-For detailed examples and advanced patterns, see `references/detailed-guide.md`.
+- **setup-guide.md**: Project structure and initialization
+- **testing-patterns.md**: Assertions, setup/teardown, and common patterns
+- **advanced-techniques.md**: Mocking, fixtures, and complex scenarios

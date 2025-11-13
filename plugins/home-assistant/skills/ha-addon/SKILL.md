@@ -1,6 +1,6 @@
 ---
 name: ha-addon
-description: Use to create, build, and publish Home Assistant add-ons. Expert in Docker containerization, YAML configuration, security best practices, and Home Assistant API integration. Use when developing add-ons, troubleshooting containers, or configuring Home Assistant extensions.
+description: Create, build, and publish Home Assistant add-ons. Expert in Docker, YAML config, security, and HA API integration. Use for add-on development, container troubleshooting, and extension configuration.
 allowed-tools: Read, Write, Edit, Bash, Glob, Grep, WebFetch, WebSearch, TodoWrite
 ---
 

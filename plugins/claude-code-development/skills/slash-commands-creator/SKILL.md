@@ -1,105 +1,44 @@
 ---
 name: slash-commands-creator
-description: Use this skill to create, review, and maintain Claude Code custom slash commands based on official guidelines. Use when creating new slash commands, reviewing existing commands, or standardizing command syntax and structure.
+description: Create and review Claude Code slash commands. Use when creating `/...` commands, reviewing syntax, or standardizing command definitions with proper argument handling and permissions.
 trigger: Use when developers need to create `/...` commands, review slash command syntax, or maintain command standards.
 author: n/a
 ---
 
 # Slash Commands Creator
 
-Use this skill to create, review, and maintain Claude Code custom slash commands
-based on our official slash command guidelines.
+Expert assistance for creating, reviewing, and maintaining Claude Code custom slash commands based on official guidelines.
 
-## Purpose
+## When to Use This Skill
 
-Standardize how we define `/...` commands so they:
-- Follow the documented syntax and frontmatter format
-- Use arguments correctly (`$ARGUMENTS`, `$1`, `$2`, etc.)
-- Respect `allowed-tools` constraints
-- Integrate cleanly as project or personal commands
+Use this skill when you need help with:
 
-## How to use this Skill
+- Creating new `/...` slash commands
+- Reviewing existing command syntax and structure
+- Standardizing command definitions
+- Implementing argument handling (`$ARGUMENTS`, `$1`, `$2`)
+- Configuring `allowed-tools` permissions
+- Choosing between project, personal, or plugin commands
 
-When I ask you to create or update a slash command, you should:
-
-1. Confirm command type
-   - Ask whether it should be:
-     - Project command (`.claude/commands/`)
-     - Personal command (`~/.claude/commands/`)
-     - Plugin command (`commands/` inside a plugin)
-
-2. Design the command
-   - Name: derive from desired `/command-name`
-   - Behavior: restate what the command should do in 1–3 lines
-   - Arguments:
-     - Decide between:
-       - `$ARGUMENTS` for free-form input
-       - `$1`, `$2`, ... for structured parameters
-     - Suggest `argument-hint` where appropriate
-   - Tools:
-     - Propose minimal `allowed-tools` set if bash execution is needed
-     - Default to read-only unless write/exec is clearly required
-
-3. Generate the file
-   - Output a complete `.md` definition, following:
+## Quick Start
 
 ```markdown
 ---
-description: Brief, clear description of what the command does
-argument-hint: [optional argument usage hint]
-allowed-tools: [optional, e.g. Bash(git status:*), Bash(git diff:*)]
-model: [optional override; otherwise inherit]
+description: Brief description of command purpose
 ---
 
-# <Command label or instructions>
-
-<Exact instructions Claude should follow when this command runs.>
-Use $ARGUMENTS and/or $1, $2 etc. as needed.
-Include any context gathering, file references with @, or bash snippets with !`...`.
+Instructions for Claude to follow when command runs.
+Use $ARGUMENTS for free-form input or $1, $2 for structured params.
 ```
 
-4. Validate against the reference
+See `references/examples.md` for complete examples with arguments, tools, and context handling.
 
-Ensure each generated command:
-- Conforms to the syntax described in:
-  - `@plugins/claude-code-development/skills/working-with-claude-code/references/slash-commands.md`
-- Is concise, deterministic, and safe
-- Avoids unsupported patterns (e.g., wildcards in MCP permissions)
-- Uses plugin prefixes (`/plugin-name:command`) only when needed
+## Available Resources
 
-## Examples
+See `references/` for comprehensive documentation:
 
-### Simple reusable review command
+- **command-creation-workflow.md**: Step-by-step process for creating commands
+- **examples.md**: Real-world command examples and patterns
 
-```markdown
----
-description: Review code for correctness, security, and clarity
----
-
-Review this code for:
-- Logical and edge-case bugs
-- Security issues
-- Readability and maintainability problems
-Provide concrete, actionable suggestions.
-```
-
-### Structured PR review command
-
-```markdown
----
-description: Review a pull request by number
-argument-hint: [pr-number] [priority] [assignee]
----
-
-Review PR #$1 with priority $2 and assign to $3.
-Focus on:
-- Security vulnerabilities
-- Performance regressions
-- Test coverage and failure risks
-Return a concise, structured summary.
-```
-
-When asked to "create a slash command":
-- Follow the workflow above
-- Show the final `.md` content ready to be saved in the correct directory
-- Do not auto-create files unless explicitly instructed
+For complete slash command syntax, see:
+- `@plugins/claude-code-development/skills/working-with-claude-code/references/slash-commands.md`

@@ -1,6 +1,6 @@
 ---
 name: api-docs-generator
-description: Use to generate comprehensive API documentation from OpenAPI specs, code docstrings, JSDoc/TSDoc comments, and Markdown annotations. Use when creating or updating API documentation from various source formats.
+description: Use to generate API documentation from OpenAPI specs, docstrings, JSDoc/TSDoc comments, and Markdown. Supports multiple documentation source formats.
 allowed-tools:
   - Read
   - Write

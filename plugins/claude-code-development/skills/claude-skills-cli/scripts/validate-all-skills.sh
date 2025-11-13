@@ -3,8 +3,6 @@
 # Validate all skills in the project
 # This script finds all directories containing a SKILL.md file and validates them
 
-set -e
-
 # Colors for output
 RED='\033[0;31m'
 GREEN='\033[0;32m'
@@ -20,32 +18,26 @@ FAILED=0
 echo -e "${BLUE}🔍 Finding all skill directories...${NC}"
 echo
 
-# Find all directories containing SKILL.md files
-# Start from current working directory and look for skills directories
-find . -type d -name "skills" | while read skills_dir; do
-    echo -e "${YELLOW}📁 Checking skills directory: $skills_dir${NC}"
-    
-    # Find all subdirectories containing SKILL.md
-    find "$skills_dir" -maxdepth 2 -type f -name "SKILL.md" | while read skill_file; do
-        skill_dir=$(dirname "$skill_file")
-        skill_name=$(basename "$skill_dir")
-        
-        echo -e "${BLUE}🔧 Validating skill: $skill_name${NC}"
-        echo "   Path: $skill_dir"
-        
-        # Run claude-skill-cli validate
-        if npx claude-skill-cli validate "$skill_dir"; then
-            echo -e "${GREEN}✅ Validation passed for: $skill_name${NC}"
-            ((PASSED++))
-        else
-            echo -e "${RED}❌ Validation failed for: $skill_name${NC}"
-            ((FAILED++))
-        fi
-        
-        ((TOTAL++))
-        echo "----------------------------------------"
-    done
-done
+# Find all SKILL.md files directly
+while IFS= read -r skill_file; do
+    skill_dir=$(dirname "$skill_file")
+    skill_name=$(basename "$skill_dir")
+
+    echo -e "${BLUE}🔧 Validating skill: $skill_name${NC}"
+    echo "   Path: $skill_dir"
+
+    # Run claude-skills-cli validate
+    if npx claude-skills-cli validate "$skill_dir" 2>&1; then
+        echo -e "${GREEN}✅ Validation passed for: $skill_name${NC}"
+        ((PASSED++))
+    else
+        echo -e "${RED}❌ Validation failed for: $skill_name${NC}"
+        ((FAILED++))
+    fi
+
+    ((TOTAL++))
+    echo "----------------------------------------"
+done < <(find . -type f -name "SKILL.md" | sort)
 
 echo
 echo -e "${BLUE}📊 Validation Summary:${NC}"

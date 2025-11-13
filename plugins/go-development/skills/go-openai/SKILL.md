@@ -1,6 +1,6 @@
 ---
 name: go-openai
-description: Use when working with the go-openai library for OpenAI API integration in Go applications. Use for setting up API clients, implementing chat completions, text completions, function calling, image generation, audio processing, embeddings, fine-tuning, and building AI-powered applications.
+description: Use when working with the go-openai library for OpenAI API integration in Go applications. Provides expertise in implementing chat completions, function calling, embeddings, image generation, and building AI-powered applications.
 allowed-tools:
   - Read
   - Write

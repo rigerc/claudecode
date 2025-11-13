@@ -1,0 +1,1 @@
+../plugins/claude-code-development/skills/claude-skills-cli/scripts/validate-all-skills.sh

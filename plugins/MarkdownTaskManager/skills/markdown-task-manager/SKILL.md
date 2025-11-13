@@ -1,6 +1,6 @@
 ---
 name: markdown-task-manager
-description: Use to manage Kanban tasks using local Markdown files. Creates tasks in `kanban.md`, archives to `archive.md`, and integrates with task-manager.html web application. Use for task creation, planning, progress tracking, and generating reports.
+description: Use to manage Kanban tasks using local Markdown files. Creates tasks in kanban.md, archives to archive.md, and integrates with task-manager.html. Handles task creation, progress tracking, archival, and reporting.
 allowed-tools:
   - Read
   - Write

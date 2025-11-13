@@ -1,6 +1,6 @@
 ---
 name: beets
-description: Use PROACTIVELY for comprehensive music library management system guidance covering setup, advanced querying, plugin development, and automation workflows for the beets music organization tool. MUST BE USED when working with music collections, metadata management, library organization, or extending beets functionality.
+description: Use when working with beets music library management system. Provides expertise in setup, importing, metadata management, querying, plugin development, and automation workflows for organizing music collections.
 allowed-tools:
   - Read
   - Write
