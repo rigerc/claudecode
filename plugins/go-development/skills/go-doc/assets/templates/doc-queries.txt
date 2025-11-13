@@ -1,0 +1,51 @@
+# Go Doc Query Templates
+# Common patterns and templates for go doc commands
+
+## Basic Package Exploration
+go doc <package>
+go doc -all <package>
+go doc -short <package>
+go doc -u <package>
+
+## Function Documentation
+go doc <package>.<function>
+go doc -src <package>.<function>
+go doc <package>.<function> <package>
+
+## Type and Method Documentation
+go doc <package>.<type>
+go doc -all <package>.<type>
+go doc <package>.<type>.<method>
+go doc -u <package>.<type>
+
+## HTTP Server
+go doc -http
+go doc -http=:6080
+go doc -http=localhost:8080
+
+## Current Package
+go doc
+go doc -all
+go doc -short
+go doc -cmd
+
+## Specific Examples
+go doc fmt.Printf
+go doc encoding/json.Marshal
+go doc net/http.Client.Do
+go doc time.Time.Now
+
+## Advanced Queries
+go doc -c <ExactSymbol>
+go doc -src -u <symbol>
+go doc -all -u <package>
+
+## Troubleshooting
+go doc -all <package> | grep <pattern>
+go doc -c <symbol>
+go doc -src <symbol>
+
+## Integration
+go doc -http &
+go doc <symbol>
+go doc -src <function>
