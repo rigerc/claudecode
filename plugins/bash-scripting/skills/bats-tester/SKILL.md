@@ -1,6 +1,6 @@
 ---
 name: bats-tester
-description: Use when creating tests for bash scripts using bats-core. Provides expertise in writing .bats test files, setting up test environments, assertions, mocking, and bash script testing best practices.
+description: Use when creating tests for bash scripts using bats-core. Provides expertise in test writing, setup, and best practices.
 allowed-tools:
   - Read
   - Write
@@ -47,6 +47,11 @@ Use this skill when you need help with:
 
 See `references/` for comprehensive documentation:
 
+- **detailed-guide.md**: Complete testing guide and workflows
 - **setup-guide.md**: Project structure and initialization
 - **testing-patterns.md**: Assertions, setup/teardown, and common patterns
+- **assertion_patterns.md**: Detailed assertion library reference
+- **bats_functions.md**: Core bats function reference
+- **test_organization.md**: Organizing tests and project structure
 - **advanced-techniques.md**: Mocking, fixtures, and complex scenarios
+- **troubleshooting.md**: Common issues and debugging techniques

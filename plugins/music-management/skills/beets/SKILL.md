@@ -1,6 +1,6 @@
 ---
 name: beets
-description: Use when working with beets music library management system. Provides expertise in setup, importing, metadata management, querying, plugin development, and automation workflows for organizing music collections.
+description: Use when working with beets music library management. Provides expertise in setup, importing, metadata, and plugin development.
 allowed-tools:
   - Read
   - Write
@@ -39,4 +39,9 @@ Manage and organize your music library with beets:
 - **Plugin System** - Extensible architecture
 - **Automation** - Custom workflows and scripts
 
-See [detailed guide](references/detailed-guide.md) for complete configuration and plugin development.
+See references for complete documentation:
+- [detailed guide](references/detailed-guide.md) - Complete configuration and plugin development
+- [configuration guide](references/configuration_guide.md) - Configuration options and settings
+- [path formats](references/path_formats.md) - Path and filename formatting
+- [query syntax](references/query_syntax.md) - Library querying and filtering
+- [troubleshooting](references/troubleshooting.md) - Common issues and solutions

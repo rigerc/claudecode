@@ -1,6 +1,6 @@
 ---
 name: go-doc
-description: Use when working with Go's `go doc` command to access package documentation, explore APIs, view symbols, and manage HTTP documentation servers for terminal workflows.
+description: Use when working with Go's `go doc` command. Access package docs, explore APIs, and manage HTTP documentation servers.
 allowed-tools: [Read, Write, Edit, Glob, Grep, Bash, WebFetch, mcp__context7__resolve-library-id, mcp__context7__get-library-docs]
 ---
 

@@ -1,6 +1,6 @@
 ---
 name: generate-documentation
-description: Use to generate project documentation. Researches with context7 and saves Markdown to docs/ directory.
+description: Use to generate project documentation. Researches with context7 and saves to docs/ directory.
 allowed-tools: Read, Write, Edit, Glob, Grep, WebFetch, WebSearch, Task, TodoWrite, mcp__context7__resolve-library-id, mcp__context7__get-library-docs
 ---
 

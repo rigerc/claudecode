@@ -43,4 +43,5 @@ See `references/` for comprehensive documentation:
 - **function_calling.md**: Function calling and structured output patterns
 - **error_handling.md**: Error handling, retry logic, and best practices
 - **model_selection.md**: Model selection strategies and cost optimization
+- **model_list.md**: Available models and provider comparison
 - **integration_patterns.md**: Web server, CLI, and application integration examples

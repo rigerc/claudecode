@@ -1,6 +1,6 @@
 ---
 name: go-bubbles-skill
-description: Use when working with the Bubbles component library for BubbleTea applications in Go. Provides expertise in implementing textinput, textarea, spinner, progress, table, list, paginator, timer, viewport, filepicker, and key bindings with Lip Gloss styling.
+description: Use when working with the Bubbles component library for BubbleTea applications in Go. Provides expertise in components and styling.
 ---
 
 # Go Bubbles Component Library Expert

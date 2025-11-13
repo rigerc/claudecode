@@ -1,6 +1,6 @@
 ---
 name: developing-claude-code-plugins
-description: Use when working on Claude Code plugins - creating, modifying, testing, releasing, or maintaining. Provides streamlined workflows, patterns, and examples for the complete plugin lifecycle.
+description: Use when working on Claude Code plugins. Provides streamlined workflows, patterns, and examples for the complete lifecycle.
 allowed-tools:
   - Read
   - Write
@@ -38,4 +38,8 @@ Work with Claude Code plugins effectively:
 - **Hooks** - Event-driven automation
 - **Agents** - Specialized AI sub-agents
 
-See [detailed guide](references/detailed-guide.md) for complete development patterns and examples.
+See references for complete development guidance:
+- [detailed guide](references/detailed-guide.md) - Complete development patterns and examples
+- [plugin structure](references/plugin-structure.md) - Plugin architecture and organization
+- [common patterns](references/common-patterns.md) - Reusable implementation patterns
+- [troubleshooting](references/troubleshooting.md) - Common issues and solutions
