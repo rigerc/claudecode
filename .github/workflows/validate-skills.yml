@@ -1,0 +1,52 @@
+name: Validate All Skills
+
+on:
+  push:
+    branches: [ main, master ]
+    paths:
+      - 'plugins/**/skills/**'
+      - 'scripts/validate-all-skills.sh'
+      - '.github/workflows/validate-skills.yml'
+  pull_request:
+    branches: [ main, master ]
+    paths:
+      - 'plugins/**/skills/**'
+      - 'scripts/validate-all-skills.sh'
+      - '.github/workflows/validate-skills.yml'
+  workflow_dispatch:
+
+jobs:
+  validate-skills:
+    runs-on: ubuntu-latest
+    name: Validate All Skills
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+
+    - name: Make validation script executable
+      run: chmod +x ./scripts/validate-all-skills.sh
+
+    - name: Validate all skills
+      run: ./scripts/validate-all-skills.sh
+
+    - name: Create summary
+      if: always()
+      run: |
+        echo "## 🔍 Skills Validation Summary" >> $GITHUB_STEP_SUMMARY
+
+        if [ $? -eq 0 ]; then
+          echo "✅ **Status**: All skills validated successfully!" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "❌ **Status**: Some skills failed validation" >> $GITHUB_STEP_SUMMARY
+        fi
+
+        # Count total skills
+        skill_count=$(find . -type f -name "SKILL.md" | wc -l)
+        echo "" >> $GITHUB_STEP_SUMMARY
+        echo "📊 **Total Skills Found**: $skill_count" >> $GITHUB_STEP_SUMMARY
