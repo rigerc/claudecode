@@ -1,6 +1,13 @@
+---
+name: slash-commands-creator
+description: Use this skill to create, review, and maintain Claude Code custom slash commands based on official guidelines. Use when creating new slash commands, reviewing existing commands, or standardizing command syntax and structure.
+trigger: Use when developers need to create `/...` commands, review slash command syntax, or maintain command standards.
+author: n/a
+---
+
 # Slash Commands Creator
 
-Use this Skill to create, review, and maintain Claude Code custom slash commands
+Use this skill to create, review, and maintain Claude Code custom slash commands
 based on our official slash command guidelines.
 
 ## Purpose

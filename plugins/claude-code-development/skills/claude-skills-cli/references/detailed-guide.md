@@ -89,9 +89,6 @@ npx claude-skills-cli validate .claude/skills/my-skill --strict
 
 # JSON output for automation
 npx claude-skills-cli validate .claude/skills/my-skill --format json
-
-# Validate all skills in project
-./scripts/validate-all-skills.sh
 ```
 
 #### Validation Checks
@@ -288,4 +285,3 @@ When a user asks to create a skill, guide them through location selection:
 - [Validation Rules Reference](./references/validation-rules.md)
 - [Command Examples](./references/command-examples.md)
 - [Skill Templates](./templates/)
-- [Validate all skills in project](./scripts/validate-all-skills.sh)

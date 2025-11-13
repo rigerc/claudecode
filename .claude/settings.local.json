@@ -4,7 +4,9 @@
       "WebFetch(domain:code.claude.com)",
       "Skill(claude-code-development:working-with-claude-code)",
       "Skill(claude-code-development:skill-creator)",
-      "Skill(claude-code-development:plugin-creator)"
+      "Skill(claude-code-development:plugin-creator)",
+      "mcp__plugin_beads_beads__create",
+      "mcp__plugin_beads_beads__set_context"
     ],
     "deny": [],
     "ask": []
