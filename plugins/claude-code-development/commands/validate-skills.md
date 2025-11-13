@@ -5,14 +5,12 @@ allowed-tools: Read, Write, Bash
 
 # Validate claude skills using claude-skills-cli with comprehensive analysis and automated fixing.
 
-## Overview
-
 This command validates all skills in the `./plugins` directory using the `claude-skills-cli` tool and provides detailed analysis of validation results with recommended fixes.
 
-# Step 1: Run doctor to auto-fix common issues
+## Step 1: Run doctor to auto-fix common issues
 python3 ./scripts/find-skills.py --doctor
 
-# Step 2: Validate to check improvements
+## Step 2: Validate to check improvements
 python3 ./scripts/find-skills.py --validate
 ```
 
