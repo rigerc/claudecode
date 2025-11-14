@@ -23,19 +23,10 @@ Create a new Claude Code Skill using the skill-creator skill
 ### `validate-all-skills`
 Validate all agent skills using claude-skills-cli
 
-## Agents (4)
-
-### context-manager
-Use PROACTIVELY when you need to manage context across multiple agents and long-running tasks, especially for projects exceeding 10k tokens. MUST B...
+## Agents (1)
 
 ### marketplace-dev
 Use PROACTIVELY when working with Claude Code marketplace repository. Expert in adding/modifying plugins, hooks, commands, agents, and skills. MUST...
-
-### mcp-expert
-Model Context Protocol (MCP) integration specialist for the cli-tool components system. Use PROACTIVELY for MCP server configurations, protocol spe...
-
-### meta-agent
-Generates a new, complete Claude Code sub-agent configuration file from a user's description. Use this to create new agents. Use this Proactively w...
 
 ## Skills (4)
 
