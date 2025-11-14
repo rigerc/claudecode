@@ -22,13 +22,16 @@ Use PROACTIVELY to research documentation, APIs, frameworks, and best practices.
 ### technical-docs-writer
 Use PROACTIVELY when you need to create user-facing documentation for a product or feature, including API documentation, getting started guides, tu...
 
-## Skills (2)
+## Skills (3)
 
 ### api-docs-generator
 Use to generate API documentation from OpenAPI specs, docstrings, or comments. Supports multiple source formats.
 
 ### generate-documentation
 Use to generate project documentation. Researches with context7 and saves to docs/ directory.
+
+### library-researcher
+Use for researching libraries and frameworks. Provides documentation and best practices via Context7.
 
 
 ## Installation

@@ -37,13 +37,10 @@ Model Context Protocol (MCP) integration specialist for the cli-tool components 
 ### meta-agent
 Generates a new, complete Claude Code sub-agent configuration file from a user's description. Use this to create new agents. Use this Proactively w...
 
-## Skills (6)
+## Skills (4)
 
 ### claude-skills-cli
 Create and manage Claude Agent Skills with progressive disclosure validation. Use for building and validating skill structure and activation.
-
-### developing-claude-code-plugins
-Use when working on Claude Code plugins. Provides streamlined workflows, patterns, and examples for the complete lifecycle.
 
 ### plugin-creator
 Use when creating or developing Claude Code plugins. Scaffolds structure, adds components, sets up development environments, and provides guidance ...
@@ -53,9 +50,6 @@ Use when creating or updating Claude Code skills that extend capabilities with s
 
 ### slash-commands-creator
 Create and review Claude Code slash commands. Use when creating `/...` commands, reviewing syntax, or standardizing command definitions with proper...
-
-### working-with-claude-code
-Use when working with Claude Code CLI or any feature. Provides comprehensive official documentation for all aspects of Claude Code.
 
 
 ## Installation
