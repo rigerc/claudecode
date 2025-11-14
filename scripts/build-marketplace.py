@@ -258,7 +258,8 @@ def list_plugin_components(plugin_dir: Path) -> Dict[str, List[Dict[str, str]]]:
 
 def generate_plugin_readme(plugin_dir: Path) -> str:
     """Generate README.md for a specific plugin."""
-    plugin_name = format_plugin_name(plugin_dir.name)
+    plugin_json_name = get_plugin_name_from_json(plugin_dir)
+    plugin_name = format_plugin_name(plugin_json_name)
     plugin_key = plugin_dir.name
 
     # Extract description from plugin.json first, then fallback to README extraction
@@ -371,15 +372,16 @@ def build_plugin_readmes(plugins_dir: Path) -> None:
 
 def extract_plugin_info(plugin_dir: Path) -> Dict[str, Any]:
     """Extract plugin information from plugin directory."""
+    plugin_json_name = get_plugin_name_from_json(plugin_dir)
     plugin_name = plugin_dir.name
     plugin_json_path = plugin_dir / ".claude-plugin" / "plugin.json"
     readme_path = plugin_dir / "README.md"
 
     # Default plugin info with relative path
     plugin_info = {
-        "name": plugin_name,
+        "name": plugin_json_name,
         "source": f"./plugins/{plugin_name}",
-        "description": f"Plugin: {plugin_name.replace('-', ' ').title()}",
+        "description": f"Plugin: {format_plugin_name(plugin_json_name)}",
     }
 
     # Load from plugin.json if exists
@@ -528,12 +530,27 @@ def generate_anchor(plugin_name: str) -> str:
     return plugin_name.lower().replace(" ", "-")
 
 
-def format_plugin_name(plugin_dir_name: str) -> str:
-    """Convert plugin directory name to proper title format."""
+def get_plugin_name_from_json(plugin_dir: Path) -> str:
+    """Get plugin name from .claude-plugin/plugin.json, fallback to directory name."""
+    plugin_json_path = plugin_dir / ".claude-plugin" / "plugin.json"
+
+    if plugin_json_path.exists():
+        try:
+            with open(plugin_json_path, "r", encoding="utf-8") as f:
+                plugin_data = json.load(f)
+                return plugin_data.get("name", plugin_dir.name)
+        except (json.JSONDecodeError, FileNotFoundError):
+            pass
+
+    return plugin_dir.name
+
+
+def format_plugin_name(plugin_name: str) -> str:
+    """Convert plugin name to proper title format."""
     import re
 
     # First handle camelCase by adding spaces before capital letters (except first char)
-    name = re.sub(r"(?<!^)(?=[A-Z])", " ", plugin_dir_name)
+    name = re.sub(r"(?<!^)(?=[A-Z])", " ", plugin_name)
     # Then replace hyphens with spaces
     name = name.replace("-", " ")
     # Clean up extra spaces and title case
@@ -548,7 +565,8 @@ def generate_plugin_list(plugin_dirs: List[Path]) -> str:
     for plugin_dir in sorted(plugin_dirs, key=lambda x: x.name):
         if plugin_dir.is_dir() and not plugin_dir.name.startswith("."):
             plugin_count += 1
-            plugin_name = format_plugin_name(plugin_dir.name)
+            plugin_json_name = get_plugin_name_from_json(plugin_dir)
+            plugin_name = format_plugin_name(plugin_json_name)
             plugin_key = plugin_dir.name
             counts = count_components(plugin_dir)
             components = list_plugin_components(plugin_dir)
@@ -562,7 +580,7 @@ def generate_plugin_list(plugin_dirs: List[Path]) -> str:
 
             # Create anchor-friendly name (lowercase, replace spaces with hyphens)
             anchor = generate_anchor(plugin_name)
-            list_items.append(f"### {plugin_name} {{#{anchor}}}\n")
+            list_items.append(f"### {plugin_name}\n")
             list_items.append(f"{description}\n")
 
             # Add install command immediately after description
@@ -618,7 +636,8 @@ def build_readme(plugins_dir: Path) -> str:
     toc_plugin_links = []
     for plugin_dir in sorted(plugin_dirs, key=lambda x: x.name):
         if plugin_dir.is_dir() and not plugin_dir.name.startswith("."):
-            plugin_name = format_plugin_name(plugin_dir.name)
+            plugin_json_name = get_plugin_name_from_json(plugin_dir)
+            plugin_name = format_plugin_name(plugin_json_name)
             plugin_key = plugin_dir.name
             # Create anchor-friendly name (lowercase, replace spaces with hyphens)
             anchor = generate_anchor(plugin_name)
@@ -637,14 +656,14 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 
 ## Table of Contents
 
-- [🚀 Installation](#-installation)
+- [🚀 Installation](#installation)
   - [Add Marketplace](#add-marketplace)
   - [Install Individual Plugins](#install-individual-plugins)
   - [Browse Available Plugins](#browse-available-plugins)
-- [🔌 Plugin Details](#-plugin-details)
+- [🔌 Plugin Details](#plugin-details)
 {chr(10).join(toc_plugin_links)}
-- [📁 Plugin Structure](#-plugin-structure)
-- [🛠️ Development](#️-development)
+- [📁 Plugin Structure](#plugin-structure)
+- [🛠️ Development](#️development)
   - [Building](#building)
   - [Plugin Categories](#plugin-categories)
 - [📄 License](#-license)

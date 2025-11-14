@@ -4,24 +4,25 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 
 ## Table of Contents
 
-- [🚀 Installation](#-installation)
+- [🚀 Installation](#installation)
   - [Add Marketplace](#add-marketplace)
   - [Install Individual Plugins](#install-individual-plugins)
   - [Browse Available Plugins](#browse-available-plugins)
-- [🔌 Plugin Details](#-plugin-details)
+- [🔌 Plugin Details](#plugin-details)
   - [Markdown Task Manager](#markdown-task-manager)
   - [Bash Scripting](#bash-scripting)
   - [Claude Code Development](#claude-code-development)
   - [Code Quality](#code-quality)
   - [Documentation Generation](#documentation-generation)
+  - [Flatban](#flatban)
   - [Go Development](#go-development)
   - [Home Assistant](#home-assistant)
   - [Library Researcher](#library-researcher)
   - [Marketplace Updater](#marketplace-updater)
   - [Music Management](#music-management)
   - [Productivity Tools](#productivity-tools)
-- [📁 Plugin Structure](#-plugin-structure)
-- [🛠️ Development](#️-development)
+- [📁 Plugin Structure](#plugin-structure)
+- [🛠️ Development](#️development)
   - [Building](#building)
   - [Plugin Categories](#plugin-categories)
 - [📄 License](#-license)
@@ -70,7 +71,7 @@ Install only the plugins you need:
 
 ## 🔌 Plugin Details
 
-### Markdown Task Manager {#markdown-task-manager}
+### Markdown Task Manager
 
 Kanban task management system using local Markdown files with comprehensive task lifecycle management
 
@@ -86,7 +87,7 @@ Kanban task management system using local Markdown files with comprehensive task
 
 ---
 
-### Bash Scripting {#bash-scripting}
+### Bash Scripting
 
 Expert tools for Bash scripting, automation, and testing with bats-core framework
 
@@ -102,7 +103,7 @@ Expert tools for Bash scripting, automation, and testing with bats-core framewor
 
 ---
 
-### Claude Code Development {#claude-code-development}
+### Claude Code Development
 
 Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks. Skill-creator is adapted from claude-skills-cli.
 
@@ -134,7 +135,7 @@ Tools for developing and extending Claude Code with custom agents, commands, ski
 
 ---
 
-### Code Quality {#code-quality}
+### Code Quality
 
 Code review, refactoring, and quality analysis tools for improving code maintainability and security
 
@@ -151,7 +152,7 @@ Code review, refactoring, and quality analysis tools for improving code maintain
 
 ---
 
-### Documentation Generation {#documentation-generation}
+### Documentation Generation
 
 Comprehensive tools for generating API documentation, technical docs, and project documentation
 
@@ -174,7 +175,19 @@ Comprehensive tools for generating API documentation, technical docs, and projec
 
 ---
 
-### Go Development {#go-development}
+### Flatban
+
+A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development.
+
+**📦 Install**: `/plugin install flatban@rigerc-claude`
+
+
+**Commands** (1):
+- `flatban`: Create or update Flatban tasks with AI assistance
+
+---
+
+### Go Development
 
 Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns
 
@@ -199,7 +212,7 @@ Specialized tools for Go development with goroutines, channels, interfaces, and 
 
 ---
 
-### Home Assistant {#home-assistant}
+### Home Assistant
 
 Home Assistant development tools and automation skills for creating add-ons, integrations, and smart home workflows
 
@@ -211,7 +224,7 @@ Home Assistant development tools and automation skills for creating add-ons, int
 
 ---
 
-### Library Researcher {#library-researcher}
+### Library Researcher
 
 Advanced library research skill using Context7 to analyze, compare, and document software libraries, frameworks, and development tools
 
@@ -223,7 +236,7 @@ Advanced library research skill using Context7 to analyze, compare, and document
 
 ---
 
-### Marketplace Updater {#marketplace-updater}
+### Marketplace Updater
 
 Automatic marketplace metadata updater that checks for updates on Claude Code startup
 
@@ -235,7 +248,7 @@ Automatic marketplace metadata updater that checks for updates on Claude Code st
 
 ---
 
-### Music Management {#music-management}
+### Music Management
 
 Comprehensive music library management system guidance using the beets music organization tool
 
@@ -247,7 +260,7 @@ Comprehensive music library management system guidance using the beets music org
 
 ---
 
-### Productivity Tools {#productivity-tools}
+### Productivity Tools
 
 Productivity enhancement tools including feature brainstorming and dotfile management
 
