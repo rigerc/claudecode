@@ -7,8 +7,14 @@
 # Create minimal skill
 npx claude-skills-cli init --name my-skill --description "Brief description with trigger keywords"
 
+# Create at specific path
+npx claude-skills-cli init --path .claude/skills/my-skill --description "Brief description with trigger keywords"
+
 # Create with examples
 npx claude-skills-cli init --name my-skill --description "..." --with-examples
+
+# Create with examples at specific path
+npx claude-skills-cli init --path plugins/my-plugin/skills/my-skill --description "..." --with-examples
 ```
 
 ### Naming Conventions
@@ -24,13 +30,28 @@ npx claude-skills-cli init --name api_client --description "..." # Underscores
 npx claude-skills-cli init --name "api client" --description "..." # Spaces
 ```
 
+### Path-based Creation
+```bash
+# Create in project skills
+npx claude-skills-cli init --path .claude/skills/my-skill --description "Project-specific skill"
+
+# Create in user skills
+npx claude-skills-cli init --path ~/.claude/skills/my-skill --description "Personal skill"
+
+# Create in plugin skills
+npx claude-skills-cli init --path plugins/my-plugin/skills/my-skill --description "Plugin skill"
+
+# Create with nested path
+npx claude-skills-cli init --path plugins/claude-code-development/skills/agent-creator --description "Agent creation skill"
+```
+
 ### Description Best Practices
 ```bash
 # Good descriptions (specific with triggers)
 npx claude-skills-cli init --name pdf-processor \
   --description "Extract text, fill forms, merge PDFs. Use when working with PDF files, forms, or document extraction."
 
-npx claude-skills-cli init --name excel-analyzer \
+npx claude-skills-cli init --path .claude/skills/excel-analyzer \
   --description "Analyze Excel spreadsheets, create pivot tables, generate charts. Use for data analysis in .xlsx files."
 
 # Bad descriptions (too vague)
