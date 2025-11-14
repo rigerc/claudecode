@@ -22,7 +22,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
   - [Music Management](#music-management)
   - [Productivity Tools](#productivity-tools)
 - [📁 Plugin Structure](#plugin-structure)
-- [🛠️ Development](#️development)
+- [🛠️ Development](#development)
   - [Building](#building)
   - [Plugin Categories](#plugin-categories)
 - [📄 License](#license)
@@ -163,7 +163,7 @@ Comprehensive tools for generating API documentation, technical docs, and projec
 
 A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development.
 
-**📦 Install**: `/plugin install Flatban@rigerc-claude`
+**📦 Install**: `/plugin install flatban@rigerc-claude`
 
 
 **Commands** (1):
