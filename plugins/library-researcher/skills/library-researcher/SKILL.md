@@ -1,6 +1,6 @@
 ---
 name: library-researcher
-description: Use for library and framework research. Provides documentation and best practices via Context7.
+description: Use for researching libraries and frameworks. Provides documentation and best practices via Context7.
 allowed-tools:
   - Read
   - Write

@@ -1,6 +1,6 @@
 ---
 name: go-bubbletea-skill
-description: Use when building terminal user interfaces (TUIs) with the BubbleTea framework in Go. Provides expertise in Model-View-Update pattern, component integration, Lip Gloss styling, performance optimization, and best practices for TUI development.
+description: Use when building terminal UIs with the BubbleTea framework in Go. Provides expertise in Model-View-Update pattern and TUI best practices.
 ---
 
 # Go BubbleTea TUI Development Expert

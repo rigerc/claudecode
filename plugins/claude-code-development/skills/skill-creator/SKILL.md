@@ -1,7 +1,7 @@
 ---
 name: skill-creator
-# prettier-ignore
-description: Design and create Claude Skills using progressive disclosure principles. Use when building new skills, planning skill architecture, or writing skill content.
+description: Use when creating or updating Claude Code skills that extend capabilities with specialized knowledge and workflows.
+license: Complete terms in LICENSE.txt
 ---
 
 # Skill Creator
