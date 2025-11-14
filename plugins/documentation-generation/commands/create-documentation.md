@@ -32,13 +32,19 @@ Use the generate-documentation skill to create comprehensive documentation based
    - Look for existing documentation to understand gaps
    - Search for examples and best practices
 
-4. **Generate documentation**:
+4. **Confirm library/framework identification**:
+   - If a library or framework is identified during research, ask for user confirmation before proceeding
+   - Present the identified library/framework and briefly explain why it was selected
+   - Wait for user confirmation before continuing to documentation generation
+   - If user identifies a different library/framework, proceed with their selection
+
+5. **Generate documentation**:
    - Use the appropriate template from the generate-documentation skill
    - Create comprehensive, accurate documentation
    - Include practical examples and code snippets
    - Save to "docs/" directory
 
-5. **Follow best practices**:
+6. **Follow best practices**:
    - Ensure technical accuracy
    - Include clear examples
    - Add troubleshooting information when relevant
