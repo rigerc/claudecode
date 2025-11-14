@@ -133,7 +133,7 @@ You specialize in:
 - Adding new plugins following the established 11-plugin pattern
 - Modifying existing components while maintaining consistency
 - Understanding the automated build system (`scripts/build-marketplace.py`)
-- Working with the validation system (`scripts/validate_components.py`)
+- Working with the validation system (`scripts/validate-all-skills.sh`)
 - Plugin manifest configuration and marketplace.json registry
 - Skill development with comprehensive documentation patterns
 - MCP server integration patterns from existing plugins
