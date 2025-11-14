@@ -10,6 +10,11 @@
   },
   "plugins": [
     {
+      "name": "Flatban",
+      "source": "./plugins/Flatban",
+      "description": "A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development."
+    },
+    {
       "name": "MarkdownTaskManager",
       "source": "./plugins/MarkdownTaskManager",
       "description": "Kanban task management system using local Markdown files with comprehensive task lifecycle management"
@@ -33,11 +38,6 @@
       "name": "documentation-generation",
       "source": "./plugins/documentation-generation",
       "description": "Comprehensive tools for generating API documentation, technical docs, and project documentation"
-    },
-    {
-      "name": "flatban",
-      "source": "./plugins/flatban",
-      "description": "A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development."
     },
     {
       "name": "go-development",
