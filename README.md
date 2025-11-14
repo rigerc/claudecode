@@ -4,11 +4,11 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 
 ## Table of Contents
 
-- [🚀 Installation](#-installation)
+- 🚀 [Installation](#-installation)
   - [Add Marketplace](#add-marketplace)
   - [Install Individual Plugins](#install-individual-plugins)
   - [Browse Available Plugins](#browse-available-plugins)
-- [🔌 Plugin Details](#-plugin-details)
+- 🔌 [Plugin Details](#-plugin-details)
   - [Bash Scripting](#bash-scripting)
   - [Claude Code Development](#claude-code-development)
   - [Code Quality](#code-quality)
@@ -21,11 +21,11 @@ A curated collection of specialized plugins for Claude Code, organized by functi
   - [Marketplace Updater](#marketplace-updater)
   - [Music Management](#music-management)
   - [Productivity Tools](#productivity-tools)
-- [📁 Plugin Structure](#-plugin-structure)
-- [🛠️ Development](#-development)
+- 📁 [Plugin Structure](#-plugin-structure)
+- 🛠️ [Development](#-development)
   - [Building](#building)
   - [Plugin Categories](#plugin-categories)
-- [📄 License](#-license)
+- 📄 [License](#-license)
 
 ## Collection Summary
 

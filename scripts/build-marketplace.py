@@ -567,17 +567,17 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 
 ## Table of Contents
 
-- [🚀 Installation](#installation)
+- 🚀 [Installation](#-installation)
   - [Add Marketplace](#add-marketplace)
   - [Install Individual Plugins](#install-individual-plugins)
   - [Browse Available Plugins](#browse-available-plugins)
-- [🔌 Plugin Details](#plugin-details)
+- 🔌 [Plugin Details](#-plugin-details)
 {toc}
-- [📁 Plugin Structure](#plugin-structure)
-- [🛠️ Development](#️development)
+- 📁 [Plugin Structure](#-plugin-structure)
+- 🛠️ [Development](#-development)
   - [Building](#building)
   - [Plugin Categories](#plugin-categories)
-- [📄 License](#license)
+- 📄 [License](#-license)
 
 ## Collection Summary
 
