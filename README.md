@@ -5,86 +5,112 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 ## Overview
 
 - **12 Specialized Plugins**
-- **12 Custom Commands**
+- **11 Custom Commands**
 - **10 Expert Agents**
-- **22 Specialized Skills**
+- **23 Specialized Skills**
+- **2 Hooks**
+- **0 MCP Servers**
 
 ## Available Plugins
 
-| Plugin | Commands | Agents | Skills | Focus |
-|--------|----------|---------|---------|-------|
-| **Flatban** | 1 | 0 | 0 | General |
-| **Markdowntaskmanager** | 0 | 0 | 1 | General |
-| **Bash Scripting** | 0 | 1 | 1 | Shell automation |
-| **Claude Code Development** | 6 | 4 | 6 | Extending Claude Code |
-| **Code Quality** | 2 | 1 | 0 | Code review |
-| **Documentation Generation** | 1 | 3 | 2 | Technical writing |
-| **Go Development** | 0 | 1 | 9 | Go programming |
-| **Home Assistant** | 0 | 0 | 1 | General |
-| **Library Researcher** | 0 | 0 | 1 | General |
-| **Marketplace Updater** | 0 | 0 | 0 | General |
-| **Music Management** | 0 | 0 | 1 | Beets tool |
-| **Productivity Tools** | 2 | 0 | 0 | Workflow enhancement |
+| Plugin | Commands | Agents | Skills | Hooks | MCP | Focus |
+|--------|----------|---------|---------|-------|-----|-------|
+| **Markdowntaskmanager** | 0 | 0 | 1 | 1 | 0 | General |
+| **Bash Scripting** | 0 | 1 | 1 | 0 | 0 | Shell automation |
+| **Claude Code Development** | 5 | 4 | 6 | 0 | 0 | Extending Claude Code |
+| **Code Quality** | 2 | 1 | 0 | 0 | 0 | Code review |
+| **Documentation Generation** | 1 | 3 | 2 | 0 | 0 | Technical writing |
+| **Flatban** | 1 | 0 | 0 | 0 | 0 | General |
+| **Go Development** | 0 | 1 | 10 | 0 | 0 | Go programming |
+| **Home Assistant** | 0 | 0 | 1 | 0 | 0 | General |
+| **Library Researcher** | 0 | 0 | 1 | 0 | 0 | General |
+| **Marketplace Updater** | 0 | 0 | 0 | 1 | 0 | General |
+| **Music Management** | 0 | 0 | 1 | 0 | 0 | Beets tool |
+| **Productivity Tools** | 2 | 0 | 0 | 0 | 0 | Workflow enhancement |
 
 ## Plugin Details
 
-### Flatban
-A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development.
-
-**Install**: `Flatban@rigerc-claude`
-
 ### Markdowntaskmanager
 A comprehensive AI-driven task management system that brings discipline and transparency to your development workflow. This plugin implements a Kanban-style task management system using local Markd...
+
+**Components**: 1 skills, 1 hooks
 
 **Install**: `MarkdownTaskManager@rigerc-claude`
 
 ### Bash Scripting
 Expert tools for Bash scripting, automation, and testing with bats-core framework.
 
+**Components**: 1 agents, 1 skills
+
 **Install**: `bash-scripting@rigerc-claude`
 
 ### Claude Code Development
 Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks.
+
+**Components**: 5 commands, 4 agents, 6 skills
 
 **Install**: `claude-code-development@rigerc-claude`
 
 ### Code Quality
 Code review, refactoring, and quality analysis tools for improving code maintainability and security.
 
+**Components**: 2 commands, 1 agents
+
 **Install**: `code-quality@rigerc-claude`
 
 ### Documentation Generation
 Comprehensive tools for generating API documentation, technical docs, and project documentation.
 
+**Components**: 1 commands, 3 agents, 2 skills
+
 **Install**: `documentation-generation@rigerc-claude`
+
+### Flatban
+A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development.
+
+**Components**: 1 commands
+
+**Install**: `flatban@rigerc-claude`
 
 ### Go Development
 Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns.
+
+**Components**: 1 agents, 10 skills
 
 **Install**: `go-development@rigerc-claude`
 
 ### Home Assistant
 A comprehensive Claude Code plugin for Home Assistant development, providing tools and skills for creating add-ons, integrations, and smart home automation workflows.
 
+**Components**: 1 skills
+
 **Install**: `home-assistant@rigerc-claude`
 
 ### Library Researcher
 **Advanced library research and documentation analysis plugin for Claude Code** The Library Researcher plugin provides powerful tools for researching, analyzing, and documenting software libraries,...
+
+**Components**: 1 skills
 
 **Install**: `library-researcher@rigerc-claude`
 
 ### Marketplace Updater
 Automatically checks if repositories in `~/.claude/plugins/` are up to date and informs you when updates are available.
 
+**Components**: 1 hooks
+
 **Install**: `marketplace-updater@rigerc-claude`
 
 ### Music Management
 Comprehensive music library management system guidance using the beets music organization tool.
 
+**Components**: 1 skills
+
 **Install**: `music-management@rigerc-claude`
 
 ### Productivity Tools
 Productivity enhancement tools including feature brainstorming, prompt enhancement, and dotfile management.
+
+**Components**: 2 commands
 
 **Install**: `productivity-tools@rigerc-claude`
 
@@ -129,6 +155,8 @@ plugin-name/
 ├── commands/                 # Custom slash commands (optional)
 ├── agents/                   # Custom agents (optional)
 ├── skills/                   # Agent Skills (optional)
+├── hooks/                    # Git hooks (optional)
+├── mcp_servers/              # MCP server configurations (optional)
 └── README.md                 # Plugin documentation
 ```
 
@@ -150,6 +178,7 @@ python scripts/build-marketplace.py
 # - Scan plugins/ directory
 # - Generate .claude-plugin/marketplace.json
 # - Update this README.md
+# - Generate individual plugin READMEs
 ```
 
 ### Plugin Categories

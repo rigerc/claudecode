@@ -4,16 +4,11 @@
     "name": "rigerc's Claude personal marketplace"
   },
   "metadata": {
-    "version": "1.0.51",
+    "version": "1.0.54",
     "description": "A curated collection of specialized plugins for Claude Code, organized by functionality to provide focused tools for specific development tasks.",
-    "lastUpdated": "2025-11-13T19:57:49.004831Z"
+    "lastUpdated": "2025-11-14T17:20:35.766990Z"
   },
   "plugins": [
-    {
-      "name": "Flatban",
-      "source": "./plugins/Flatban",
-      "description": "A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development."
-    },
     {
       "name": "MarkdownTaskManager",
       "source": "./plugins/MarkdownTaskManager",
@@ -38,6 +33,11 @@
       "name": "documentation-generation",
       "source": "./plugins/documentation-generation",
       "description": "Comprehensive tools for generating API documentation, technical docs, and project documentation."
+    },
+    {
+      "name": "flatban",
+      "source": "./plugins/flatban",
+      "description": "A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development."
     },
     {
       "name": "go-development",

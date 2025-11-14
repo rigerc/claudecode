@@ -10,6 +10,7 @@ from pathlib import Path
 from typing import Dict, List, Any
 from datetime import datetime, timezone
 
+
 def extract_plugin_description(plugin_dir: Path) -> str:
     """Extract description from plugin README.md - text after first heading and before second heading."""
     readme_path = plugin_dir / "README.md"
@@ -18,9 +19,9 @@ def extract_plugin_description(plugin_dir: Path) -> str:
         return "Specialized tools for enhanced development workflows"
 
     try:
-        with open(readme_path, 'r', encoding='utf-8') as f:
+        with open(readme_path, "r", encoding="utf-8") as f:
             readme_content = f.read()
-            lines = readme_content.split('\n')
+            lines = readme_content.split("\n")
 
             description_lines = []
             in_description = False
@@ -30,7 +31,7 @@ def extract_plugin_description(plugin_dir: Path) -> str:
                 line = line.strip()
 
                 # Count headings to find boundaries
-                if line.startswith('#'):
+                if line.startswith("#"):
                     heading_count += 1
                     if heading_count == 1:
                         # Skip the first heading, start collecting after this
@@ -42,16 +43,16 @@ def extract_plugin_description(plugin_dir: Path) -> str:
 
                 # Collect description text between first and second headings
                 if in_description and line:
-                    if not line.startswith('#'):
+                    if not line.startswith("#"):
                         description_lines.append(line)
                 elif in_description and not line and description_lines:
                     # Stop if we hit an empty line after collecting some content
                     continue
 
             if description_lines:
-                description = ' '.join(description_lines)
+                description = " ".join(description_lines)
                 # Clean up and limit length
-                description = re.sub(r'\s+', ' ', description).strip()
+                description = re.sub(r"\s+", " ", description).strip()
                 if len(description) > 200:
                     description = description[:197] + "..."
                 return description
@@ -60,6 +61,278 @@ def extract_plugin_description(plugin_dir: Path) -> str:
         print(f"Warning: Could not read {readme_path}: {e}")
 
     return "Specialized tools for enhanced development workflows"
+
+
+def extract_component_description(file_path: Path) -> str:
+    """Extract description from component file (first paragraph after heading)."""
+    if not file_path.exists():
+        return "No description available"
+
+    try:
+        with open(file_path, "r", encoding="utf-8") as f:
+            content = f.read()
+            lines = content.split("\n")
+
+            description_lines = []
+            in_description = False
+
+            for line in lines:
+                line = line.strip()
+
+                # Skip empty lines and headings
+                if not line or line.startswith("#"):
+                    if line.startswith("#") and in_description:
+                        break  # Stop at next heading
+                    continue
+
+                # Start collecting description after first heading/empty line
+                if not in_description:
+                    in_description = True
+
+                if in_description:
+                    description_lines.append(line)
+                    if len(description_lines) >= 3:  # Limit to first few lines
+                        break
+
+            if description_lines:
+                description = " ".join(description_lines)
+                description = re.sub(r"\s+", " ", description).strip()
+                if len(description) > 150:
+                    description = description[:147] + "..."
+                return description
+
+    except (FileNotFoundError, UnicodeDecodeError) as e:
+        print(f"Warning: Could not read {file_path}: {e}")
+
+    return "No description available"
+
+
+def list_plugin_components(plugin_dir: Path) -> Dict[str, List[Dict[str, str]]]:
+    """List all components with their descriptions for a plugin."""
+    components = {
+        "commands": [],
+        "agents": [],
+        "skills": [],
+        "hooks": [],
+        "mcp_servers": [],
+    }
+
+    # List commands
+    commands_dir = plugin_dir / "commands"
+    if commands_dir.exists():
+        for cmd_file in sorted(commands_dir.glob("*.md")):
+            name = cmd_file.stem
+            description = extract_component_description(cmd_file)
+            components["commands"].append({"name": name, "description": description})
+
+    # List agents
+    agents_dir = plugin_dir / "agents"
+    if agents_dir.exists():
+        for agent_file in sorted(agents_dir.glob("*.md")):
+            name = agent_file.stem
+            description = extract_component_description(agent_file)
+            components["agents"].append({"name": name, "description": description})
+
+    # List skills
+    skills_dir = plugin_dir / "skills"
+    if skills_dir.exists():
+        for skill_dir in sorted(skills_dir.iterdir()):
+            if skill_dir.is_dir() and (skill_dir / "SKILL.md").exists():
+                name = skill_dir.name
+                description = extract_component_description(skill_dir / "SKILL.md")
+                components["skills"].append({"name": name, "description": description})
+
+    # List hooks
+    hooks_dir = plugin_dir / "hooks"
+    if hooks_dir.exists():
+        hooks_json = hooks_dir / "hooks.json"
+        if hooks_json.exists():
+            try:
+                with open(hooks_json, "r", encoding="utf-8") as f:
+                    hooks_data = json.load(f)
+                    if isinstance(hooks_data, dict) and "hooks" in hooks_data:
+                        hooks_section = hooks_data["hooks"]
+                        if isinstance(hooks_section, dict):
+                            for hook_event, hook_configs in hooks_section.items():
+                                if isinstance(hook_configs, list):
+                                    for i, hook_config in enumerate(hook_configs):
+                                        if isinstance(hook_config, dict):
+                                            name = f"{hook_event}_{i}"
+                                            description = hook_config.get(
+                                                "description", f"Hook for {hook_event}"
+                                            )
+                                            components["hooks"].append(
+                                                {
+                                                    "name": name,
+                                                    "description": description,
+                                                }
+                                            )
+                        elif isinstance(hooks_section, list):
+                            for hook in hooks_section:
+                                if isinstance(hook, dict):
+                                    name = hook.get("name", "Unknown")
+                                    description = hook.get(
+                                        "description", "No description"
+                                    )
+                                    components["hooks"].append(
+                                        {"name": name, "description": description}
+                                    )
+                    elif isinstance(hooks_data, list):
+                        for hook in hooks_data:
+                            name = hook.get("name", "Unknown")
+                            description = hook.get("description", "No description")
+                            components["hooks"].append(
+                                {"name": name, "description": description}
+                            )
+            except (json.JSONDecodeError, FileNotFoundError):
+                # Fallback to markdown files
+                for hook_file in sorted(hooks_dir.glob("*.md")):
+                    name = hook_file.stem
+                    description = extract_component_description(hook_file)
+                    components["hooks"].append(
+                        {"name": name, "description": description}
+                    )
+        else:
+            # Fallback to markdown files
+            for hook_file in sorted(hooks_dir.glob("*.md")):
+                name = hook_file.stem
+                description = extract_component_description(hook_file)
+                components["hooks"].append({"name": name, "description": description})
+
+    # List MCP servers
+    mcp_dir = plugin_dir / "mcp_servers"
+    if mcp_dir.exists():
+        for mcp_file in sorted(mcp_dir.glob("*.json")):
+            name = mcp_file.stem
+            try:
+                with open(mcp_file, "r", encoding="utf-8") as f:
+                    mcp_data = json.load(f)
+                    description = mcp_data.get(
+                        "description", "No description available"
+                    )
+                    components["mcp_servers"].append(
+                        {"name": name, "description": description}
+                    )
+            except (json.JSONDecodeError, FileNotFoundError):
+                components["mcp_servers"].append(
+                    {"name": name, "description": "Configuration file"}
+                )
+
+    return components
+
+
+def generate_plugin_readme(plugin_dir: Path) -> str:
+    """Generate README.md for a specific plugin."""
+    plugin_name = plugin_dir.name.replace("-", " ").title()
+    plugin_key = plugin_dir.name
+
+    # Extract description from plugin.json first, then fallback to README extraction
+    plugin_json_path = plugin_dir / ".claude-plugin" / "plugin.json"
+    description = ""
+
+    if plugin_json_path.exists():
+        try:
+            with open(plugin_json_path, "r", encoding="utf-8") as f:
+                plugin_data = json.load(f)
+                description = plugin_data.get("description", "")
+        except (json.JSONDecodeError, FileNotFoundError):
+            pass
+
+    # Fallback to extracting from README if no description in plugin.json
+    if not description:
+        description = extract_plugin_description(plugin_dir)
+
+    # Get component counts and details
+    counts = count_components(plugin_dir)
+    components = list_plugin_components(plugin_dir)
+
+    readme = f"""# {plugin_name}
+
+{description}
+
+## Overview
+
+This plugin provides the following components:
+
+"""
+
+    # Add component sections
+    if components["commands"]:
+        readme += f"## Commands ({len(components['commands'])})\n\n"
+        for cmd in components["commands"]:
+            readme += f"### `{cmd['name']}`\n{cmd['description']}\n\n"
+
+    if components["agents"]:
+        readme += f"## Agents ({len(components['agents'])})\n\n"
+        for agent in components["agents"]:
+            readme += f"### {agent['name']}\n{agent['description']}\n\n"
+
+    if components["skills"]:
+        readme += f"## Skills ({len(components['skills'])})\n\n"
+        for skill in components["skills"]:
+            readme += f"### {skill['name']}\n{skill['description']}\n\n"
+
+    if components["hooks"]:
+        readme += f"## Hooks ({len(components['hooks'])})\n\n"
+        for hook in components["hooks"]:
+            readme += f"### {hook['name']}\n{hook['description']}\n\n"
+
+    if components["mcp_servers"]:
+        readme += f"## MCP Servers ({len(components['mcp_servers'])})\n\n"
+        for mcp in components["mcp_servers"]:
+            readme += f"### {mcp['name']}\n{mcp['description']}\n\n"
+
+    readme += f"""## Installation
+
+Install this plugin from the rigerc-claude marketplace:
+
+```bash
+/plugin install {plugin_key}@rigerc-claude
+```
+
+## Usage
+
+After installation, the components provided by this plugin will be available in your Claude Code environment.
+
+- **Commands** can be used with slash commands (e.g., `/command-name`)
+- **Agents** provide specialized expertise for specific tasks
+- **Skills** enhance agent capabilities for particular domains
+- **Hooks** automate workflows and git operations
+- **MCP Servers** provide external tool integrations
+
+## Development
+
+This plugin is part of the rigerc-claude marketplace collection. For development details, see the main repository.
+
+---
+
+*This README is automatically generated. Do not edit manually - run `python scripts/build-marketplace.py` to update.*
+"""
+
+    return readme
+
+
+def build_plugin_readmes(plugins_dir: Path) -> None:
+    """Generate README.md for each plugin."""
+    if not plugins_dir.exists():
+        print(f"Warning: Plugins directory {plugins_dir} does not exist")
+        return
+
+    for plugin_dir in plugins_dir.iterdir():
+        if plugin_dir.is_dir() and not plugin_dir.name.startswith("."):
+            # Check if it's a valid plugin
+            plugin_json = plugin_dir / ".claude-plugin" / "plugin.json"
+            readme = plugin_dir / "README.md"
+
+            if plugin_json.exists() or readme.exists():
+                plugin_readme = generate_plugin_readme(plugin_dir)
+                readme_path = plugin_dir / "README.md"
+
+                with open(readme_path, "w", encoding="utf-8") as f:
+                    f.write(plugin_readme)
+
+                print(f"✅ Generated {readme_path}")
+
 
 def extract_plugin_info(plugin_dir: Path) -> Dict[str, Any]:
     """Extract plugin information from plugin directory."""
@@ -71,15 +344,17 @@ def extract_plugin_info(plugin_dir: Path) -> Dict[str, Any]:
     plugin_info = {
         "name": plugin_name,
         "source": f"./plugins/{plugin_name}",
-        "description": f"Plugin: {plugin_name.replace('-', ' ').title()}"
+        "description": f"Plugin: {plugin_name.replace('-', ' ').title()}",
     }
 
     # Load from plugin.json if exists
     if plugin_json_path.exists():
         try:
-            with open(plugin_json_path, 'r', encoding='utf-8') as f:
+            with open(plugin_json_path, "r", encoding="utf-8") as f:
                 plugin_data = json.load(f)
-                plugin_info["description"] = plugin_data.get("description", plugin_info["description"])
+                plugin_info["description"] = plugin_data.get(
+                    "description", plugin_info["description"]
+                )
         except (json.JSONDecodeError, FileNotFoundError) as e:
             print(f"Warning: Could not parse {plugin_json_path}: {e}")
 
@@ -92,39 +367,74 @@ def extract_plugin_info(plugin_dir: Path) -> Dict[str, Any]:
 
     return plugin_info
 
+
 def count_components(plugin_dir: Path) -> Dict[str, int]:
-    """Count commands, agents, and skills in plugin directory."""
-    counts = {"commands": 0, "agents": 0, "skills": 0}
+    """Count commands, agents, skills, hooks, and MCP servers in plugin directory."""
+    counts = {"commands": 0, "agents": 0, "skills": 0, "hooks": 0, "mcp_servers": 0}
 
     for component_type in counts.keys():
         component_dir = plugin_dir / component_type
         if component_dir.exists():
             if component_type == "skills":
                 # Count skill directories (each contains SKILL.md)
-                counts[component_type] = len([d for d in component_dir.iterdir()
-                                             if d.is_dir() and (d / "SKILL.md").exists()])
+                counts[component_type] = len(
+                    [
+                        d
+                        for d in component_dir.iterdir()
+                        if d.is_dir() and (d / "SKILL.md").exists()
+                    ]
+                )
+            elif component_type == "hooks":
+                # Count hooks.json files or markdown files in hooks directory
+                hooks_json = component_dir / "hooks.json"
+                if hooks_json.exists():
+                    try:
+                        with open(hooks_json, "r", encoding="utf-8") as f:
+                            hooks_data = json.load(f)
+                            # Count hooks in the JSON structure
+                            if isinstance(hooks_data, dict):
+                                counts[component_type] = len(
+                                    hooks_data.get("hooks", [])
+                                )
+                            elif isinstance(hooks_data, list):
+                                counts[component_type] = len(hooks_data)
+                    except (json.JSONDecodeError, FileNotFoundError):
+                        counts[component_type] = len(
+                            [f for f in component_dir.glob("*.md")]
+                        )
+                else:
+                    counts[component_type] = len(
+                        [f for f in component_dir.glob("*.md")]
+                    )
+            elif component_type == "mcp_servers":
+                # Count MCP server configurations
+                counts[component_type] = len([f for f in component_dir.glob("*.json")])
             else:
-                # Count markdown files
+                # Count markdown files for commands and agents
                 counts[component_type] = len([f for f in component_dir.glob("*.md")])
 
     return counts
+
 
 def get_current_version(marketplace_file: Path) -> str:
     """Get current version from existing marketplace file or return initial version."""
     if marketplace_file.exists():
         try:
-            with open(marketplace_file, 'r', encoding='utf-8') as f:
+            with open(marketplace_file, "r", encoding="utf-8") as f:
                 marketplace = json.load(f)
-                current_version = marketplace.get("metadata", {}).get("version", "1.0.0")
+                current_version = marketplace.get("metadata", {}).get(
+                    "version", "1.0.0"
+                )
                 return current_version
         except (json.JSONDecodeError, FileNotFoundError):
             pass
     return "1.0.0"
 
+
 def increment_version(version: str) -> str:
     """Increment patch version (x.y.z -> x.y.z+1)."""
     try:
-        parts = version.split('.')
+        parts = version.split(".")
         if len(parts) == 3:
             major, minor, patch = map(int, parts)
             return f"{major}.{minor}.{patch + 1}"
@@ -132,6 +442,7 @@ def increment_version(version: str) -> str:
         pass
     # Fallback to new version if parsing fails
     return "1.0.1"
+
 
 def build_marketplace_json(plugins_dir: Path, marketplace_file: Path) -> Dict[str, Any]:
     """Build marketplace.json from plugins directory with version management."""
@@ -142,7 +453,7 @@ def build_marketplace_json(plugins_dir: Path, marketplace_file: Path) -> Dict[st
         return {}
 
     for plugin_dir in plugins_dir.iterdir():
-        if plugin_dir.is_dir() and not plugin_dir.name.startswith('.'):
+        if plugin_dir.is_dir() and not plugin_dir.name.startswith("."):
             # Check if it's a valid plugin (has .claude-plugin/plugin.json or README.md)
             plugin_json = plugin_dir / ".claude-plugin" / "plugin.json"
             readme = plugin_dir / "README.md"
@@ -163,29 +474,30 @@ def build_marketplace_json(plugins_dir: Path, marketplace_file: Path) -> Dict[st
 
     marketplace = {
         "name": "rigerc-claude",
-        "owner": {
-            "name": "rigerc's Claude personal marketplace"
-        },
+        "owner": {"name": "rigerc's Claude personal marketplace"},
         "metadata": {
             "version": new_version,
             "description": "A curated collection of specialized plugins for Claude Code, organized by functionality to provide focused tools for specific development tasks.",
-            "lastUpdated": datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
+            "lastUpdated": datetime.now(timezone.utc)
+            .isoformat()
+            .replace("+00:00", "Z"),
         },
-        "plugins": plugins
+        "plugins": plugins,
     }
 
     return marketplace
 
+
 def generate_plugin_table(plugin_dirs: List[Path]) -> str:
     """Generate markdown table of plugins."""
     table_lines = [
-        "| Plugin | Commands | Agents | Skills | Focus |",
-        "|--------|----------|---------|---------|-------|"
+        "| Plugin | Commands | Agents | Skills | Hooks | MCP | Focus |",
+        "|--------|----------|---------|---------|-------|-----|-------|",
     ]
 
     for plugin_dir in sorted(plugin_dirs, key=lambda x: x.name):
-        if plugin_dir.is_dir() and not plugin_dir.name.startswith('.'):
-            plugin_name = plugin_dir.name.replace('-', ' ').title()
+        if plugin_dir.is_dir() and not plugin_dir.name.startswith("."):
+            plugin_name = plugin_dir.name.replace("-", " ").title()
             counts = count_components(plugin_dir)
 
             # Determine focus based on plugin content
@@ -207,39 +519,62 @@ def generate_plugin_table(plugin_dirs: List[Path]) -> str:
 
             table_lines.append(
                 f"| **{plugin_name}** | {counts['commands']} | {counts['agents']} | "
-                f"{counts['skills']} | {focus} |"
+                f"{counts['skills']} | {counts['hooks']} | {counts['mcp_servers']} | {focus} |"
             )
 
-    return '\n'.join(table_lines)
+    return "\n".join(table_lines)
+
 
 def generate_plugin_list(plugin_dirs: List[Path]) -> str:
     """Generate detailed plugin list with installation commands."""
     list_items = []
 
     for plugin_dir in sorted(plugin_dirs, key=lambda x: x.name):
-        if plugin_dir.is_dir() and not plugin_dir.name.startswith('.'):
-            plugin_name = plugin_dir.name.replace('-', ' ').title()
+        if plugin_dir.is_dir() and not plugin_dir.name.startswith("."):
+            plugin_name = plugin_dir.name.replace("-", " ").title()
             plugin_key = plugin_dir.name
+            counts = count_components(plugin_dir)
 
             # Extract description from README.md
             description = extract_plugin_description(plugin_dir)
 
             list_items.append(f"### {plugin_name}\n{description}\n")
+
+            # Add component counts
+            components = []
+            if counts["commands"] > 0:
+                components.append(f"{counts['commands']} commands")
+            if counts["agents"] > 0:
+                components.append(f"{counts['agents']} agents")
+            if counts["skills"] > 0:
+                components.append(f"{counts['skills']} skills")
+            if counts["hooks"] > 0:
+                components.append(f"{counts['hooks']} hooks")
+            if counts["mcp_servers"] > 0:
+                components.append(f"{counts['mcp_servers']} MCP servers")
+
+            if components:
+                list_items.append(f"**Components**: {', '.join(components)}\n")
+
             list_items.append(f"**Install**: `{plugin_key}@rigerc-claude`\n")
 
-    return '\n'.join(list_items)
+    return "\n".join(list_items)
+
 
 def build_readme(plugins_dir: Path) -> str:
     """Build README.md from plugins directory."""
 
     # Get plugin directories
-    plugin_dirs = [d for d in plugins_dir.iterdir()
-                   if d.is_dir() and not d.name.startswith('.')]
+    plugin_dirs = [
+        d for d in plugins_dir.iterdir() if d.is_dir() and not d.name.startswith(".")
+    ]
 
     # Count totals
     total_commands = sum(count_components(d)["commands"] for d in plugin_dirs)
     total_agents = sum(count_components(d)["agents"] for d in plugin_dirs)
     total_skills = sum(count_components(d)["skills"] for d in plugin_dirs)
+    total_hooks = sum(count_components(d)["hooks"] for d in plugin_dirs)
+    total_mcp_servers = sum(count_components(d)["mcp_servers"] for d in plugin_dirs)
 
     readme = f"""# Claude Extensions Plugin Collection
 
@@ -251,6 +586,8 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 - **{total_commands} Custom Commands**
 - **{total_agents} Expert Agents**
 - **{total_skills} Specialized Skills**
+- **{total_hooks} Hooks**
+- **{total_mcp_servers} MCP Servers**
 
 ## Available Plugins
 
@@ -300,6 +637,8 @@ plugin-name/
 ├── commands/                 # Custom slash commands (optional)
 ├── agents/                   # Custom agents (optional)
 ├── skills/                   # Agent Skills (optional)
+├── hooks/                    # Git hooks (optional)
+├── mcp_servers/              # MCP server configurations (optional)
 └── README.md                 # Plugin documentation
 ```
 
@@ -321,6 +660,7 @@ python scripts/build-marketplace.py
 # - Scan plugins/ directory
 # - Generate .claude-plugin/marketplace.json
 # - Update this README.md
+# - Generate individual plugin READMEs
 ```
 
 ### Plugin Categories
@@ -343,6 +683,7 @@ All plugins in this collection are licensed under MIT License.
 
     return readme
 
+
 def main():
     """Main build function."""
     script_dir = Path(__file__).parent
@@ -359,7 +700,7 @@ def main():
     marketplace_file = marketplace_dir / "marketplace.json"
     marketplace = build_marketplace_json(plugins_dir, marketplace_file)
 
-    with open(marketplace_file, 'w', encoding='utf-8') as f:
+    with open(marketplace_file, "w", encoding="utf-8") as f:
         json.dump(marketplace, f, indent=2, ensure_ascii=False)
 
     print(f"✅ Generated {marketplace_file}")
@@ -368,10 +709,14 @@ def main():
     readme_content = build_readme(plugins_dir)
     readme_file = project_root / "README.md"
 
-    with open(readme_file, 'w', encoding='utf-8') as f:
+    with open(readme_file, "w", encoding="utf-8") as f:
         f.write(readme_content)
 
     print(f"✅ Generated {readme_file}")
+
+    # Build individual plugin READMEs
+    print("\nBuilding individual plugin READMEs...")
+    build_plugin_readmes(plugins_dir)
 
     # Summary
     plugin_count = len(marketplace.get("plugins", []))
@@ -379,6 +724,7 @@ def main():
 
     if plugin_count == 0:
         print("⚠️  No plugins found. Check the plugins/ directory structure.")
+
 
 if __name__ == "__main__":
     main()

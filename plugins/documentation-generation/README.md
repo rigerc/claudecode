@@ -1,33 +1,57 @@
-# Documentation Generation Plugin
+# Documentation Generation
 
 Comprehensive tools for generating API documentation, technical docs, and project documentation.
 
-## Commands
+## Overview
 
-- `/create-documentation` - Generate comprehensive documentation for projects, APIs, features, and code
+This plugin provides the following components:
 
-## Agents
+## Commands (1)
 
-- **technical-docs-writer** - Creates user-facing documentation for products and features, including API docs, getting started guides, tutorials, and reference materials
-- **readme-writer** - Creates compelling README documentation for open source projects, libraries, and developer tools
-- **researcher** - Researches documentation, APIs, frameworks, and best practices for accurate and up-to-date information
+### `create-documentation`
+--- description: Command for using the generate-documentation skill argument-hint: "description"
 
-## Skills
+## Agents (3)
 
-- **api-docs-generator** - Generates comprehensive API documentation from OpenAPI specs, code docstrings, JSDoc/TSDoc comments, and Markdown annotations
-- **generate-documentation** - Researches and generates comprehensive documentation for projects, APIs, features, and code
+### readme-writer
+--- name: readme-writer description: Use PROACTIVELY when you need to create or improve README documentation for open source projects, libraries, o...
+
+### researcher
+--- name: researcher description: Use PROACTIVELY to research documentation, APIs, frameworks, and best practices. MUST BE USED when user mentions:...
+
+### technical-docs-writer
+--- name: technical-docs-writer description: Use PROACTIVELY when you need to create user-facing documentation for a product or feature, including ...
+
+## Skills (2)
+
+### api-docs-generator
+--- name: api-docs-generator description: Use to generate API documentation from OpenAPI specs, docstrings, JSDoc/TSDoc comments, and Markdown. Sup...
+
+### generate-documentation
+--- name: generate-documentation description: Use to generate project documentation. Researches with context7 and saves Markdown to docs/ directory.
 
 ## Installation
 
+Install this plugin from the rigerc-claude marketplace:
+
 ```bash
-/plugin marketplace add ./plugins
-/plugin install documentation-generation@plugins
+/plugin install documentation-generation@rigerc-claude
 ```
 
-## Use Cases
+## Usage
 
-- Creating API documentation from various source formats
-- Writing user-friendly technical guides and tutorials
-- Generating comprehensive project documentation
-- Researching and documenting best practices
-- Creating engaging README files for open source projects
+After installation, the components provided by this plugin will be available in your Claude Code environment.
+
+- **Commands** can be used with slash commands (e.g., `/command-name`)
+- **Agents** provide specialized expertise for specific tasks
+- **Skills** enhance agent capabilities for particular domains
+- **Hooks** automate workflows and git operations
+- **MCP Servers** provide external tool integrations
+
+## Development
+
+This plugin is part of the rigerc-claude marketplace collection. For development details, see the main repository.
+
+---
+
+*This README is automatically generated. Do not edit manually - run `python scripts/build-marketplace.py` to update.*

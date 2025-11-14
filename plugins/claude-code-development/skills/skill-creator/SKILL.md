@@ -1,49 +1,55 @@
 ---
 name: skill-creator
-description: Guide for creating effective skills. This skill should be used when users want to create a new skill (or update an existing skill) that extends Claude's capabilities with specialized knowledge, workflows, or tool integrations.
-license: Complete terms in LICENSE.txt
+# prettier-ignore
+description: Design and create Claude Skills using progressive disclosure principles. Use when building new skills, planning skill architecture, or writing skill content.
 ---
 
 # Skill Creator
 
-This skill provides guidance for creating effective skills that extend Claude's capabilities with specialized knowledge, workflows, and tools.
-
-## When to Use This Skill
-
-Use this skill when you need to:
-
-- Create a new skill from scratch
-- Update or refactor an existing skill
-- Understand skill structure and best practices
-- Package and distribute skills
-- Debug skill validation errors
+Create effective Claude Skills using progressive disclosure.
 
 ## Quick Start
 
-Initialize a new skill using the provided script:
+1. Ask user location (Project/User/Plugin) via AskUserQuestion
+2. Use `claude-skills-cli` skill to create & validate
+3. Keep SKILL.md under 50 lines, move details to references/
 
-```bash
-scripts/init_skill.py <skill-name> --path <output-directory>
+## When to Create
+
+- Repeating context across conversations
+- Domain expertise needed repeatedly
+
+## Progressive Disclosure
+
+Three levels: **Metadata** (~27 tokens) → **SKILL.md** (<50 lines) →
+**references/** (unlimited)
+
+Keep Levels 1 & 2 lean. Move details to Level 3.
+
+## Structure
+
+```
+my-skill/
+├── SKILL.md       # Core instructions + metadata
+├── references/    # Detailed docs (loaded as needed)
+├── scripts/       # Executable operations
+└── assets/        # Templates, images, files
 ```
 
-This creates a template skill directory with proper structure and placeholder files.
+## Workflow
 
-## Skill Creation Workflow
+**Location** (use AskUserQuestion): Project (`.claude/skills/`), User
+(`~/.claude/skills/`), or Plugin (`./plugins/<plugin>/skills/`)
 
-Follow these steps in order (skip only if clearly not applicable):
+**Validation**: Always use `claude-skills-cli` skill after creation.
 
-1. **Understand with Examples**: Gather concrete examples of how the skill will be used
-2. **Plan Resources**: Identify scripts, references, and assets needed
-3. **Initialize**: Run `init_skill.py` to create the skill structure
-4. **Implement**: Add resources and write SKILL.md instructions
-5. **Package**: Run `scripts/package_skill.py <path/to/skill>` to validate and create distributable zip
-6. **Iterate**: Test and refine based on real usage
+**Packaging**: Optional - only for sharing/uploading.
 
-## Available Resources
+## References
 
-See `references/` for comprehensive documentation:
-
-- **skill_structure.md**: Anatomy of skills, progressive disclosure, and resource types
-- **creation_process.md**: Detailed step-by-step creation workflow
-- **writing_guidelines.md**: Best practices for writing effective SKILL.md content
-- **skills.md**: Complete skills documentation and advanced topics
+- [quick-start.md](references/quick-start.md) - First skill walkthrough
+- [writing-guide.md](references/writing-guide.md) - Writing effective skills
+- [development-process.md](references/development-process.md) - 7-step workflow
+- [skill-examples.md](references/skill-examples.md) - Patterns & examples
+- [cli-reference.md](references/cli-reference.md) - CLI tool usage
+- [anthropic-resources.md](references/anthropic-resources.md) - Official docs

@@ -1,26 +1,43 @@
-# Bash Scripting Plugin
+# Bash Scripting
 
 Expert tools for Bash scripting, automation, and testing with bats-core framework.
 
-## Agents
+## Overview
 
-- **bash-scripting-expert** - Expert Bash scripting developer specializing in best practices, code review, optimization, and modern Bash patterns for production-ready automation scripts.
+This plugin provides the following components:
 
-## Skills
+## Agents (1)
 
-- **bats-tester** - Comprehensive guidance for creating tests for bash scripts using the bats-core testing framework, including setup, test environments, helper libraries, and best practices.
+### bash-scripting-expert
+--- name: bash-scripting-expert description: Expert Bash scripting developer specializing in best practices, code review, optimization, and modern ...
+
+## Skills (1)
+
+### bats-tester
+--- name: bats-tester description: Use when creating tests for bash scripts using bats-core. Provides expertise in writing .bats test files, settin...
 
 ## Installation
 
+Install this plugin from the rigerc-claude marketplace:
+
 ```bash
-/plugin marketplace add ./plugins
-/plugin install bash-scripting@plugins
+/plugin install bash-scripting@rigerc-claude
 ```
 
-## Use Cases
+## Usage
 
-- Writing production-ready Bash automation scripts
-- Creating comprehensive tests for shell scripts using bats-core
-- Refactoring legacy Bash code for better maintainability
-- Implementing advanced Bash features with security and performance focus
-- Setting up automated testing for command-line tools
+After installation, the components provided by this plugin will be available in your Claude Code environment.
+
+- **Commands** can be used with slash commands (e.g., `/command-name`)
+- **Agents** provide specialized expertise for specific tasks
+- **Skills** enhance agent capabilities for particular domains
+- **Hooks** automate workflows and git operations
+- **MCP Servers** provide external tool integrations
+
+## Development
+
+This plugin is part of the rigerc-claude marketplace collection. For development details, see the main repository.
+
+---
+
+*This README is automatically generated. Do not edit manually - run `python scripts/build-marketplace.py` to update.*

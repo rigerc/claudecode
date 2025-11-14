@@ -1,7 +1,7 @@
 {
   "name": "claude-code-development",
   "version": "1.0.0",
-  "description": "Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks",
+  "description": "Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks. Skill-creator is adapted from claude-skills-cli.",
   "author": {
     "name": "Claude Extensions"
   },

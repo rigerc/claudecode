@@ -1,28 +1,41 @@
-# Productivity Tools Plugin
+# Productivity Tools
 
 Productivity enhancement tools including feature brainstorming, prompt enhancement, and dotfile management.
 
-## Commands
+## Overview
 
-- `/feature-brainstorm` - Analyze the current project and suggest improvements to features or new features that are in line with the project's goals
-- `/enhance-prompt` - Enhance a basic prompt with more detail, context, and clarity in a single concise paragraph
+This plugin provides the following components:
 
-## Agents
+## Commands (2)
 
-- **chezmoi** - Chezmoi dotfile management system specialist for setup, configuration management, encryption, and workflow optimization
+### `enhance-prompt`
+--- allowed-tools: Read, Write, Edit, Bash, Glob, Grep, Task, mcp__context7__resolve-library-id, mcp__context7__get-library-docs argument-hint: [pr...
+
+### `feature-brainstorm`
+--- allowed-tools: Read, Write, Edit, Bash, Glob, Grep, Task, mcp__context7__resolve-library-id, mcp__context7__get-library-docs description: Analy...
 
 ## Installation
 
+Install this plugin from the rigerc-claude marketplace:
+
 ```bash
-/plugin marketplace add ./plugins
-/plugin install productivity-tools@plugins
+/plugin install productivity-tools@rigerc-claude
 ```
 
-## Use Cases
+## Usage
 
-- Brainstorming new features for existing projects
-- Analyzing projects for improvement opportunities
-- Enhancing prompts with context and specificity
-- Managing dotfiles across multiple machines with Chezmoi
-- Setting up secure encrypted dotfile configurations
-- Creating machine-specific configurations and templates
+After installation, the components provided by this plugin will be available in your Claude Code environment.
+
+- **Commands** can be used with slash commands (e.g., `/command-name`)
+- **Agents** provide specialized expertise for specific tasks
+- **Skills** enhance agent capabilities for particular domains
+- **Hooks** automate workflows and git operations
+- **MCP Servers** provide external tool integrations
+
+## Development
+
+This plugin is part of the rigerc-claude marketplace collection. For development details, see the main repository.
+
+---
+
+*This README is automatically generated. Do not edit manually - run `python scripts/build-marketplace.py` to update.*
