@@ -1,6 +1,6 @@
 # Markdowntaskmanager
 
-A comprehensive AI-driven task management system that brings discipline and transparency to your development workflow. This plugin implements a Kanban-style task management system using local Markd...
+Kanban task management system using local Markdown files with comprehensive task lifecycle management
 
 ## Overview
 
@@ -9,7 +9,7 @@ This plugin provides the following components:
 ## Skills (1)
 
 ### markdown-task-manager
---- name: markdown-task-manager description: Use to manage Kanban tasks using local Markdown files. Creates tasks in kanban.md, archives to archive...
+--- name: markdown-task-manager description: Use to manage Kanban tasks using local Markdown files. Handles task creation, tracking, archival, and ...
 
 ## Hooks (1)
 

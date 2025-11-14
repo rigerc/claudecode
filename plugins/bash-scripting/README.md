@@ -1,6 +1,6 @@
 # Bash Scripting
 
-Expert tools for Bash scripting, automation, and testing with bats-core framework.
+Expert tools for Bash scripting, automation, and testing with bats-core framework
 
 ## Overview
 
@@ -14,7 +14,7 @@ This plugin provides the following components:
 ## Skills (1)
 
 ### bats-tester
---- name: bats-tester description: Use when creating tests for bash scripts using bats-core. Provides expertise in writing .bats test files, settin...
+--- name: bats-tester description: Use when creating tests for bash scripts using bats-core. Provides expertise in test writing, setup, and best pr...
 
 ## Installation
 

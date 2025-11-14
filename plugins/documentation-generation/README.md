@@ -1,6 +1,6 @@
 # Documentation Generation
 
-Comprehensive tools for generating API documentation, technical docs, and project documentation.
+Comprehensive tools for generating API documentation, technical docs, and project documentation
 
 ## Overview
 
@@ -25,10 +25,10 @@ This plugin provides the following components:
 ## Skills (2)
 
 ### api-docs-generator
---- name: api-docs-generator description: Use to generate API documentation from OpenAPI specs, docstrings, JSDoc/TSDoc comments, and Markdown. Sup...
+--- name: api-docs-generator description: Use to generate API documentation from OpenAPI specs, docstrings, or comments. Supports multiple source f...
 
 ### generate-documentation
---- name: generate-documentation description: Use to generate project documentation. Researches with context7 and saves Markdown to docs/ directory.
+--- name: generate-documentation description: Use to generate project documentation. Researches with context7 and saves to docs/ directory.
 
 ## Installation
 

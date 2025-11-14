@@ -16,7 +16,7 @@ This plugin provides the following components:
 Install this plugin from the rigerc-claude marketplace:
 
 ```bash
-/plugin install flatban@rigerc-claude
+/plugin install Flatban@rigerc-claude
 ```
 
 ## Usage

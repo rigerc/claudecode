@@ -1,6 +1,6 @@
 # Go Development
 
-Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns.
+Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns
 
 ## Overview
 
@@ -20,10 +20,10 @@ This plugin provides the following components:
 --- name: go-bubbles-skill description: Use when working with the Bubbles component library for BubbleTea applications in Go. Provides expertise in...
 
 ### go-bubbletea-skill
---- name: go-bubbletea-skill description: Use when building terminal user interfaces (TUIs) with the BubbleTea framework in Go. Provides expertise ...
+--- name: go-bubbletea-skill description: Use when building terminal UIs with the BubbleTea framework in Go. Provides expertise in Model-View-Updat...
 
 ### go-doc
---- name: go-doc description: Use when working with Go's `go doc` command to access package documentation, explore APIs, view symbols, and manage H...
+--- name: go-doc description: Use when working with Go's `go doc` command. Access package docs, explore APIs, and manage HTTP documentation servers.
 
 ### go-env-parser
 --- name: go-env-parser description: Use when working with github.com/caarlos0/env for parsing environment variables into Go structs. Covers struct...
@@ -32,7 +32,7 @@ This plugin provides the following components:
 --- name: go-koanf description: Use when implementing Go configuration management with Koanf. Load from files, env vars, flags with hot-reloading a...
 
 ### go-openai
---- name: go-openai description: Use when working with the go-openai library for OpenAI API integration in Go applications. Provides expertise in i...
+--- name: go-openai description: Use when working with the go-openai library for OpenAI API integration in Go. Provides expertise in chat, embeddin...
 
 ### go-openrouter
 --- name: go-openrouter description: Use when working with the OpenRouter Go client library for AI model integration. Provides expertise in chat co...

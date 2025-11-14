@@ -1,6 +1,6 @@
 # Code Quality
 
-Code review, refactoring, and quality analysis tools for improving code maintainability and security.
+Code review, refactoring, and quality analysis tools for improving code maintainability and security
 
 ## Overview
 

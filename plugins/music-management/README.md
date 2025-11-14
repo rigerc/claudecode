@@ -1,6 +1,6 @@
 # Music Management
 
-Comprehensive music library management system guidance using the beets music organization tool.
+Comprehensive music library management system guidance using the beets music organization tool
 
 ## Overview
 
@@ -9,7 +9,7 @@ This plugin provides the following components:
 ## Skills (1)
 
 ### beets
---- name: beets description: Use when working with beets music library management system. Provides expertise in setup, importing, metadata manageme...
+--- name: beets description: Use when working with beets music library management. Provides expertise in setup, importing, metadata, and plugin dev...
 
 ## Installation
 

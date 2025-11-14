@@ -1,6 +1,6 @@
 # Library Researcher
 
-**Advanced library research and documentation analysis plugin for Claude Code** The Library Researcher plugin provides powerful tools for researching, analyzing, and documenting software libraries,...
+Advanced library research skill using Context7 to analyze, compare, and document software libraries, frameworks, and development tools
 
 ## Overview
 
@@ -9,7 +9,7 @@ This plugin provides the following components:
 ## Skills (1)
 
 ### library-researcher
---- name: library-researcher description: Use for library and framework research. Provides documentation and best practices via Context7.
+--- name: library-researcher description: Use for researching libraries and frameworks. Provides documentation and best practices via Context7.
 
 ## Installation
 

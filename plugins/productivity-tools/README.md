@@ -1,6 +1,6 @@
 # Productivity Tools
 
-Productivity enhancement tools including feature brainstorming, prompt enhancement, and dotfile management.
+Productivity enhancement tools including feature brainstorming and dotfile management
 
 ## Overview
 

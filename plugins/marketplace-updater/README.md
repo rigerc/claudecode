@@ -1,6 +1,6 @@
 # Marketplace Updater
 
-Automatically checks if repositories in `~/.claude/plugins/` are up to date and informs you when updates are available.
+Automatic marketplace metadata updater that checks for updates on Claude Code startup
 
 ## Overview
 

@@ -1,6 +1,6 @@
 # Claude Code Development
 
-Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks.
+Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks. Skill-creator is adapted from claude-skills-cli.
 
 ## Overview
 
@@ -43,19 +43,19 @@ This plugin provides the following components:
 --- name: claude-skills-cli description: Create and manage Claude Agent Skills with progressive disclosure validation. Use for building and validat...
 
 ### developing-claude-code-plugins
---- name: developing-claude-code-plugins description: Use when working on Claude Code plugins - creating, modifying, testing, releasing, or maintai...
+--- name: developing-claude-code-plugins description: Use when working on Claude Code plugins. Provides streamlined workflows, patterns, and exampl...
 
 ### plugin-creator
 --- name: plugin-creator description: Use when creating or developing Claude Code plugins. Scaffolds structure, adds components, sets up developmen...
 
 ### skill-creator
---- name: skill-creator
+--- name: skill-creator description: Use when creating or updating Claude Code skills that extend capabilities with specialized knowledge and workf...
 
 ### slash-commands-creator
 --- name: slash-commands-creator description: Create and review Claude Code slash commands. Use when creating `/...` commands, reviewing syntax, or...
 
 ### working-with-claude-code
---- name: working-with-claude-code description: Use when working with Claude Code CLI, plugins, hooks, MCP servers, skills, configuration, or any C...
+--- name: working-with-claude-code description: Use when working with Claude Code CLI or any feature. Provides comprehensive official documentation...
 
 ## Installation
 

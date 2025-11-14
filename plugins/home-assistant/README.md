@@ -1,6 +1,6 @@
 # Home Assistant
 
-A comprehensive Claude Code plugin for Home Assistant development, providing tools and skills for creating add-ons, integrations, and smart home automation workflows.
+Home Assistant development tools and automation skills for creating add-ons, integrations, and smart home workflows
 
 ## Overview
 
@@ -9,7 +9,7 @@ This plugin provides the following components:
 ## Skills (1)
 
 ### ha-addon
---- name: ha-addon description: Create, build, and publish Home Assistant add-ons. Expert in Docker, YAML config, security, and HA API integration....
+--- name: ha-addon description: Use when working on Home Assistant add-ons. Expert in Docker, YAML config, security, and HA API integration.
 
 ## Installation
 
