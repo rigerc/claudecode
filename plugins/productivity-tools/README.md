@@ -14,6 +14,7 @@ Enhance prompt with full repository context and codebase analysis
 ### `feature-brainstorm`
 Analyze the current project and suggest improvements to features or new features that are in line with the project's goals. The suggestions should ...
 
+
 ## Installation
 
 Install this plugin from the rigerc-claude marketplace:

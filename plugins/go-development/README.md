@@ -43,6 +43,7 @@ Use when creating end-to-end tests for TUI applications in Go using Teastraw. Ex
 ### go-urfave-cli-v3
 Use when building Go CLI applications with urfave/cli v3. Provides code generation, templates, migration tools, and reference documentation for com...
 
+
 ## Installation
 
 Install this plugin from the rigerc-claude marketplace:

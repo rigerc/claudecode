@@ -9,7 +9,6 @@ A curated collection of specialized plugins for Claude Code, organized by functi
   - [Install Individual Plugins](#install-individual-plugins)
   - [Browse Available Plugins](#browse-available-plugins)
 - [🔌 Plugin Details](#plugin-details)
-  - [Markdown Task Manager](#markdown-task-manager)
   - [Bash Scripting](#bash-scripting)
   - [Claude Code Development](#claude-code-development)
   - [Code Quality](#code-quality)
@@ -18,6 +17,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
   - [Go Development](#go-development)
   - [Home Assistant](#home-assistant)
   - [Library Researcher](#library-researcher)
+  - [Markdown Task Manager](#markdown-task-manager)
   - [Marketplace Updater](#marketplace-updater)
   - [Music Management](#music-management)
   - [Productivity Tools](#productivity-tools)
@@ -25,7 +25,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 - [🛠️ Development](#️development)
   - [Building](#building)
   - [Plugin Categories](#plugin-categories)
-- [📄 License](#-license)
+- [📄 License](#license)
 
 ## Collection Summary
 
@@ -70,22 +70,6 @@ Install only the plugins you need:
 ---
 
 ## 🔌 Plugin Details
-
-### Markdown Task Manager
-
-Kanban task management system using local Markdown files with comprehensive task lifecycle management
-
-**📦 Install**: `/plugin install MarkdownTaskManager@rigerc-claude`
-
-
-**Skills** (1):
-- **markdown-task-manager**: Use to manage Kanban tasks using local Markdown files. Handles task creation, tracking, archival, and reporting.
-
-
-**Hooks** (1):
-- **SessionStart_0**: Hook for SessionStart
-
----
 
 ### Bash Scripting
 
@@ -233,6 +217,22 @@ Advanced library research skill using Context7 to analyze, compare, and document
 
 **Skills** (1):
 - **library-researcher**: Use for researching libraries and frameworks. Provides documentation and best practices via Context7.
+
+---
+
+### Markdown Task Manager
+
+Kanban task management system using local Markdown files with comprehensive task lifecycle management
+
+**📦 Install**: `/plugin install MarkdownTaskManager@rigerc-claude`
+
+
+**Skills** (1):
+- **markdown-task-manager**: Use to manage Kanban tasks using local Markdown files. Handles task creation, tracking, archival, and reporting.
+
+
+**Hooks** (1):
+- **SessionStart_0**: Hook for SessionStart
 
 ---
 

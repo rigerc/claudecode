@@ -11,6 +11,7 @@ This plugin provides the following components:
 ### `flatban`
 Create or update Flatban tasks with AI assistance
 
+
 ## Installation
 
 Install this plugin from the rigerc-claude marketplace:

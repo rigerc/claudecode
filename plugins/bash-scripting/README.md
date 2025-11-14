@@ -16,6 +16,7 @@ Expert Bash scripting developer specializing in best practices, code review, opt
 ### bats-tester
 Use when creating tests for bash scripts using bats-core. Provides expertise in test writing, setup, and best practices.
 
+
 ## Installation
 
 Install this plugin from the rigerc-claude marketplace:

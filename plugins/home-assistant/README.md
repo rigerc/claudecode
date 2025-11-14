@@ -11,6 +11,7 @@ This plugin provides the following components:
 ### ha-addon
 Use when working on Home Assistant add-ons. Expert in Docker, YAML config, security, and HA API integration.
 
+
 ## Installation
 
 Install this plugin from the rigerc-claude marketplace:

@@ -11,6 +11,7 @@ This plugin provides the following components:
 ### library-researcher
 Use for researching libraries and frameworks. Provides documentation and best practices via Context7.
 
+
 ## Installation
 
 Install this plugin from the rigerc-claude marketplace:

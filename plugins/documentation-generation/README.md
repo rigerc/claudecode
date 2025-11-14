@@ -30,6 +30,7 @@ Use to generate API documentation from OpenAPI specs, docstrings, or comments. S
 ### generate-documentation
 Use to generate project documentation. Researches with context7 and saves to docs/ directory.
 
+
 ## Installation
 
 Install this plugin from the rigerc-claude marketplace:

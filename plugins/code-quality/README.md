@@ -19,6 +19,7 @@ Intelligently refactor and improve code quality
 ### code-reviewer
 Expert code review specialist for quality, security, and maintainability. Use PROACTIVELY after writing or modifying code to ensure high developmen...
 
+
 ## Installation
 
 Install this plugin from the rigerc-claude marketplace:

@@ -16,6 +16,7 @@ Use to manage Kanban tasks using local Markdown files. Handles task creation, tr
 ### SessionStart_0
 Hook for SessionStart
 
+
 ## Installation
 
 Install this plugin from the rigerc-claude marketplace:

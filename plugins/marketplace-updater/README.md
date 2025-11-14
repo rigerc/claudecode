@@ -11,6 +11,7 @@ This plugin provides the following components:
 ### SessionStart_0
 Hook for SessionStart
 
+
 ## Installation
 
 Install this plugin from the rigerc-claude marketplace:

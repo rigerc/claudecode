@@ -11,6 +11,7 @@ This plugin provides the following components:
 ### beets
 Use when working with beets music library management. Provides expertise in setup, importing, metadata, and plugin development.
 
+
 ## Installation
 
 Install this plugin from the rigerc-claude marketplace:

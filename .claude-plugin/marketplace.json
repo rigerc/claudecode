@@ -4,16 +4,11 @@
     "name": "rigerc's Claude personal marketplace"
   },
   "metadata": {
-    "version": "1.0.72",
+    "version": "1.0.76",
     "description": "A curated collection of specialized plugins for Claude Code, organized by functionality to provide focused tools for specific development tasks.",
-    "lastUpdated": "2025-11-14T18:37:19.524262Z"
+    "lastUpdated": "2025-11-14T18:55:02.530706Z"
   },
   "plugins": [
-    {
-      "name": "MarkdownTaskManager",
-      "source": "./plugins/MarkdownTaskManager",
-      "description": "Kanban task management system using local Markdown files with comprehensive task lifecycle management"
-    },
     {
       "name": "bash-scripting",
       "source": "./plugins/bash-scripting",
@@ -53,6 +48,11 @@
       "name": "library-researcher",
       "source": "./plugins/library-researcher",
       "description": "Advanced library research skill using Context7 to analyze, compare, and document software libraries, frameworks, and development tools"
+    },
+    {
+      "name": "MarkdownTaskManager",
+      "source": "./plugins/MarkdownTaskManager",
+      "description": "Kanban task management system using local Markdown files with comprehensive task lifecycle management"
     },
     {
       "name": "marketplace-updater",
