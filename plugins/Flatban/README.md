@@ -16,7 +16,7 @@ Create or update Flatban tasks with AI assistance
 Install this plugin from the rigerc-claude marketplace:
 
 ```bash
-/plugin install flatban@rigerc-claude
+/plugin install Flatban@rigerc-claude
 ```
 
 ## Usage
