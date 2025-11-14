@@ -4,9 +4,9 @@
     "name": "rigerc's Claude personal marketplace"
   },
   "metadata": {
-    "version": "1.0.76",
+    "version": "1.0.77",
     "description": "A curated collection of specialized plugins for Claude Code, organized by functionality to provide focused tools for specific development tasks.",
-    "lastUpdated": "2025-11-14T18:55:02.530706Z"
+    "lastUpdated": "2025-11-14T18:55:36.714080Z"
   },
   "plugins": [
     {
@@ -30,8 +30,8 @@
       "description": "Comprehensive tools for generating API documentation, technical docs, and project documentation"
     },
     {
-      "name": "flatban",
-      "source": "./plugins/flatban",
+      "name": "Flatban",
+      "source": "./plugins/Flatban",
       "description": "A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development."
     },
     {
