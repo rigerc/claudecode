@@ -15,12 +15,12 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 
 | Plugin | Commands | Agents | Skills | Hooks | MCP | Focus |
 |--------|----------|---------|---------|-------|-----|-------|
+| **Flatban** | 1 | 0 | 0 | 0 | 0 | General |
 | **Markdowntaskmanager** | 0 | 0 | 1 | 1 | 0 | General |
 | **Bash Scripting** | 0 | 1 | 1 | 0 | 0 | Shell automation |
 | **Claude Code Development** | 5 | 4 | 6 | 0 | 0 | Extending Claude Code |
 | **Code Quality** | 2 | 1 | 0 | 0 | 0 | Code review |
 | **Documentation Generation** | 1 | 3 | 2 | 0 | 0 | Technical writing |
-| **Flatban** | 1 | 0 | 0 | 0 | 0 | General |
 | **Go Development** | 0 | 1 | 10 | 0 | 0 | Go programming |
 | **Home Assistant** | 0 | 0 | 1 | 0 | 0 | General |
 | **Library Researcher** | 0 | 0 | 1 | 0 | 0 | General |
@@ -29,6 +29,13 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 | **Productivity Tools** | 2 | 0 | 0 | 0 | 0 | Workflow enhancement |
 
 ## Plugin Details
+
+### Flatban
+A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development.
+
+**Components**: 1 commands
+
+**Install**: `Flatban@rigerc-claude`
 
 ### Markdowntaskmanager
 A comprehensive AI-driven task management system that brings discipline and transparency to your development workflow. This plugin implements a Kanban-style task management system using local Markd...
@@ -64,13 +71,6 @@ Comprehensive tools for generating API documentation, technical docs, and projec
 **Components**: 1 commands, 3 agents, 2 skills
 
 **Install**: `documentation-generation@rigerc-claude`
-
-### Flatban
-A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development.
-
-**Components**: 1 commands
-
-**Install**: `flatban@rigerc-claude`
 
 ### Go Development
 Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns.
