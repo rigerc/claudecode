@@ -18,6 +18,7 @@ Create effective Claude Skills using progressive disclosure.
 
 - Repeating context across conversations
 - Domain expertise needed repeatedly
+- On request
 
 ## Progressive Disclosure
 
@@ -39,7 +40,7 @@ my-skill/
 ## Workflow
 
 **Location** (use AskUserQuestion): Project (`.claude/skills/`), User
-(`~/.claude/skills/`), or Plugin (`./plugins/<plugin>/skills/`)
+(`~/.claude/skills/`), or Plugin (`plugins/<plugin>/skills/`)
 
 **Validation**: Always use `claude-skills-cli` skill after creation.
 

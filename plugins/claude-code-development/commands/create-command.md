@@ -18,7 +18,7 @@ Use the slash-command-creator skill to understand how to create slash commands p
 
 The process should be:
 1. Use the slash-command-creator skill to get slash command creation guidance
-2. Ask whether they want a project-level command (`.claude/commands/`) or personal command (`~/.claude/commands/`) or plugin command (./plugins/<plugin>/commands)
+2. Ask whether they want a project-level command (`.claude/commands/`) or personal command (`~/.claude/commands/`) or plugin command (plugins/<plugin>/commands)
 3. Create the command file at the appropriate location
 4. Include proper frontmatter with the provided description, allowed-tools, etc.
 5. Add the command content with argument placeholders ($1, $2, $ARGUMENTS)

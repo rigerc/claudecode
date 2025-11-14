@@ -23,7 +23,7 @@
    mkdir -p ~/.claude/skills/my-skill
 
    # Plugin location (replace <plugin-name>)
-   mkdir -p ./plugins/<plugin-name>/skills/my-skill
+   mkdir -p plugins/<plugin-name>/skills/my-skill
    ```
 
 3. **Create SKILL.md with frontmatter**

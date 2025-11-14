@@ -46,6 +46,9 @@ Before creating a skill, determine where to save it:
 - Use **Plugin** when developing skills to distribute with a plugin
 
 #### Step 2: Create Skill Scaffolding
+You have two options for creating skill scaffolding:
+
+**Option 1: Create with name (creates in current directory)**
 ```bash
 # Create minimal skill scaffolding
 npx claude-skills-cli init --name my-skill --description "Brief description with trigger keywords"
@@ -54,8 +57,17 @@ npx claude-skills-cli init --name my-skill --description "Brief description with
 npx claude-skills-cli init --name my-skill --description "..." --with-examples
 ```
 
-#### Step 3: Move to Desired Location
-The CLI creates skills in the current directory. Move them to the chosen location:
+**Option 2: Create with path (creates directly at target location)**
+```bash
+# Create at specific location (no move needed)
+npx claude-skills-cli init --path .claude/skills/my-skill --description "Brief description with trigger keywords"
+
+# Create with examples at target location
+npx claude-skills-cli init --path .claude/skills/my-skill --description "..." --with-examples
+```
+
+#### Step 3: Move to Desired Location (if using --name option)
+The CLI creates skills in the current directory when using `--name`. Move them to the chosen location:
 
 ```bash
 # For project skills
@@ -68,6 +80,8 @@ mv my-skill ~/.claude/skills/
 ls plugins/  # See available plugins
 mv my-skill plugins/[plugin-name]/skills/
 ```
+
+**Note**: When using `--path`, skills are created directly at the target location, eliminating the need to move them.
 
 #### Skill Structure Validation
 The CLI enforces:
@@ -198,7 +212,21 @@ npx claude-skills-cli doctor .claude/skills/my-skill
 
 ### Example 1: Project Skill for Team Workflow
 ```bash
-# Step 1: Create skill scaffolding
+# Step 1: Create skill scaffolding directly at target location
+npx claude-skills-cli init \
+  --path .claude/skills/api-client-helper \
+  --description "Creating and configuring API client code for REST services. Use when working with HTTP requests, API authentication, or client libraries."
+
+# Step 2: Validate with strict mode
+npx claude-skills-cli validate .claude/skills/api-client-helper --strict
+
+# Step 3: Ensure reliable activation for team
+npx claude-skills-cli add-hook --project
+```
+
+**Alternative (using --name option):**
+```bash
+# Step 1: Create skill scaffolding with name
 npx claude-skills-cli init \
   --name api-client-helper \
   --description "Creating and configuring API client code for REST services. Use when working with HTTP requests, API authentication, or client libraries."
@@ -214,6 +242,24 @@ npx claude-skills-cli add-hook --project
 ```
 
 ### Example 2: Personal Skill for Individual Use
+```bash
+# Step 1: Create skill scaffolding with examples at target location
+npx claude-skills-cli init \
+  --path ~/.claude/skills/data-processor \
+  --description "Processing and analyzing data files in CSV, JSON, and Excel formats. Use for data cleaning, transformation, and analysis tasks." \
+  --with-examples
+
+# Step 2: Fix any formatting issues
+npx claude-skills-cli doctor ~/.claude/skills/data-processor
+
+# Step 3: Check overall quality
+npx claude-skills-cli stats ~/.claude/skills/
+
+# Step 4: Add global hook for personal activation
+npx claude-skills-cli add-hook
+```
+
+**Alternative (using --name option):**
 ```bash
 # Step 1: Create skill scaffolding with examples
 npx claude-skills-cli init \
@@ -235,6 +281,24 @@ npx claude-skills-cli add-hook
 ```
 
 ### Example 3: Plugin Skill Development
+```bash
+# Step 1: Check available plugins
+ls plugins/
+# Output: claude-code-development/ my-custom-plugin/
+
+# Step 2: Create skill scaffolding directly at plugin location
+npx claude-skills-cli init \
+  --path plugins/claude-code-development/skills/plugin-helper \
+  --description "Helping users develop and test Claude Code plugins. Use when creating plugin structure, debugging plugin issues, or packaging plugins."
+
+# Step 3: Validate and test
+npx claude-skills-cli validate plugins/claude-code-development/skills/plugin-helper --strict
+
+# Step 4: Package for distribution
+npx claude-skills-cli package plugins/claude-code-development/skills/plugin-helper
+```
+
+**Alternative (using --name option):**
 ```bash
 # Step 1: Check available plugins
 ls plugins/
@@ -268,7 +332,10 @@ When a user asks to create a skill, guide them through location selection:
 
 2. **Create based on choice**:
    ```bash
-   # For project skill
+   # For project skill (using --path for direct creation)
+   npx claude-skills-cli init --path .claude/skills/git-manager --description "Managing git repositories, branches, and workflows. Use for git operations, branch management, and repository maintenance."
+
+   # Alternative (using --name, requires moving)
    npx claude-skills-cli init --name git-manager --description "Managing git repositories, branches, and workflows. Use for git operations, branch management, and repository maintenance."
    mv git-manager .claude/skills/
    ```

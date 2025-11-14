@@ -2,32 +2,32 @@
 
 Step-by-step workflow for creating effective Claude Skills.
 
-## The Seven Steps
+## Workflow
 
-### 1. Recognize
+### 1. Gather & Research
 
-Notice when you're repeatedly providing the same context or domain
-knowledge:
+**Determine if research is needed**:
+- Skip research if user provides documentation or references
+- Skip research if comprehensive docs/ directory already exists with relevant information
+- Proceed with research if domain knowledge is missing or incomplete
 
-- Explaining the same database schema multiple times
-- Providing API integration details in every conversation
-- Sharing framework-specific conventions repeatedly
-- Teaching the same domain concepts
+**Research Phase** (only if needed):
+- Use the `documentation-generation:library-researcher` skill or MCP tools to understand the technical ecosystem
+- Research available APIs, frameworks, libraries, and established patterns
+- Study official documentation and best practices
+- Identify common workflows and use cases in the domain
+- Look for existing solutions, tools, and community standards
 
-**Signal**: "I've explained this 3+ times in different conversations"
-
-### 2. Gather
-
-Collect 3-5 concrete examples of how you've used this knowledge:
-
+**Gather Usage Examples**:
+- Collect 3-5 concrete examples of how you've used this knowledge
 - Save conversation snippets showing the repeated context
 - Document the specific questions or tasks that triggered the need
 - Note the exact information you provided each time
 - Identify common patterns across usage
 
-**Output**: A collection of real usage examples
+**Output**: Domain research documentation (if needed) + collection of real usage examples
 
-### 3. Plan
+### 2. Plan
 
 Decide information hierarchy:
 
@@ -58,7 +58,7 @@ Decide information hierarchy:
 - Configuration files
 - Images and diagrams
 
-### 4. Structure
+### 34. Structure
 
 #### Determine Skill Location
 
@@ -67,7 +67,7 @@ Before creating the directory, ask the user where to save the skill:
 1. **Project** (`.claude/skills/`) - Available only in current project
 2. **User** (`~/.claude/skills/`) - Available globally across all
    projects
-3. **Plugin** (`./plugins/<plugin>/skills/`) - Only available if the
+3. **Plugin** (`plugins/<plugin>/skills/`) - Only available if the
    current project contains `.claude-plugin/marketplace.json`
 
 Use the AskUserQuestion tool to present these options.
@@ -90,7 +90,7 @@ mkdir -p ./plugins/<plugin-name>/skills/my-skill/{references,scripts,assets}
 touch ./plugins/<plugin-name>/skills/my-skill/SKILL.md
 ```
 
-### 5. Write
+### 4. Write
 
 #### Write Description First
 
@@ -157,7 +157,7 @@ Examples: validators, code generators, formatters
 - Static files (images, data files)
 - Resources that shouldn't be loaded into context
 
-### 7. Validate & Iterate
+### 6. Validate & Iterate
 
 **Validation** (REQUIRED after creation):
 
