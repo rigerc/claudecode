@@ -16,7 +16,6 @@ A curated collection of specialized plugins for Claude Code, organized by functi
   - [Flatban](#flatban)
   - [Go Development](#go-development)
   - [Home Assistant](#home-assistant)
-  - [Library Researcher](#library-researcher)
   - [Markdown Task Manager](#markdown-task-manager)
   - [Marketplace Updater](#marketplace-updater)
   - [Music Management](#music-management)
@@ -29,10 +28,10 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 
 ## Collection Summary
 
-- **12 Specialized Plugins**
+- **11 Specialized Plugins**
 - **11 Custom Commands**
 - **10 Expert Agents**
-- **23 Specialized Skills**
+- **21 Specialized Skills**
 - **2 Hooks**
 - **0 MCP Servers**
 
@@ -109,13 +108,11 @@ Tools for developing and extending Claude Code with custom agents, commands, ski
 - **meta-agent**: Generates a new, complete Claude Code sub-agent configuration file from a user's description. Use this to create new agents. Use this Proactively w...
 
 
-**Skills** (6):
+**Skills** (4):
 - **claude-skills-cli**: Create and manage Claude Agent Skills with progressive disclosure validation. Use for building and validating skill structure and activation.
-- **developing-claude-code-plugins**: Use when working on Claude Code plugins. Provides streamlined workflows, patterns, and examples for the complete lifecycle.
 - **plugin-creator**: Use when creating or developing Claude Code plugins. Scaffolds structure, adds components, sets up development environments, and provides guidance ...
 - **skill-creator**: Use when creating or updating Claude Code skills that extend capabilities with specialized knowledge and workflows.
 - **slash-commands-creator**: Create and review Claude Code slash commands. Use when creating `/...` commands, reviewing syntax, or standardizing command definitions with proper...
-- **working-with-claude-code**: Use when working with Claude Code CLI or any feature. Provides comprehensive official documentation for all aspects of Claude Code.
 
 ---
 
@@ -153,9 +150,10 @@ Comprehensive tools for generating API documentation, technical docs, and projec
 - **technical-docs-writer**: Use PROACTIVELY when you need to create user-facing documentation for a product or feature, including API documentation, getting started guides, tu...
 
 
-**Skills** (2):
+**Skills** (3):
 - **api-docs-generator**: Use to generate API documentation from OpenAPI specs, docstrings, or comments. Supports multiple source formats.
 - **generate-documentation**: Use to generate project documentation. Researches with context7 and saves to docs/ directory.
+- **library-researcher**: Use for researching libraries and frameworks. Provides documentation and best practices via Context7.
 
 ---
 
@@ -205,18 +203,6 @@ Home Assistant development tools and automation skills for creating add-ons, int
 
 **Skills** (1):
 - **ha-addon**: Use when working on Home Assistant add-ons. Expert in Docker, YAML config, security, and HA API integration.
-
----
-
-### Library Researcher
-
-Advanced library research skill using Context7 to analyze, compare, and document software libraries, frameworks, and development tools
-
-**📦 Install**: `/plugin install library-researcher@rigerc-claude`
-
-
-**Skills** (1):
-- **library-researcher**: Use for researching libraries and frameworks. Provides documentation and best practices via Context7.
 
 ---
 
