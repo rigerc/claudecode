@@ -9,7 +9,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
   - [Install Individual Plugins](#install-individual-plugins)
   - [Browse Available Plugins](#browse-available-plugins)
 - [🔌 Plugin Details](#-plugin-details)
-  - [Markdowntaskmanager](#markdowntaskmanager)
+  - [Markdown Task Manager](#markdown-task-manager)
   - [Bash Scripting](#bash-scripting)
   - [Claude Code Development](#claude-code-development)
   - [Code Quality](#code-quality)
@@ -71,7 +71,7 @@ Install only the plugins you need:
 
 ## 🔌 Plugin Details
 
-### Markdowntaskmanager {#markdowntaskmanager}
+### Markdown Task Manager {#markdown-task-manager}
 
 Kanban task management system using local Markdown files with comprehensive task lifecycle management
 

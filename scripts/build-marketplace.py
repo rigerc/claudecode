@@ -258,7 +258,7 @@ def list_plugin_components(plugin_dir: Path) -> Dict[str, List[Dict[str, str]]]:
 
 def generate_plugin_readme(plugin_dir: Path) -> str:
     """Generate README.md for a specific plugin."""
-    plugin_name = plugin_dir.name.replace("-", " ").title()
+    plugin_name = format_plugin_name(plugin_dir.name)
     plugin_key = plugin_dir.name
 
     # Extract description from plugin.json first, then fallback to README extraction
@@ -523,6 +523,23 @@ def build_marketplace_json(plugins_dir: Path, marketplace_file: Path) -> Dict[st
     return marketplace
 
 
+def generate_anchor(plugin_name: str) -> str:
+    """Generate consistent anchor from plugin name."""
+    return plugin_name.lower().replace(" ", "-")
+
+
+def format_plugin_name(plugin_dir_name: str) -> str:
+    """Convert plugin directory name to proper title format."""
+    import re
+
+    # First handle camelCase by adding spaces before capital letters (except first char)
+    name = re.sub(r"(?<!^)(?=[A-Z])", " ", plugin_dir_name)
+    # Then replace hyphens with spaces
+    name = name.replace("-", " ")
+    # Clean up extra spaces and title case
+    return " ".join(name.split()).title()
+
+
 def generate_plugin_list(plugin_dirs: List[Path]) -> str:
     """Generate detailed plugin list with installation commands."""
     list_items = []
@@ -531,7 +548,7 @@ def generate_plugin_list(plugin_dirs: List[Path]) -> str:
     for plugin_dir in sorted(plugin_dirs, key=lambda x: x.name):
         if plugin_dir.is_dir() and not plugin_dir.name.startswith("."):
             plugin_count += 1
-            plugin_name = plugin_dir.name.replace("-", " ").title()
+            plugin_name = format_plugin_name(plugin_dir.name)
             plugin_key = plugin_dir.name
             counts = count_components(plugin_dir)
             components = list_plugin_components(plugin_dir)
@@ -544,12 +561,14 @@ def generate_plugin_list(plugin_dirs: List[Path]) -> str:
                 list_items.append("---\n")
 
             # Create anchor-friendly name (lowercase, replace spaces with hyphens)
-            anchor = plugin_name.lower().replace(" ", "-")
+            anchor = generate_anchor(plugin_name)
             list_items.append(f"### {plugin_name} {{#{anchor}}}\n")
             list_items.append(f"{description}\n")
 
             # Add install command immediately after description
-            list_items.append(f"**📦 Install**: `/plugin install {plugin_key}@rigerc-claude`\n")
+            list_items.append(
+                f"**📦 Install**: `/plugin install {plugin_key}@rigerc-claude`\n"
+            )
 
             # Add detailed component information with better spacing
             if components["commands"]:
@@ -599,10 +618,10 @@ def build_readme(plugins_dir: Path) -> str:
     toc_plugin_links = []
     for plugin_dir in sorted(plugin_dirs, key=lambda x: x.name):
         if plugin_dir.is_dir() and not plugin_dir.name.startswith("."):
-            plugin_name = plugin_dir.name.replace("-", " ").title()
+            plugin_name = format_plugin_name(plugin_dir.name)
             plugin_key = plugin_dir.name
             # Create anchor-friendly name (lowercase, replace spaces with hyphens)
-            anchor = plugin_name.lower().replace(" ", "-")
+            anchor = generate_anchor(plugin_name)
             toc_plugin_links.append(f"  - [{plugin_name}](#{anchor})")
 
     # Count totals

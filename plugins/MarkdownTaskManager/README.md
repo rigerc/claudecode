@@ -1,4 +1,4 @@
-# Markdowntaskmanager
+# Markdown Task Manager
 
 Kanban task management system using local Markdown files with comprehensive task lifecycle management
 
