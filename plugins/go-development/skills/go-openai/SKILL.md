@@ -37,6 +37,12 @@ Integrate OpenAI APIs into Go applications:
 - **Embeddings** - Vector embeddings for search
 - **Fine-tuning** - Custom model training
 
-See references for comprehensive guidance:
-- [detailed guide](references/detailed-guide.md) - Comprehensive API examples and integration patterns
-- [models guide](references/models_guide.md) - Model selection, capabilities, and optimization
+See `references/` for focused documentation:
+- **[getting-started.md](references/getting-started.md)** - Basic setup, configuration, and deployment
+- **[chat-completions.md](references/chat-completions.md)** - GPT chat, function calling, and structured output
+- **[media-generation.md](references/media-generation.md)** - DALL-E image generation and Whisper audio processing
+- **[embeddings-and-finetuning.md](references/embeddings-and-finetuning.md)** - Vector embeddings and custom model training
+- **[integration-patterns.md](references/integration-patterns.md)** - Error handling, web servers, and CLI integration
+- **[best-practices.md](references/best-practices.md)** - Model selection and cost optimization
+- [detailed guide](references/detailed-guide.md) - Complete overview and navigation
+- [models guide](references/models_guide.md) - Model capabilities and optimization

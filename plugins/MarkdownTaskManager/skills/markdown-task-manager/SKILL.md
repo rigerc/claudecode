@@ -39,4 +39,10 @@ All tasks follow this mandatory structure:
 - **Description**: Free text (no subheadings allowed)
 - **Sections**: Subtasks, Notes, Results, Modified files
 
-See [detailed guide](references/detailed-guide.md) for complete format specification, examples, and [validation](references/validation.md) rules.
+See `references/` for focused documentation:
+- **[task-format-guide.md](references/task-format-guide.md)** - Task format, workflow, and golden rules
+- **[file-structure-examples.md](references/file-structure-examples.md)** - Complete templates and usage examples
+- **[implementation-usage.md](references/implementation-usage.md)** - Skill functions and setup instructions
+- **[troubleshooting.md](references/troubleshooting.md)** - Common issues and debugging
+- **[performance-optimization.md](references/performance-optimization.md)** - Scalability and performance tuning
+- [validation.md](references/validation.md) - Format validation rules

@@ -10,7 +10,7 @@ Create effective Claude Skills using progressive disclosure.
 
 ## Quick Start
 
-1. Ask user location (Project/User/Plugin) via AskUserQuestion
+1. Ask user location (Project/User/Project Plugin) via AskUserQuestion
 2. Use `claude-skills-cli` skill to create & validate
 3. Keep SKILL.md under 50 lines, move details to references/
 

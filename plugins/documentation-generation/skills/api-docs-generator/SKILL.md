@@ -38,4 +38,9 @@ Generate API documentation from various sources:
 - JSDoc/TSDoc comments
 - Inline Markdown documentation
 
-See [detailed guide](references/detailed-guide.md) for comprehensive examples and advanced usage.
+See `references/` for focused documentation:
+- **[quick-start.md](references/quick-start.md)** - Getting started and source format identification
+- **[formatting-guide.md](references/formatting-guide.md)** - Documentation structure and formatting best practices
+- **[examples.md](references/examples.md)** - Complete code examples and generated outputs
+- **[patterns.md](references/patterns.md)** - Common API patterns and design guidelines
+- **[troubleshooting.md](references/troubleshooting.md)** - Issues, performance, and optimization

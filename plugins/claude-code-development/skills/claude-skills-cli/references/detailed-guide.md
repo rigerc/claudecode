@@ -38,12 +38,12 @@ Before creating a skill, determine where to save it:
 **Save Location Options:**
 - **Project Skills** (`.claude/skills/`): Team-shared, committed to git
 - **Personal Skills** (`~/.claude/skills/`): Individual, across all projects
-- **Plugin Skills** (`plugins/[plugin]/skills/`): Bundled with plugins (if `plugins/` directory exists)
+- **Project Plugin Skills** (`plugins/[plugin]/skills/`): Bundled with plugins (if `plugins/` directory exists)
 
 **Choosing the Right Location:**
 - Use **Project** for team workflows and shared utilities
 - Use **Personal** for individual preferences and experimental skills
-- Use **Plugin** when developing skills to distribute with a plugin
+- Use **Project Plugin** when developing skills to distribute with a plugin
 
 #### Step 2: Create Skill Scaffolding
 You have two options for creating skill scaffolding:

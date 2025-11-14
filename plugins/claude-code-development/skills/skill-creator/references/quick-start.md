@@ -8,7 +8,7 @@
 
    - **Project** (`.claude/skills/`) - Current project only
    - **User** (`~/.claude/skills/`) - Available globally
-   - **Plugin** (`./plugins/<plugin>/skills/`) - Only if
+   - **Project Plugin** (`plugins/<plugin>/skills/`) - Only if
      `.claude-plugin/marketplace.json` exists
 
    Ask the user using AskUserQuestion tool.
@@ -22,7 +22,7 @@
    # User location
    mkdir -p ~/.claude/skills/my-skill
 
-   # Plugin location (replace <plugin-name>)
+   # Project Plugin location (replace <plugin-name>)
    mkdir -p plugins/<plugin-name>/skills/my-skill
    ```
 
