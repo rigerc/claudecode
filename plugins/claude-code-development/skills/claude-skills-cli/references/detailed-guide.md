@@ -57,13 +57,13 @@ npx claude-skills-cli init --name my-skill --description "Brief description with
 npx claude-skills-cli init --name my-skill --description "..." --with-examples
 ```
 
-**Option 2: Create with path (creates directly at target location)**
+**Option 2: Create with path (creates directly at target location - use full/absolute paths)**
 ```bash
-# Create at specific location (no move needed)
-npx claude-skills-cli init --path .claude/skills/my-skill --description "Brief description with trigger keywords"
+# Create at specific location (no move needed) - always use full paths
+npx claude-skills-cli init --path /full/path/to/.claude/skills/my-skill --description "Brief description with trigger keywords"
 
 # Create with examples at target location
-npx claude-skills-cli init --path .claude/skills/my-skill --description "..." --with-examples
+npx claude-skills-cli init --path /full/path/to/.claude/skills/my-skill --description "..." --with-examples
 ```
 
 #### Step 3: Move to Desired Location (if using --name option)
@@ -95,14 +95,14 @@ The CLI enforces:
 
 #### Comprehensive Validation
 ```bash
-# Basic validation
-npx claude-skills-cli validate .claude/skills/my-skill
+# Basic validation (use full paths)
+npx claude-skills-cli validate /full/path/to/.claude/skills/my-skill
 
 # Strict validation (fail on warnings)
-npx claude-skills-cli validate .claude/skills/my-skill --strict
+npx claude-skills-cli validate /full/path/to/.claude/skills/my-skill --strict
 
 # JSON output for automation
-npx claude-skills-cli validate .claude/skills/my-skill --format json
+npx claude-skills-cli validate /full/path/to/.claude/skills/my-skill --format json
 ```
 
 #### Validation Checks
@@ -115,7 +115,8 @@ npx claude-skills-cli validate .claude/skills/my-skill --format json
 
 #### Auto-fix Common Issues
 ```bash
-npx claude-skills-cli doctor .claude/skills/my-skill
+# Use full paths
+npx claude-skills-cli doctor /full/path/to/.claude/skills/my-skill
 ```
 
 The doctor fixes:
@@ -147,12 +148,14 @@ npx claude-skills-cli add-hook --local
 
 #### View Skill Statistics
 ```bash
-npx claude-skills-cli stats .claude/skills
+# Use full paths
+npx claude-skills-cli stats /full/path/to/.claude/skills
 ```
 
 #### Package for Distribution
 ```bash
-npx claude-skills-cli package .claude/skills/my-skill
+# Use full paths
+npx claude-skills-cli package /full/path/to/.claude/skills/my-skill
 ```
 
 ## Best Practices
@@ -197,7 +200,8 @@ npx claude-skills-cli add-hook  # Add explicit activation hook
 **Problem**: Validation warns about multi-line descriptions
 **Solution**:
 ```bash
-npx claude-skills-cli doctor .claude/skills/my-skill
+# Use full paths
+npx claude-skills-cli doctor /full/path/to/.claude/skills/my-skill
 ```
 
 ### Validation Failures
@@ -212,13 +216,13 @@ npx claude-skills-cli doctor .claude/skills/my-skill
 
 ### Example 1: Project Skill for Team Workflow
 ```bash
-# Step 1: Create skill scaffolding directly at target location
+# Step 1: Create skill scaffolding directly at target location (use full path)
 npx claude-skills-cli init \
-  --path .claude/skills/api-client-helper \
+  --path /full/path/to/.claude/skills/api-client-helper \
   --description "Creating and configuring API client code for REST services. Use when working with HTTP requests, API authentication, or client libraries."
 
-# Step 2: Validate with strict mode
-npx claude-skills-cli validate .claude/skills/api-client-helper --strict
+# Step 2: Validate with strict mode (use full path)
+npx claude-skills-cli validate /full/path/to/.claude/skills/api-client-helper --strict
 
 # Step 3: Ensure reliable activation for team
 npx claude-skills-cli add-hook --project
@@ -232,10 +236,10 @@ npx claude-skills-cli init \
   --description "Creating and configuring API client code for REST services. Use when working with HTTP requests, API authentication, or client libraries."
 
 # Step 2: Move to project location (team-shared)
-mv api-client-helper .claude/skills/
+mv api-client-helper /full/path/to/.claude/skills/
 
-# Step 3: Validate with strict mode
-npx claude-skills-cli validate .claude/skills/api-client-helper --strict
+# Step 3: Validate with strict mode (use full path)
+npx claude-skills-cli validate /full/path/to/.claude/skills/api-client-helper --strict
 
 # Step 4: Ensure reliable activation for team
 npx claude-skills-cli add-hook --project
@@ -243,13 +247,13 @@ npx claude-skills-cli add-hook --project
 
 ### Example 2: Personal Skill for Individual Use
 ```bash
-# Step 1: Create skill scaffolding with examples at target location
+# Step 1: Create skill scaffolding with examples at target location (~ expands to full home path)
 npx claude-skills-cli init \
   --path ~/.claude/skills/data-processor \
   --description "Processing and analyzing data files in CSV, JSON, and Excel formats. Use for data cleaning, transformation, and analysis tasks." \
   --with-examples
 
-# Step 2: Fix any formatting issues
+# Step 2: Fix any formatting issues (~ expands to full path)
 npx claude-skills-cli doctor ~/.claude/skills/data-processor
 
 # Step 3: Check overall quality
@@ -267,7 +271,7 @@ npx claude-skills-cli init \
   --description "Processing and analyzing data files in CSV, JSON, and Excel formats. Use for data cleaning, transformation, and analysis tasks." \
   --with-examples
 
-# Step 2: Move to personal location (individual use)
+# Step 2: Move to personal location (~ expands to full path)
 mv data-processor ~/.claude/skills/
 
 # Step 3: Fix any formatting issues
@@ -283,25 +287,25 @@ npx claude-skills-cli add-hook
 ### Example 3: Plugin Skill Development
 ```bash
 # Step 1: Check available plugins
-ls plugins/
+ls /full/path/to/plugins/
 # Output: claude-code-development/ my-custom-plugin/
 
-# Step 2: Create skill scaffolding directly at plugin location
+# Step 2: Create skill scaffolding directly at plugin location (use full path)
 npx claude-skills-cli init \
-  --path plugins/claude-code-development/skills/plugin-helper \
+  --path /full/path/to/plugins/claude-code-development/skills/plugin-helper \
   --description "Helping users develop and test Claude Code plugins. Use when creating plugin structure, debugging plugin issues, or packaging plugins."
 
-# Step 3: Validate and test
-npx claude-skills-cli validate plugins/claude-code-development/skills/plugin-helper --strict
+# Step 3: Validate and test (use full path)
+npx claude-skills-cli validate /full/path/to/plugins/claude-code-development/skills/plugin-helper --strict
 
-# Step 4: Package for distribution
-npx claude-skills-cli package plugins/claude-code-development/skills/plugin-helper
+# Step 4: Package for distribution (use full path)
+npx claude-skills-cli package /full/path/to/plugins/claude-code-development/skills/plugin-helper
 ```
 
 **Alternative (using --name option):**
 ```bash
 # Step 1: Check available plugins
-ls plugins/
+ls /full/path/to/plugins/
 # Output: claude-code-development/ my-custom-plugin/
 
 # Step 2: Create skill scaffolding
@@ -309,14 +313,14 @@ npx claude-skills-cli init \
   --name plugin-helper \
   --description "Helping users develop and test Claude Code plugins. Use when creating plugin structure, debugging plugin issues, or packaging plugins."
 
-# Step 3: Move to plugin location
-mv plugin-helper plugins/claude-code-development/skills/
+# Step 3: Move to plugin location (use full path)
+mv plugin-helper /full/path/to/plugins/claude-code-development/skills/
 
-# Step 4: Validate and test
-npx claude-skills-cli validate plugins/claude-code-development/skills/plugin-helper --strict
+# Step 4: Validate and test (use full path)
+npx claude-skills-cli validate /full/path/to/plugins/claude-code-development/skills/plugin-helper --strict
 
-# Step 5: Package for distribution
-npx claude-skills-cli package plugins/claude-code-development/skills/plugin-helper
+# Step 5: Package for distribution (use full path)
+npx claude-skills-cli package /full/path/to/plugins/claude-code-development/skills/plugin-helper
 ```
 
 ### Example 4: Interactive Location Selection Workflow
@@ -332,18 +336,18 @@ When a user asks to create a skill, guide them through location selection:
 
 2. **Create based on choice**:
    ```bash
-   # For project skill (using --path for direct creation)
-   npx claude-skills-cli init --path .claude/skills/git-manager --description "Managing git repositories, branches, and workflows. Use for git operations, branch management, and repository maintenance."
+   # For project skill (using --path for direct creation - use full path)
+   npx claude-skills-cli init --path /full/path/to/.claude/skills/git-manager --description "Managing git repositories, branches, and workflows. Use for git operations, branch management, and repository maintenance."
 
-   # Alternative (using --name, requires moving)
+   # Alternative (using --name, requires moving with full path)
    npx claude-skills-cli init --name git-manager --description "Managing git repositories, branches, and workflows. Use for git operations, branch management, and repository maintenance."
-   mv git-manager .claude/skills/
+   mv git-manager /full/path/to/.claude/skills/
    ```
 
 3. **Complete setup**:
    ```bash
-   # Validate and ensure activation
-   npx claude-skills-cli validate .claude/skills/git-manager --strict
+   # Validate and ensure activation (use full path)
+   npx claude-skills-cli validate /full/path/to/.claude/skills/git-manager --strict
    npx claude-skills-cli add-hook --project  # or --global or --local
    ```
 

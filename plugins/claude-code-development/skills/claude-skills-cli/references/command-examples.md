@@ -7,14 +7,14 @@
 # Create minimal skill
 npx claude-skills-cli init --name my-skill --description "Brief description with trigger keywords"
 
-# Create at specific path
-npx claude-skills-cli init --path .claude/skills/my-skill --description "Brief description with trigger keywords"
+# Create at specific path (always use full/absolute paths)
+npx claude-skills-cli init --path /full/path/to/.claude/skills/my-skill --description "Brief description with trigger keywords"
 
 # Create with examples
 npx claude-skills-cli init --name my-skill --description "..." --with-examples
 
-# Create with examples at specific path
-npx claude-skills-cli init --path plugins/my-plugin/skills/my-skill --description "..." --with-examples
+# Create with examples at specific path (use full path)
+npx claude-skills-cli init --path /full/path/to/plugins/my-plugin/skills/my-skill --description "..." --with-examples
 ```
 
 ### Naming Conventions
@@ -30,19 +30,19 @@ npx claude-skills-cli init --name api_client --description "..." # Underscores
 npx claude-skills-cli init --name "api client" --description "..." # Spaces
 ```
 
-### Path-based Creation
+### Path-based Creation (always use full/absolute paths)
 ```bash
-# Create in project skills
-npx claude-skills-cli init --path .claude/skills/my-skill --description "Project-specific skill"
+# Create in project skills (use full path)
+npx claude-skills-cli init --path /full/path/to/.claude/skills/my-skill --description "Project-specific skill"
 
-# Create in user skills
+# Create in user skills (~ expands to full home path)
 npx claude-skills-cli init --path ~/.claude/skills/my-skill --description "Personal skill"
 
-# Create in plugin skills
-npx claude-skills-cli init --path plugins/my-plugin/skills/my-skill --description "Plugin skill"
+# Create in plugin skills (use full path)
+npx claude-skills-cli init --path /full/path/to/plugins/my-plugin/skills/my-skill --description "Plugin skill"
 
-# Create with nested path
-npx claude-skills-cli init --path plugins/claude-code-development/skills/agent-creator --description "Agent creation skill"
+# Create with nested path (use full path)
+npx claude-skills-cli init --path /full/path/to/plugins/claude-code-development/skills/agent-creator --description "Agent creation skill"
 ```
 
 ### Description Best Practices
@@ -51,7 +51,8 @@ npx claude-skills-cli init --path plugins/claude-code-development/skills/agent-c
 npx claude-skills-cli init --name pdf-processor \
   --description "Extract text, fill forms, merge PDFs. Use when working with PDF files, forms, or document extraction."
 
-npx claude-skills-cli init --path .claude/skills/excel-analyzer \
+# Use full paths with --path option
+npx claude-skills-cli init --path /full/path/to/.claude/skills/excel-analyzer \
   --description "Analyze Excel spreadsheets, create pivot tables, generate charts. Use for data analysis in .xlsx files."
 
 # Bad descriptions (too vague)
@@ -61,50 +62,50 @@ npx claude-skills-cli init --name helper \
 
 ## validate Command Examples
 
-### Validation Modes
+### Validation Modes (use full paths)
 ```bash
-# Basic validation
-npx claude-skills-cli validate .claude/skills/my-skill
+# Basic validation (use full path)
+npx claude-skills-cli validate /full/path/to/.claude/skills/my-skill
 
-# Strict validation (fails on warnings)
-npx claude-skills-cli validate .claude/skills/my-skill --strict
+# Strict validation (fails on warnings, use full path)
+npx claude-skills-cli validate /full/path/to/.claude/skills/my-skill --strict
 
-# JSON output for automation
-npx claude-skills-cli validate .claude/skills/my-skill --format json
+# JSON output for automation (use full path)
+npx claude-skills-cli validate /full/path/to/.claude/skills/my-skill --format json
 ```
 
 ### Batch Validation
 ```bash
-# Validate all skills in directory
-npx claude-skills-cli validate .claude/skills/
+# Validate all skills in directory (use full path)
+npx claude-skills-cli validate /full/path/to/.claude/skills/
 
-# Validate with JSON output for CI/CD
-npx claude-skills-cli validate .claude/skills/ --format json > validation-report.json
+# Validate with JSON output for CI/CD (use full path)
+npx claude-skills-cli validate /full/path/to/.claude/skills/ --format json > validation-report.json
 ```
 
 ## doctor Command Examples
 
-### Fix Common Issues
+### Fix Common Issues (use full paths)
 ```bash
-# Fix multi-line descriptions
-npx claude-skills-cli doctor .claude/skills/my-skill
+# Fix multi-line descriptions (use full path)
+npx claude-skills-cli doctor /full/path/to/.claude/skills/my-skill
 
-# Doctor multiple skills
-npx claude-skills-cli doctor .claude/skills/skill1 .claude/skills/skill2
+# Doctor multiple skills (use full paths)
+npx claude-skills-cli doctor /full/path/to/.claude/skills/skill1 /full/path/to/.claude/skills/skill2
 
-# Doctor all skills in directory
-npx claude-skills-cli doctor .claude/skills/
+# Doctor all skills in directory (use full path)
+npx claude-skills-cli doctor /full/path/to/.claude/skills/
 ```
 
 ## stats Command Examples
 
-### Skill Overview
+### Skill Overview (use full paths)
 ```bash
-# Show statistics for all skills
-npx claude-skills-cli stats .claude/skills
+# Show statistics for all skills (use full path)
+npx claude-skills-cli stats /full/path/to/.claude/skills
 
-# Show statistics for specific skill
-npx claude-skills-cli stats .claude/skills/my-skill
+# Show statistics for specific skill (use full path)
+npx claude-skills-cli stats /full/path/to/.claude/skills/my-skill
 ```
 
 ### Sample Output
@@ -121,13 +122,13 @@ Quality Rating: 4/5
 
 ## package Command Examples
 
-### Create Distribution Package
+### Create Distribution Package (use full paths)
 ```bash
-# Package single skill
-npx claude-skills-cli package .claude/skills/my-skill
+# Package single skill (use full path)
+npx claude-skills-cli package /full/path/to/.claude/skills/my-skill
 
-# Package with validation skip
-npx claude-skills-cli package .claude/skills/my-skill --skip-validation
+# Package with validation skip (use full path)
+npx claude-skills-cli package /full/path/to/.claude/skills/my-skill --skip-validation
 ```
 
 ### Output
@@ -168,53 +169,54 @@ The hook adds this instruction to settings:
 
 ## Workflow Examples
 
-### Complete Skill Creation Workflow
+### Complete Skill Creation Workflow (use full paths)
 ```bash
-# 1. Create skill
+# 1. Create skill (use full path with --path)
 npx claude-skills-cli init \
-  --name api-client-helper \
+  --path /full/path/to/.claude/skills/api-client-helper \
   --description "Creating and configuring API client code for REST services. Use when working with HTTP requests, API authentication, or client libraries." \
   --with-examples
 
-# 2. Validate
-npx claude-skills-cli validate .claude/skills/api-client-helper --strict
+# 2. Validate (use full path)
+npx claude-skills-cli validate /full/path/to/.claude/skills/api-client-helper --strict
 
-# 3. Fix issues if any
-npx claude-skills-cli doctor .claude/skills/api-client-helper
+# 3. Fix issues if any (use full path)
+npx claude-skills-cli doctor /full/path/to/.claude/skills/api-client-helper
 
 # 4. Ensure activation
 npx claude-skills-cli add-hook --project
 
-# 5. Check stats
-npx claude-skills-cli stats .claude/skills/
+# 5. Check stats (use full path)
+npx claude-skills-cli stats /full/path/to/.claude/skills/
 ```
 
-### Troubleshooting Workflow
+### Troubleshooting Workflow (use full paths)
 ```bash
-# 1. Identify issues
-npx claude-skills-cli validate .claude/skills/problem-skill
+# 1. Identify issues (use full path)
+npx claude-skills-cli validate /full/path/to/.claude/skills/problem-skill
 
-# 2. Get detailed report
-npx claude-skills-cli validate .claude/skills/problem-skill --format json
+# 2. Get detailed report (use full path)
+npx claude-skills-cli validate /full/path/to/.claude/skills/problem-skill --format json
 
-# 3. Auto-fix common issues
-npx claude-skills-cli doctor .claude/skills/problem-skill
+# 3. Auto-fix common issues (use full path)
+npx claude-skills-cli doctor /full/path/to/.claude/skills/problem-skill
 
-# 4. Re-validate
-npx claude-skills-cli validate .claude/skills/problem-skill --strict
+# 4. Re-validate (use full path)
+npx claude-skills-cli validate /full/path/to/.claude/skills/problem-skill --strict
 
-# 5. Check all skills health
-npx claude-skills-cli stats .claude/skills/
+# 5. Check all skills health (use full path)
+npx claude-skills-cli stats /full/path/to/.claude/skills/
 ```
 
-### CI/CD Integration
+### CI/CD Integration (use full paths)
 ```bash
 # In CI pipeline
 #!/bin/bash
 set -e
 
 echo "Validating all Claude Skills..."
-npx claude-skills-cli validate .claude/skills/ --strict --format json > validation.json
+# Use full path or $PWD for current working directory
+npx claude-skills-cli validate $PWD/.claude/skills/ --strict --format json > validation.json
 
 # Check for errors
 if jq -e '.[] | select(.status == "error")' validation.json > /dev/null; then

@@ -69,18 +69,18 @@ claude-skills-cli init [options]
 # Project location (.claude/skills/)
 npx claude-skills-cli init --name my-skill
 
-# User location (~/.claude/skills/)
+# User location (~/.claude/skills/ - ~ expands to full home path)
 npx claude-skills-cli init --path ~/.claude/skills/my-skill
 
-# Plugin location (./plugins/<plugin>/skills/)
-npx claude-skills-cli init --path ./plugins/my-plugin/skills/my-skill
+# Plugin location (always use full/absolute paths with --path)
+npx claude-skills-cli init --path /full/path/to/plugins/my-plugin/skills/my-skill
 
 # With description
 npx claude-skills-cli init --name my-skill \
   --description "SQLite queries. Use when writing database operations"
 
-# Custom absolute path
-npx claude-skills-cli init --path /custom/path/my-skill \
+# Custom absolute path (always use full paths with --path)
+npx claude-skills-cli init --path /full/path/to/custom/location/my-skill \
   --description "Brief description"
 ```
 
@@ -150,20 +150,20 @@ claude-skills-cli validate <skill_path> [options]
 #### Examples
 
 ```bash
-# Validate project skill
-npx claude-skills-cli validate .claude/skills/my-skill
+# Validate project skill (use full path)
+npx claude-skills-cli validate /full/path/to/.claude/skills/my-skill
 
-# Validate user skill
+# Validate user skill (~ expands to full home path)
 npx claude-skills-cli validate ~/.claude/skills/my-skill
 
-# Validate plugin skill
-npx claude-skills-cli validate ./plugins/my-plugin/skills/my-skill
+# Validate plugin skill (use full path)
+npx claude-skills-cli validate /full/path/to/plugins/my-plugin/skills/my-skill
 
-# Strict mode (warnings = errors)
-npx claude-skills-cli validate .claude/skills/my-skill --strict
+# Strict mode (warnings = errors, use full path)
+npx claude-skills-cli validate /full/path/to/.claude/skills/my-skill --strict
 
-# Validate multiple skills
-npx claude-skills-cli validate .claude/skills/skill-1
+# Validate multiple skills (use full paths)
+npx claude-skills-cli validate /full/path/to/.claude/skills/skill-1
 npx claude-skills-cli validate ~/.claude/skills/skill-2
 ```
 
@@ -321,16 +321,16 @@ description: This is a long description that got wrapped by prettier across mult
 #### Examples
 
 ```bash
-# Fix multi-line description (project skill)
-npx claude-skills-cli doctor .claude/skills/my-skill
+# Fix multi-line description (project skill, use full path)
+npx claude-skills-cli doctor /full/path/to/.claude/skills/my-skill
 
-# Fix user skill
+# Fix user skill (~ expands to full home path)
 npx claude-skills-cli doctor ~/.claude/skills/my-skill
 
-# Common workflow after formatting
-npx prettier --write .claude/skills/my-skill/SKILL.md
-npx claude-skills-cli doctor .claude/skills/my-skill
-npx claude-skills-cli validate .claude/skills/my-skill
+# Common workflow after formatting (use full paths)
+npx prettier --write /full/path/to/.claude/skills/my-skill/SKILL.md
+npx claude-skills-cli doctor /full/path/to/.claude/skills/my-skill
+npx claude-skills-cli validate /full/path/to/.claude/skills/my-skill
 ```
 
 #### Output
@@ -406,20 +406,20 @@ claude-skills-cli package <skill_path> [options]
 #### Examples
 
 ```bash
-# Package project skill (validates first)
-npx claude-skills-cli package .claude/skills/my-skill
+# Package project skill (validates first, use full path)
+npx claude-skills-cli package /full/path/to/.claude/skills/my-skill
 
-# Package user skill
+# Package user skill (~ expands to full home path)
 npx claude-skills-cli package ~/.claude/skills/my-skill
 
-# Package plugin skill
-npx claude-skills-cli package ./plugins/my-plugin/skills/my-skill
+# Package plugin skill (use full path)
+npx claude-skills-cli package /full/path/to/plugins/my-plugin/skills/my-skill
 
-# Custom output directory
-npx claude-skills-cli package .claude/skills/my-skill --output builds/
+# Custom output directory (use full path)
+npx claude-skills-cli package /full/path/to/.claude/skills/my-skill --output builds/
 
-# Skip validation (not recommended)
-npx claude-skills-cli package .claude/skills/my-skill --skip-validation
+# Skip validation (not recommended, use full path)
+npx claude-skills-cli package /full/path/to/.claude/skills/my-skill --skip-validation
 ```
 
 #### Excluded Files
@@ -465,45 +465,45 @@ The created zip can be:
 
 ## Common Workflows
 
-### Create and Validate New Skill
+### Create and Validate New Skill (use full paths)
 
 ```bash
 # 1. Determine location (ask user: project, user, or plugin)
 # For this example, using project location
 
-# 2. Create skill
-npx claude-skills-cli init --name database-queries \
+# 2. Create skill (use full path with --path)
+npx claude-skills-cli init --path /full/path/to/.claude/skills/database-queries \
   --description "SQLite queries. Use when writing SELECT, INSERT, UPDATE"
 
-# 3. Edit SKILL.md
-vim .claude/skills/database-queries/SKILL.md
+# 3. Edit SKILL.md (use full path)
+vim /full/path/to/.claude/skills/database-queries/SKILL.md
 
-# 4. Add references
-vim .claude/skills/database-queries/references/schema.md
+# 4. Add references (use full path)
+vim /full/path/to/.claude/skills/database-queries/references/schema.md
 
-# 5. Format (if using formatter)
-npx prettier --write .claude/skills/database-queries/SKILL.md
+# 5. Format (if using formatter, use full path)
+npx prettier --write /full/path/to/.claude/skills/database-queries/SKILL.md
 
-# 6. Fix any formatting issues
-npx claude-skills-cli doctor .claude/skills/database-queries
+# 6. Fix any formatting issues (use full path)
+npx claude-skills-cli doctor /full/path/to/.claude/skills/database-queries
 
-# 7. Validate
-npx claude-skills-cli validate .claude/skills/database-queries
+# 7. Validate (use full path)
+npx claude-skills-cli validate /full/path/to/.claude/skills/database-queries
 
-# 8. Fix any remaining issues, re-validate
-npx claude-skills-cli validate .claude/skills/database-queries
+# 8. Fix any remaining issues, re-validate (use full path)
+npx claude-skills-cli validate /full/path/to/.claude/skills/database-queries
 
-# 9. (Optional) Package if distributing to others
-# npx claude-skills-cli package .claude/skills/database-queries
+# 9. (Optional) Package if distributing to others (use full path)
+# npx claude-skills-cli package /full/path/to/.claude/skills/database-queries
 ```
 
-### Strict Validation in CI
+### Strict Validation in CI (use full paths)
 
 ```bash
 # package.json
 {
   "scripts": {
-    "test:skills": "claude-skills-cli validate .claude/skills/* --strict"
+    "test:skills": "claude-skills-cli validate $PWD/.claude/skills/* --strict"
   }
 }
 
@@ -511,22 +511,22 @@ npx claude-skills-cli validate .claude/skills/database-queries
 npm run test:skills
 ```
 
-### Batch Validate All Skills
+### Batch Validate All Skills (use full paths)
 
 ```bash
-# Bash script to validate all skills
-for skill in .claude/skills/*/; do
+# Bash script to validate all skills (use $PWD for current directory)
+for skill in $PWD/.claude/skills/*/; do
   echo "Validating $skill"
   npx claude-skills-cli validate "$skill" || exit 1
 done
 ```
 
-### Quick Skill Creation
+### Quick Skill Creation (use full paths)
 
 ```bash
-# One-liner with validation
-npx claude-skills-cli init --name my-skill --description "Brief desc" && \
-  npx claude-skills-cli validate .claude/skills/my-skill
+# One-liner with validation (use full path)
+npx claude-skills-cli init --path /full/path/to/.claude/skills/my-skill --description "Brief desc" && \
+  npx claude-skills-cli validate /full/path/to/.claude/skills/my-skill
 ```
 
 ---

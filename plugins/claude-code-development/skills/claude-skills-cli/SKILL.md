@@ -20,13 +20,13 @@ Expert assistance for creating, validating, and managing Claude Agent Skills usi
 ```bash
 # Create and validate skill
 npx claude-skills-cli init --name my-skill --description "Brief description with trigger keywords"
-# Or create at specific path:
-npx claude-skills-cli init --path .claude/skills/my-skill --description "Brief description with trigger keywords"
-npx claude-skills-cli validate .claude/skills/my-skill
+# Or create at specific path (always use full/absolute paths):
+npx claude-skills-cli init --path /full/path/to/.claude/skills/my-skill --description "Brief description with trigger keywords"
+npx claude-skills-cli validate /full/path/to/.claude/skills/my-skill
 
 # Add activation hook and fix issues
 npx claude-skills-cli add-hook --project
-npx claude-skills-cli doctor .claude/skills/my-skill
+npx claude-skills-cli doctor /full/path/to/.claude/skills/my-skill
 ```
 
 ## References
