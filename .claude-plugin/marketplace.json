@@ -4,9 +4,9 @@
     "name": "rigerc's Claude personal marketplace"
   },
   "metadata": {
-    "version": "1.0.82",
+    "version": "1.0.83",
     "description": "A curated collection of specialized plugins for Claude Code, organized by functionality to provide focused tools for specific development tasks.",
-    "lastUpdated": "2025-11-14T19:18:21.064558Z"
+    "lastUpdated": "2025-11-14T21:17:15.259750Z"
   },
   "plugins": [
     {
@@ -43,11 +43,6 @@
       "name": "home-assistant",
       "source": "./plugins/home-assistant",
       "description": "Home Assistant development tools and automation skills for creating add-ons, integrations, and smart home workflows"
-    },
-    {
-      "name": "library-researcher",
-      "source": "./plugins/library-researcher",
-      "description": "Advanced library research skill using Context7 to analyze, compare, and document software libraries, frameworks, and development tools"
     },
     {
       "name": "MarkdownTaskManager",
