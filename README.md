@@ -30,7 +30,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 
 - **11 Specialized Plugins**
 - **11 Custom Commands**
-- **10 Expert Agents**
+- **7 Expert Agents**
 - **21 Specialized Skills**
 - **2 Hooks**
 - **0 MCP Servers**
@@ -101,11 +101,8 @@ Tools for developing and extending Claude Code with custom agents, commands, ski
 - `validate-all-skills`: Validate all agent skills using claude-skills-cli
 
 
-**Agents** (4):
-- **context-manager**: Use PROACTIVELY when you need to manage context across multiple agents and long-running tasks, especially for projects exceeding 10k tokens. MUST B...
+**Agents** (1):
 - **marketplace-dev**: Use PROACTIVELY when working with Claude Code marketplace repository. Expert in adding/modifying plugins, hooks, commands, agents, and skills. MUST...
-- **mcp-expert**: Model Context Protocol (MCP) integration specialist for the cli-tool components system. Use PROACTIVELY for MCP server configurations, protocol spe...
-- **meta-agent**: Generates a new, complete Claude Code sub-agent configuration file from a user's description. Use this to create new agents. Use this Proactively w...
 
 
 **Skills** (4):
