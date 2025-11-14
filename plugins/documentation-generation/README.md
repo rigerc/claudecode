@@ -9,26 +9,26 @@ This plugin provides the following components:
 ## Commands (1)
 
 ### `create-documentation`
---- description: Command for using the generate-documentation skill argument-hint: "description"
+Command for using the generate-documentation skill
 
 ## Agents (3)
 
 ### readme-writer
---- name: readme-writer description: Use PROACTIVELY when you need to create or improve README documentation for open source projects, libraries, o...
+Use PROACTIVELY when you need to create or improve README documentation for open source projects, libraries, or developer tools. MUST BE USED for a...
 
 ### researcher
---- name: researcher description: Use PROACTIVELY to research documentation, APIs, frameworks, and best practices. MUST BE USED when user mentions:...
+Use PROACTIVELY to research documentation, APIs, frameworks, and best practices. MUST BE USED when user mentions: "documentation for", "how does X ...
 
 ### technical-docs-writer
---- name: technical-docs-writer description: Use PROACTIVELY when you need to create user-facing documentation for a product or feature, including ...
+Use PROACTIVELY when you need to create user-facing documentation for a product or feature, including API documentation, getting started guides, tu...
 
 ## Skills (2)
 
 ### api-docs-generator
---- name: api-docs-generator description: Use to generate API documentation from OpenAPI specs, docstrings, or comments. Supports multiple source f...
+Use to generate API documentation from OpenAPI specs, docstrings, or comments. Supports multiple source formats.
 
 ### generate-documentation
---- name: generate-documentation description: Use to generate project documentation. Researches with context7 and saves to docs/ directory.
+Use to generate project documentation. Researches with context7 and saves to docs/ directory.
 
 ## Installation
 

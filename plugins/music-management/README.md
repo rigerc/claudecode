@@ -9,7 +9,7 @@ This plugin provides the following components:
 ## Skills (1)
 
 ### beets
---- name: beets description: Use when working with beets music library management. Provides expertise in setup, importing, metadata, and plugin dev...
+Use when working with beets music library management. Provides expertise in setup, importing, metadata, and plugin development.
 
 ## Installation
 

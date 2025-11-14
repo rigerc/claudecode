@@ -9,7 +9,7 @@ This plugin provides the following components:
 ## Commands (2)
 
 ### `code-review`
---- allowed-tools: Read, Bash, Grep, Glob argument-hint: [file-path] [commit-hash]
+Comprehensive code quality review with security, performance, and architecture analysis
 
 ### `refactor-code`
 Intelligently refactor and improve code quality
@@ -17,7 +17,7 @@ Intelligently refactor and improve code quality
 ## Agents (1)
 
 ### code-reviewer
---- name: code-reviewer description: Expert code review specialist for quality, security, and maintainability. Use PROACTIVELY after writing or mod...
+Expert code review specialist for quality, security, and maintainability. Use PROACTIVELY after writing or modifying code to ensure high developmen...
 
 ## Installation
 

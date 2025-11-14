@@ -11,106 +11,151 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 - **2 Hooks**
 - **0 MCP Servers**
 
-## Available Plugins
-
-| Plugin | Commands | Agents | Skills | Hooks | MCP | Focus |
-|--------|----------|---------|---------|-------|-----|-------|
-| **Flatban** | 1 | 0 | 0 | 0 | 0 | General |
-| **Markdowntaskmanager** | 0 | 0 | 1 | 1 | 0 | General |
-| **Bash Scripting** | 0 | 1 | 1 | 0 | 0 | Shell automation |
-| **Claude Code Development** | 5 | 4 | 6 | 0 | 0 | Extending Claude Code |
-| **Code Quality** | 2 | 1 | 0 | 0 | 0 | Code review |
-| **Documentation Generation** | 1 | 3 | 2 | 0 | 0 | Technical writing |
-| **Go Development** | 0 | 1 | 10 | 0 | 0 | Go programming |
-| **Home Assistant** | 0 | 0 | 1 | 0 | 0 | General |
-| **Library Researcher** | 0 | 0 | 1 | 0 | 0 | General |
-| **Marketplace Updater** | 0 | 0 | 0 | 1 | 0 | General |
-| **Music Management** | 0 | 0 | 1 | 0 | 0 | Beets tool |
-| **Productivity Tools** | 2 | 0 | 0 | 0 | 0 | Workflow enhancement |
-
 ## Plugin Details
 
-### Flatban
-A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development.
+### [Markdowntaskmanager](./plugins/MarkdownTaskManager/)
+Kanban task management system using local Markdown files with comprehensive task lifecycle management
 
-**Components**: 1 commands
+**Skills** (1):
+- **markdown-task-manager**: Use to manage Kanban tasks using local Markdown files. Handles task creation, tracking, archival, and reporting.
 
-**Install**: `Flatban@rigerc-claude`
-
-### Markdowntaskmanager
-A comprehensive AI-driven task management system that brings discipline and transparency to your development workflow. This plugin implements a Kanban-style task management system using local Markd...
-
-**Components**: 1 skills, 1 hooks
+**Hooks** (1):
+- **SessionStart_0**: Hook for SessionStart
 
 **Install**: `MarkdownTaskManager@rigerc-claude`
 
-### Bash Scripting
-Expert tools for Bash scripting, automation, and testing with bats-core framework.
+### [Bash Scripting](./plugins/bash-scripting/)
+Expert tools for Bash scripting, automation, and testing with bats-core framework
 
-**Components**: 1 agents, 1 skills
+**Agents** (1):
+- **bash-scripting-expert**: Expert Bash scripting developer specializing in best practices, code review, optimization, and modern Bash patterns. Provides professional guidance...
+
+**Skills** (1):
+- **bats-tester**: Use when creating tests for bash scripts using bats-core. Provides expertise in test writing, setup, and best practices.
 
 **Install**: `bash-scripting@rigerc-claude`
 
-### Claude Code Development
-Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks.
+### [Claude Code Development](./plugins/claude-code-development/)
+Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks. Skill-creator is adapted from claude-skills-cli.
 
-**Components**: 5 commands, 4 agents, 6 skills
+**Commands** (5):
+- `create-agent`: Create a new Claude Code agent or sub-agent using the working-with-claude-code skill
+- `create-command`: Create a new Claude Code slash command using the slash-command-creator skill
+- `create-hook`: Create a new Claude Code hook using the working-with-claude-code skill
+- `create-skill`: Create a new Claude Code Skill using the skill-creator skill
+- `validate-all-skills`: Validate all agent skills using claude-skills-cli
+
+**Agents** (4):
+- **context-manager**: Use PROACTIVELY when you need to manage context across multiple agents and long-running tasks, especially for projects exceeding 10k tokens. MUST B...
+- **marketplace-dev**: Use PROACTIVELY when working with Claude Code marketplace repository. Expert in adding/modifying plugins, hooks, commands, agents, and skills. MUST...
+- **mcp-expert**: Model Context Protocol (MCP) integration specialist for the cli-tool components system. Use PROACTIVELY for MCP server configurations, protocol spe...
+- **meta-agent**: Generates a new, complete Claude Code sub-agent configuration file from a user's description. Use this to create new agents. Use this Proactively w...
+
+**Skills** (6):
+- **claude-skills-cli**: Create and manage Claude Agent Skills with progressive disclosure validation. Use for building and validating skill structure and activation.
+- **developing-claude-code-plugins**: Use when working on Claude Code plugins. Provides streamlined workflows, patterns, and examples for the complete lifecycle.
+- **plugin-creator**: Use when creating or developing Claude Code plugins. Scaffolds structure, adds components, sets up development environments, and provides guidance ...
+- **skill-creator**: Use when creating or updating Claude Code skills that extend capabilities with specialized knowledge and workflows.
+- **slash-commands-creator**: Create and review Claude Code slash commands. Use when creating `/...` commands, reviewing syntax, or standardizing command definitions with proper...
+- **working-with-claude-code**: Use when working with Claude Code CLI or any feature. Provides comprehensive official documentation for all aspects of Claude Code.
 
 **Install**: `claude-code-development@rigerc-claude`
 
-### Code Quality
-Code review, refactoring, and quality analysis tools for improving code maintainability and security.
+### [Code Quality](./plugins/code-quality/)
+Code review, refactoring, and quality analysis tools for improving code maintainability and security
 
-**Components**: 2 commands, 1 agents
+**Commands** (2):
+- `code-review`: Comprehensive code quality review with security, performance, and architecture analysis
+- `refactor-code`: Intelligently refactor and improve code quality
+
+**Agents** (1):
+- **code-reviewer**: Expert code review specialist for quality, security, and maintainability. Use PROACTIVELY after writing or modifying code to ensure high developmen...
 
 **Install**: `code-quality@rigerc-claude`
 
-### Documentation Generation
-Comprehensive tools for generating API documentation, technical docs, and project documentation.
+### [Documentation Generation](./plugins/documentation-generation/)
+Comprehensive tools for generating API documentation, technical docs, and project documentation
 
-**Components**: 1 commands, 3 agents, 2 skills
+**Commands** (1):
+- `create-documentation`: Command for using the generate-documentation skill
+
+**Agents** (3):
+- **readme-writer**: Use PROACTIVELY when you need to create or improve README documentation for open source projects, libraries, or developer tools. MUST BE USED for a...
+- **researcher**: Use PROACTIVELY to research documentation, APIs, frameworks, and best practices. MUST BE USED when user mentions: "documentation for", "how does X ...
+- **technical-docs-writer**: Use PROACTIVELY when you need to create user-facing documentation for a product or feature, including API documentation, getting started guides, tu...
+
+**Skills** (2):
+- **api-docs-generator**: Use to generate API documentation from OpenAPI specs, docstrings, or comments. Supports multiple source formats.
+- **generate-documentation**: Use to generate project documentation. Researches with context7 and saves to docs/ directory.
 
 **Install**: `documentation-generation@rigerc-claude`
 
-### Go Development
-Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns.
+### [Flatban](./plugins/flatban/)
+A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development.
 
-**Components**: 1 agents, 10 skills
+**Commands** (1):
+- `flatban`: Create or update Flatban tasks with AI assistance
+
+**Install**: `flatban@rigerc-claude`
+
+### [Go Development](./plugins/go-development/)
+Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns
+
+**Agents** (1):
+- **golang-pro**: Write idiomatic Go code with goroutines, channels, and interfaces. Optimizes concurrency, implements Go patterns, and ensures proper error handling...
+
+**Skills** (10):
+- **anthropic-sdk-go**: Use when integrating the official Anthropic Go SDK for Claude. Covers API clients, messages, streaming, function calling, files, and beta features ...
+- **go-bubbles-skill**: Use when working with the Bubbles component library for BubbleTea applications in Go. Provides expertise in components and styling.
+- **go-bubbletea-skill**: Use when building terminal UIs with the BubbleTea framework in Go. Provides expertise in Model-View-Update pattern and TUI best practices.
+- **go-doc**: Use when working with Go's `go doc` command. Access package docs, explore APIs, and manage HTTP documentation servers.
+- **go-env-parser**: Use when working with github.com/caarlos0/env for parsing environment variables into Go structs. Covers struct tags, custom parsers, envFile/envExp...
+- **go-koanf**: Use when implementing Go configuration management with Koanf. Load from files, env vars, flags with hot-reloading and type-safe unmarshalling.
+- **go-openai**: Use when working with the go-openai library for OpenAI API integration in Go. Provides expertise in chat, embeddings, and more.
+- **go-openrouter**: Use when working with the OpenRouter Go client library for AI model integration. Provides expertise in chat completions, streaming, function callin...
+- **go-teastraw**: Use when creating end-to-end tests for TUI applications in Go using Teastraw. Expertise in testing compiled TUI binaries, simulating user interacti...
+- **go-urfave-cli-v3**: Use when building Go CLI applications with urfave/cli v3. Provides code generation, templates, migration tools, and reference documentation for com...
 
 **Install**: `go-development@rigerc-claude`
 
-### Home Assistant
-A comprehensive Claude Code plugin for Home Assistant development, providing tools and skills for creating add-ons, integrations, and smart home automation workflows.
+### [Home Assistant](./plugins/home-assistant/)
+Home Assistant development tools and automation skills for creating add-ons, integrations, and smart home workflows
 
-**Components**: 1 skills
+**Skills** (1):
+- **ha-addon**: Use when working on Home Assistant add-ons. Expert in Docker, YAML config, security, and HA API integration.
 
 **Install**: `home-assistant@rigerc-claude`
 
-### Library Researcher
-**Advanced library research and documentation analysis plugin for Claude Code** The Library Researcher plugin provides powerful tools for researching, analyzing, and documenting software libraries,...
+### [Library Researcher](./plugins/library-researcher/)
+Advanced library research skill using Context7 to analyze, compare, and document software libraries, frameworks, and development tools
 
-**Components**: 1 skills
+**Skills** (1):
+- **library-researcher**: Use for researching libraries and frameworks. Provides documentation and best practices via Context7.
 
 **Install**: `library-researcher@rigerc-claude`
 
-### Marketplace Updater
-Automatically checks if repositories in `~/.claude/plugins/` are up to date and informs you when updates are available.
+### [Marketplace Updater](./plugins/marketplace-updater/)
+Automatic marketplace metadata updater that checks for updates on Claude Code startup
 
-**Components**: 1 hooks
+**Hooks** (1):
+- **SessionStart_0**: Hook for SessionStart
 
 **Install**: `marketplace-updater@rigerc-claude`
 
-### Music Management
-Comprehensive music library management system guidance using the beets music organization tool.
+### [Music Management](./plugins/music-management/)
+Comprehensive music library management system guidance using the beets music organization tool
 
-**Components**: 1 skills
+**Skills** (1):
+- **beets**: Use when working with beets music library management. Provides expertise in setup, importing, metadata, and plugin development.
 
 **Install**: `music-management@rigerc-claude`
 
-### Productivity Tools
-Productivity enhancement tools including feature brainstorming, prompt enhancement, and dotfile management.
+### [Productivity Tools](./plugins/productivity-tools/)
+Productivity enhancement tools including feature brainstorming and dotfile management
 
-**Components**: 2 commands
+**Commands** (2):
+- `enhance-prompt`: Enhance prompt with full repository context and codebase analysis
+- `feature-brainstorm`: Analyze the current project and suggest improvements to features or new features that are in line with the project's goals. The suggestions should ...
 
 **Install**: `productivity-tools@rigerc-claude`
 

@@ -4,70 +4,70 @@
     "name": "rigerc's Claude personal marketplace"
   },
   "metadata": {
-    "version": "1.0.55",
+    "version": "1.0.60",
     "description": "A curated collection of specialized plugins for Claude Code, organized by functionality to provide focused tools for specific development tasks.",
-    "lastUpdated": "2025-11-14T17:25:43.834980Z"
+    "lastUpdated": "2025-11-14T17:42:56.738055Z"
   },
   "plugins": [
     {
-      "name": "Flatban",
-      "source": "./plugins/Flatban",
-      "description": "A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development."
-    },
-    {
       "name": "MarkdownTaskManager",
       "source": "./plugins/MarkdownTaskManager",
-      "description": "A comprehensive AI-driven task management system that brings discipline and transparency to your development workflow. This plugin implements a Kanban-style task management system using local Markd..."
+      "description": "Kanban task management system using local Markdown files with comprehensive task lifecycle management"
     },
     {
       "name": "bash-scripting",
       "source": "./plugins/bash-scripting",
-      "description": "Expert tools for Bash scripting, automation, and testing with bats-core framework."
+      "description": "Expert tools for Bash scripting, automation, and testing with bats-core framework"
     },
     {
       "name": "claude-code-development",
       "source": "./plugins/claude-code-development",
-      "description": "Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks."
+      "description": "Tools for developing and extending Claude Code with custom agents, commands, skills, and hooks. Skill-creator is adapted from claude-skills-cli."
     },
     {
       "name": "code-quality",
       "source": "./plugins/code-quality",
-      "description": "Code review, refactoring, and quality analysis tools for improving code maintainability and security."
+      "description": "Code review, refactoring, and quality analysis tools for improving code maintainability and security"
     },
     {
       "name": "documentation-generation",
       "source": "./plugins/documentation-generation",
-      "description": "Comprehensive tools for generating API documentation, technical docs, and project documentation."
+      "description": "Comprehensive tools for generating API documentation, technical docs, and project documentation"
+    },
+    {
+      "name": "flatban",
+      "source": "./plugins/flatban",
+      "description": "A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development."
     },
     {
       "name": "go-development",
       "source": "./plugins/go-development",
-      "description": "Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns."
+      "description": "Specialized tools for Go development with goroutines, channels, interfaces, and idiomatic patterns"
     },
     {
       "name": "home-assistant",
       "source": "./plugins/home-assistant",
-      "description": "A comprehensive Claude Code plugin for Home Assistant development, providing tools and skills for creating add-ons, integrations, and smart home automation workflows."
+      "description": "Home Assistant development tools and automation skills for creating add-ons, integrations, and smart home workflows"
     },
     {
       "name": "library-researcher",
       "source": "./plugins/library-researcher",
-      "description": "**Advanced library research and documentation analysis plugin for Claude Code** The Library Researcher plugin provides powerful tools for researching, analyzing, and documenting software libraries,..."
+      "description": "Advanced library research skill using Context7 to analyze, compare, and document software libraries, frameworks, and development tools"
     },
     {
       "name": "marketplace-updater",
       "source": "./plugins/marketplace-updater",
-      "description": "Automatically checks if repositories in `~/.claude/plugins/` are up to date and informs you when updates are available."
+      "description": "Automatic marketplace metadata updater that checks for updates on Claude Code startup"
     },
     {
       "name": "music-management",
       "source": "./plugins/music-management",
-      "description": "Comprehensive music library management system guidance using the beets music organization tool."
+      "description": "Comprehensive music library management system guidance using the beets music organization tool"
     },
     {
       "name": "productivity-tools",
       "source": "./plugins/productivity-tools",
-      "description": "Productivity enhancement tools including feature brainstorming, prompt enhancement, and dotfile management."
+      "description": "Productivity enhancement tools including feature brainstorming and dotfile management"
     }
   ]
 }

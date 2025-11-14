@@ -9,10 +9,10 @@ This plugin provides the following components:
 ## Commands (2)
 
 ### `enhance-prompt`
---- allowed-tools: Read, Write, Edit, Bash, Glob, Grep, Task, mcp__context7__resolve-library-id, mcp__context7__get-library-docs argument-hint: [pr...
+Enhance prompt with full repository context and codebase analysis
 
 ### `feature-brainstorm`
---- allowed-tools: Read, Write, Edit, Bash, Glob, Grep, Task, mcp__context7__resolve-library-id, mcp__context7__get-library-docs description: Analy...
+Analyze the current project and suggest improvements to features or new features that are in line with the project's goals. The suggestions should ...
 
 ## Installation
 

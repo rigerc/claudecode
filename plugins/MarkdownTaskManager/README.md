@@ -9,7 +9,7 @@ This plugin provides the following components:
 ## Skills (1)
 
 ### markdown-task-manager
---- name: markdown-task-manager description: Use to manage Kanban tasks using local Markdown files. Handles task creation, tracking, archival, and ...
+Use to manage Kanban tasks using local Markdown files. Handles task creation, tracking, archival, and reporting.
 
 ## Hooks (1)
 

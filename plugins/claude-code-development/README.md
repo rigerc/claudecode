@@ -9,53 +9,53 @@ This plugin provides the following components:
 ## Commands (5)
 
 ### `create-agent`
---- description: Create a new Claude Code agent or sub-agent using the working-with-claude-code skill argument-hint: [agent-name] "[agent-descripti...
+Create a new Claude Code agent or sub-agent using the working-with-claude-code skill
 
 ### `create-command`
---- description: Create a new Claude Code slash command using the slash-command-creator skill argument-hint: [command-name] "[command-description]"
+Create a new Claude Code slash command using the slash-command-creator skill
 
 ### `create-hook`
---- description: Create a new Claude Code hook using the working-with-claude-code skill argument-hint: [hook-event] "[hook-purpose]"
+Create a new Claude Code hook using the working-with-claude-code skill
 
 ### `create-skill`
---- description: Create a new Claude Code Skill using the skill-creator skill argument-hint: [skill-name] "[skill-description]"
+Create a new Claude Code Skill using the skill-creator skill
 
 ### `validate-all-skills`
---- description: Validate all agent skills using claude-skills-cli allowed-tools: Bash, Read, Grep, Glob, TodoWrite
+Validate all agent skills using claude-skills-cli
 
 ## Agents (4)
 
 ### context-manager
---- name: context-manager description: Use PROACTIVELY when you need to manage context across multiple agents and long-running tasks, especially fo...
+Use PROACTIVELY when you need to manage context across multiple agents and long-running tasks, especially for projects exceeding 10k tokens. MUST B...
 
 ### marketplace-dev
---- name: marketplace-dev description: Use PROACTIVELY when working with Claude Code marketplace repository. Expert in adding/modifying plugins, ho...
+Use PROACTIVELY when working with Claude Code marketplace repository. Expert in adding/modifying plugins, hooks, commands, agents, and skills. MUST...
 
 ### mcp-expert
---- name: mcp-expert description: Model Context Protocol (MCP) integration specialist for the cli-tool components system. Use PROACTIVELY for MCP s...
+Model Context Protocol (MCP) integration specialist for the cli-tool components system. Use PROACTIVELY for MCP server configurations, protocol spe...
 
 ### meta-agent
---- name: meta-agent description: Generates a new, complete Claude Code sub-agent configuration file from a user's description. Use this to create ...
+Generates a new, complete Claude Code sub-agent configuration file from a user's description. Use this to create new agents. Use this Proactively w...
 
 ## Skills (6)
 
 ### claude-skills-cli
---- name: claude-skills-cli description: Create and manage Claude Agent Skills with progressive disclosure validation. Use for building and validat...
+Create and manage Claude Agent Skills with progressive disclosure validation. Use for building and validating skill structure and activation.
 
 ### developing-claude-code-plugins
---- name: developing-claude-code-plugins description: Use when working on Claude Code plugins. Provides streamlined workflows, patterns, and exampl...
+Use when working on Claude Code plugins. Provides streamlined workflows, patterns, and examples for the complete lifecycle.
 
 ### plugin-creator
---- name: plugin-creator description: Use when creating or developing Claude Code plugins. Scaffolds structure, adds components, sets up developmen...
+Use when creating or developing Claude Code plugins. Scaffolds structure, adds components, sets up development environments, and provides guidance ...
 
 ### skill-creator
---- name: skill-creator description: Use when creating or updating Claude Code skills that extend capabilities with specialized knowledge and workf...
+Use when creating or updating Claude Code skills that extend capabilities with specialized knowledge and workflows.
 
 ### slash-commands-creator
---- name: slash-commands-creator description: Create and review Claude Code slash commands. Use when creating `/...` commands, reviewing syntax, or...
+Create and review Claude Code slash commands. Use when creating `/...` commands, reviewing syntax, or standardizing command definitions with proper...
 
 ### working-with-claude-code
---- name: working-with-claude-code description: Use when working with Claude Code CLI or any feature. Provides comprehensive official documentation...
+Use when working with Claude Code CLI or any feature. Provides comprehensive official documentation for all aspects of Claude Code.
 
 ## Installation
 

@@ -64,7 +64,7 @@ def extract_plugin_description(plugin_dir: Path) -> str:
 
 
 def extract_component_description(file_path: Path) -> str:
-    """Extract description from component file (first paragraph after heading)."""
+    """Extract description from component file (from YAML frontmatter or first paragraph)."""
     if not file_path.exists():
         return "No description available"
 
@@ -73,6 +73,41 @@ def extract_component_description(file_path: Path) -> str:
             content = f.read()
             lines = content.split("\n")
 
+            # First try to extract description from YAML frontmatter
+            if lines and len(lines) > 0 and lines[0].strip() == "---":
+                in_yaml = True
+                yaml_lines = []
+
+                for line in lines[1:]:  # Skip the first ---
+                    line_stripped = line.strip()
+                    if line_stripped == "---":
+                        break  # End of YAML frontmatter
+                    yaml_lines.append(line)
+
+                # Parse YAML lines to find description
+                for yaml_line in yaml_lines:
+                    if yaml_line.strip().startswith("description:"):
+                        # Extract description after "description:"
+                        desc_match = re.match(r"description:\s*(.+)", yaml_line.strip())
+                        if desc_match:
+                            description = desc_match.group(1).strip()
+                            # Remove quotes if present
+                            if description.startswith('"') and description.endswith(
+                                '"'
+                            ):
+                                description = description[1:-1]
+                            elif description.startswith("'") and description.endswith(
+                                "'"
+                            ):
+                                description = description[1:-1]
+
+                            # Clean up and limit length
+                            description = re.sub(r"\s+", " ", description).strip()
+                            if len(description) > 150:
+                                description = description[:147] + "..."
+                            return description
+
+            # Fallback: extract first paragraph after heading
             description_lines = []
             in_description = False
 
@@ -488,43 +523,6 @@ def build_marketplace_json(plugins_dir: Path, marketplace_file: Path) -> Dict[st
     return marketplace
 
 
-def generate_plugin_table(plugin_dirs: List[Path]) -> str:
-    """Generate markdown table of plugins."""
-    table_lines = [
-        "| Plugin | Commands | Agents | Skills | Hooks | MCP | Focus |",
-        "|--------|----------|---------|---------|-------|-----|-------|",
-    ]
-
-    for plugin_dir in sorted(plugin_dirs, key=lambda x: x.name):
-        if plugin_dir.is_dir() and not plugin_dir.name.startswith("."):
-            plugin_name = plugin_dir.name.replace("-", " ").title()
-            counts = count_components(plugin_dir)
-
-            # Determine focus based on plugin content
-            focus = "General"
-            if "claude-code" in plugin_dir.name:
-                focus = "Extending Claude Code"
-            elif "bash" in plugin_dir.name:
-                focus = "Shell automation"
-            elif "documentation" in plugin_dir.name or "docs" in plugin_dir.name:
-                focus = "Technical writing"
-            elif "code-quality" in plugin_dir.name or "review" in plugin_dir.name:
-                focus = "Code review"
-            elif "go" in plugin_dir.name or "golang" in plugin_dir.name:
-                focus = "Go programming"
-            elif "music" in plugin_dir.name or "beets" in plugin_dir.name:
-                focus = "Beets tool"
-            elif "productivity" in plugin_dir.name:
-                focus = "Workflow enhancement"
-
-            table_lines.append(
-                f"| **{plugin_name}** | {counts['commands']} | {counts['agents']} | "
-                f"{counts['skills']} | {counts['hooks']} | {counts['mcp_servers']} | {focus} |"
-            )
-
-    return "\n".join(table_lines)
-
-
 def generate_plugin_list(plugin_dirs: List[Path]) -> str:
     """Generate detailed plugin list with installation commands."""
     list_items = []
@@ -534,27 +532,47 @@ def generate_plugin_list(plugin_dirs: List[Path]) -> str:
             plugin_name = plugin_dir.name.replace("-", " ").title()
             plugin_key = plugin_dir.name
             counts = count_components(plugin_dir)
+            components = list_plugin_components(plugin_dir)
 
             # Extract description from README.md
             description = extract_plugin_description(plugin_dir)
 
-            list_items.append(f"### {plugin_name}\n{description}\n")
+            list_items.append(
+                f"### [{plugin_name}](./plugins/{plugin_key}/)\n{description}\n"
+            )
 
-            # Add component counts
-            components = []
-            if counts["commands"] > 0:
-                components.append(f"{counts['commands']} commands")
-            if counts["agents"] > 0:
-                components.append(f"{counts['agents']} agents")
-            if counts["skills"] > 0:
-                components.append(f"{counts['skills']} skills")
-            if counts["hooks"] > 0:
-                components.append(f"{counts['hooks']} hooks")
-            if counts["mcp_servers"] > 0:
-                components.append(f"{counts['mcp_servers']} MCP servers")
+            # Add detailed component information
+            if components["commands"]:
+                list_items.append(f"**Commands** ({len(components['commands'])}):")
+                for cmd in components["commands"]:
+                    list_items.append(f"- `{cmd['name']}`: {cmd['description']}")
+                list_items.append("")
 
-            if components:
-                list_items.append(f"**Components**: {', '.join(components)}\n")
+            if components["agents"]:
+                list_items.append(f"**Agents** ({len(components['agents'])}):")
+                for agent in components["agents"]:
+                    list_items.append(f"- **{agent['name']}**: {agent['description']}")
+                list_items.append("")
+
+            if components["skills"]:
+                list_items.append(f"**Skills** ({len(components['skills'])}):")
+                for skill in components["skills"]:
+                    list_items.append(f"- **{skill['name']}**: {skill['description']}")
+                list_items.append("")
+
+            if components["hooks"]:
+                list_items.append(f"**Hooks** ({len(components['hooks'])}):")
+                for hook in components["hooks"]:
+                    list_items.append(f"- **{hook['name']}**: {hook['description']}")
+                list_items.append("")
+
+            if components["mcp_servers"]:
+                list_items.append(
+                    f"**MCP Servers** ({len(components['mcp_servers'])}):"
+                )
+                for mcp in components["mcp_servers"]:
+                    list_items.append(f"- **{mcp['name']}**: {mcp['description']}")
+                list_items.append("")
 
             list_items.append(f"**Install**: `{plugin_key}@rigerc-claude`\n")
 
@@ -588,10 +606,6 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 - **{total_skills} Specialized Skills**
 - **{total_hooks} Hooks**
 - **{total_mcp_servers} MCP Servers**
-
-## Available Plugins
-
-{generate_plugin_table(plugin_dirs)}
 
 ## Plugin Details
 

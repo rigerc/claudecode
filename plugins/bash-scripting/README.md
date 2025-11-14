@@ -9,12 +9,12 @@ This plugin provides the following components:
 ## Agents (1)
 
 ### bash-scripting-expert
---- name: bash-scripting-expert description: Expert Bash scripting developer specializing in best practices, code review, optimization, and modern ...
+Expert Bash scripting developer specializing in best practices, code review, optimization, and modern Bash patterns. Provides professional guidance...
 
 ## Skills (1)
 
 ### bats-tester
---- name: bats-tester description: Use when creating tests for bash scripts using bats-core. Provides expertise in test writing, setup, and best pr...
+Use when creating tests for bash scripts using bats-core. Provides expertise in test writing, setup, and best practices.
 
 ## Installation
 

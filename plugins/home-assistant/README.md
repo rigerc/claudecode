@@ -9,7 +9,7 @@ This plugin provides the following components:
 ## Skills (1)
 
 ### ha-addon
---- name: ha-addon description: Use when working on Home Assistant add-ons. Expert in Docker, YAML config, security, and HA API integration.
+Use when working on Home Assistant add-ons. Expert in Docker, YAML config, security, and HA API integration.
 
 ## Installation
 

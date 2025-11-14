@@ -9,7 +9,7 @@ This plugin provides the following components:
 ## Skills (1)
 
 ### library-researcher
---- name: library-researcher description: Use for researching libraries and frameworks. Provides documentation and best practices via Context7.
+Use for researching libraries and frameworks. Provides documentation and best practices via Context7.
 
 ## Installation
 
