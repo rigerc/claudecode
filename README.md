@@ -9,12 +9,12 @@ A curated collection of specialized plugins for Claude Code, organized by functi
   - [Install Individual Plugins](#install-individual-plugins)
   - [Browse Available Plugins](#browse-available-plugins)
 - [🔌 Plugin Details](#-plugin-details)
+  - [Flatban](#flatban)
   - [Markdowntaskmanager](#markdowntaskmanager)
   - [Bash Scripting](#bash-scripting)
   - [Claude Code Development](#claude-code-development)
   - [Code Quality](#code-quality)
   - [Documentation Generation](#documentation-generation)
-  - [Flatban](#flatban)
   - [Go Development](#go-development)
   - [Home Assistant](#home-assistant)
   - [Library Researcher](#library-researcher)
@@ -70,6 +70,18 @@ Install only the plugins you need:
 ---
 
 ## 🔌 Plugin Details
+
+### Flatban {#flatban}
+
+A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development.
+
+**📦 Install**: `/plugin install Flatban@rigerc-claude`
+
+
+**Commands** (1):
+- `flatban`: Create or update Flatban tasks with AI assistance
+
+---
 
 ### Markdowntaskmanager {#markdowntaskmanager}
 
@@ -172,18 +184,6 @@ Comprehensive tools for generating API documentation, technical docs, and projec
 **Skills** (2):
 - **api-docs-generator**: Use to generate API documentation from OpenAPI specs, docstrings, or comments. Supports multiple source formats.
 - **generate-documentation**: Use to generate project documentation. Researches with context7 and saves to docs/ directory.
-
----
-
-### Flatban {#flatban}
-
-A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development.
-
-**📦 Install**: `/plugin install flatban@rigerc-claude`
-
-
-**Commands** (1):
-- `flatban`: Create or update Flatban tasks with AI assistance
 
 ---
 
