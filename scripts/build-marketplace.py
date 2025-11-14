@@ -526,9 +526,11 @@ def build_marketplace_json(plugins_dir: Path, marketplace_file: Path) -> Dict[st
 def generate_plugin_list(plugin_dirs: List[Path]) -> str:
     """Generate detailed plugin list with installation commands."""
     list_items = []
+    plugin_count = 0
 
     for plugin_dir in sorted(plugin_dirs, key=lambda x: x.name):
         if plugin_dir.is_dir() and not plugin_dir.name.startswith("."):
+            plugin_count += 1
             plugin_name = plugin_dir.name.replace("-", " ").title()
             plugin_key = plugin_dir.name
             counts = count_components(plugin_dir)
@@ -537,44 +539,50 @@ def generate_plugin_list(plugin_dirs: List[Path]) -> str:
             # Extract description from README.md
             description = extract_plugin_description(plugin_dir)
 
-            list_items.append(
-                f"### [{plugin_name}](./plugins/{plugin_key}/)\n{description}\n"
-            )
+            # Add horizontal rule between plugins (but not before first one)
+            if plugin_count > 1:
+                list_items.append("---\n")
 
-            # Add detailed component information
+            # Create anchor-friendly name (lowercase, replace spaces with hyphens)
+            anchor = plugin_name.lower().replace(" ", "-")
+            list_items.append(f"### {plugin_name} {{#{anchor}}}\n")
+            list_items.append(f"{description}\n")
+
+            # Add install command immediately after description
+            list_items.append(f"**📦 Install**: `/plugin install {plugin_key}@rigerc-claude`\n")
+
+            # Add detailed component information with better spacing
             if components["commands"]:
-                list_items.append(f"**Commands** ({len(components['commands'])}):")
+                list_items.append(f"\n**Commands** ({len(components['commands'])}):")
                 for cmd in components["commands"]:
                     list_items.append(f"- `{cmd['name']}`: {cmd['description']}")
                 list_items.append("")
 
             if components["agents"]:
-                list_items.append(f"**Agents** ({len(components['agents'])}):")
+                list_items.append(f"\n**Agents** ({len(components['agents'])}):")
                 for agent in components["agents"]:
                     list_items.append(f"- **{agent['name']}**: {agent['description']}")
                 list_items.append("")
 
             if components["skills"]:
-                list_items.append(f"**Skills** ({len(components['skills'])}):")
+                list_items.append(f"\n**Skills** ({len(components['skills'])}):")
                 for skill in components["skills"]:
                     list_items.append(f"- **{skill['name']}**: {skill['description']}")
                 list_items.append("")
 
             if components["hooks"]:
-                list_items.append(f"**Hooks** ({len(components['hooks'])}):")
+                list_items.append(f"\n**Hooks** ({len(components['hooks'])}):")
                 for hook in components["hooks"]:
                     list_items.append(f"- **{hook['name']}**: {hook['description']}")
                 list_items.append("")
 
             if components["mcp_servers"]:
                 list_items.append(
-                    f"**MCP Servers** ({len(components['mcp_servers'])}):"
+                    f"\n**MCP Servers** ({len(components['mcp_servers'])}):"
                 )
                 for mcp in components["mcp_servers"]:
                     list_items.append(f"- **{mcp['name']}**: {mcp['description']}")
                 list_items.append("")
-
-            list_items.append(f"**Install**: `{plugin_key}@rigerc-claude`\n")
 
     return "\n".join(list_items)
 
@@ -587,6 +595,16 @@ def build_readme(plugins_dir: Path) -> str:
         d for d in plugins_dir.iterdir() if d.is_dir() and not d.name.startswith(".")
     ]
 
+    # Generate TOC plugin links
+    toc_plugin_links = []
+    for plugin_dir in sorted(plugin_dirs, key=lambda x: x.name):
+        if plugin_dir.is_dir() and not plugin_dir.name.startswith("."):
+            plugin_name = plugin_dir.name.replace("-", " ").title()
+            plugin_key = plugin_dir.name
+            # Create anchor-friendly name (lowercase, replace spaces with hyphens)
+            anchor = plugin_name.lower().replace(" ", "-")
+            toc_plugin_links.append(f"  - [{plugin_name}](#{anchor})")
+
     # Count totals
     total_commands = sum(count_components(d)["commands"] for d in plugin_dirs)
     total_agents = sum(count_components(d)["agents"] for d in plugin_dirs)
@@ -598,7 +616,21 @@ def build_readme(plugins_dir: Path) -> str:
 
 A curated collection of specialized plugins for Claude Code, organized by functionality to provide focused tools for specific development tasks.
 
-## Overview
+## Table of Contents
+
+- [🚀 Installation](#-installation)
+  - [Add Marketplace](#add-marketplace)
+  - [Install Individual Plugins](#install-individual-plugins)
+  - [Browse Available Plugins](#browse-available-plugins)
+- [🔌 Plugin Details](#-plugin-details)
+{chr(10).join(toc_plugin_links)}
+- [📁 Plugin Structure](#-plugin-structure)
+- [🛠️ Development](#️-development)
+  - [Building](#building)
+  - [Plugin Categories](#plugin-categories)
+- [📄 License](#-license)
+
+## Collection Summary
 
 - **{len(plugin_dirs)} Specialized Plugins**
 - **{total_commands} Custom Commands**
@@ -607,13 +639,11 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 - **{total_hooks} Hooks**
 - **{total_mcp_servers} MCP Servers**
 
-## Plugin Details
+---
 
-{generate_plugin_list(plugin_dirs)}
+## 🚀 Installation
 
-## Installation
-
-### Add the Marketplace
+### Add Marketplace
 
 First, add this collection to your Claude Code marketplaces:
 
@@ -640,7 +670,15 @@ Install only the plugins you need:
 # Install desired plugins
 ```
 
-## Plugin Structure
+---
+
+## 🔌 Plugin Details
+
+{generate_plugin_list(plugin_dirs)}
+
+---
+
+## 📁 Plugin Structure
 
 Each plugin follows the standard Claude Code plugin structure:
 
@@ -656,7 +694,9 @@ plugin-name/
 └── README.md                 # Plugin documentation
 ```
 
-## Development
+---
+
+## 🛠️ Development
 
 This collection is automatically generated from the `plugins/` directory. When adding or modifying plugins:
 
@@ -679,14 +719,16 @@ python scripts/build-marketplace.py
 
 ### Plugin Categories
 
-- **Development Tools**: For extending Claude Code and development workflows
-- **Language Specific**: Targeted tools for specific programming languages
-- **Documentation**: Comprehensive documentation generation and writing tools
-- **Quality & Review**: Code analysis, review, and improvement tools
-- **Productivity**: General productivity enhancement tools
-- **Specialized**: Domain-specific tools for particular use cases
+— **Development Tools** — For extending Claude Code and development workflows
+— **Language Specific** — Targeted tools for specific programming languages  
+— **Documentation** — Comprehensive documentation generation and writing tools
+— **Quality & Review** — Code analysis, review, and improvement tools
+— **Productivity** — General productivity enhancement tools
+— **Specialized** — Domain-specific tools for particular use cases
 
-## License
+---
+
+## 📄 License
 
 All plugins in this collection are licensed under MIT License.
 
