@@ -1,0 +1,353 @@
+#!/usr/bin/env fish
+
+# Fish Plugin Management Script
+# Helper script for creating and managing Fish shell plugins
+
+function fish-plugin --description "Fish shell plugin management tool"
+    set -l cmd $argv[1]
+    set -a argv[1]
+
+    switch $cmd
+        case create
+            __fish_plugin_create $argv
+        case completion
+            __fish_plugin_completion $argv
+        case validate
+            __fish_plugin_validate $argv
+        case install
+            __fish_plugin_install $argv
+        case '' '-h' '--help'
+            __fish_plugin_help
+        case '*'
+            echo "Unknown command: $cmd" >&2
+            __fish_plugin_help
+            return 1
+    end
+end
+
+function __fish_plugin_create -d "Create new plugin scaffold"
+    set -l plugin_name $argv[1]
+
+    if test -z "$plugin_name"
+        echo "Error: Plugin name required" >&2
+        echo "Usage: fish-plugin create <plugin-name>" >&2
+        return 1
+    end
+
+    set -l plugin_dir ~/.config/fish
+    set -l functions_dir $plugin_dir/functions
+    set -l completions_dir $plugin_dir/completions
+    set -l conf_dir $plugin_dir/conf.d
+
+    echo "Creating Fish plugin: $plugin_name"
+    echo "Plugin directory: $plugin_dir"
+
+    # Create directories
+    mkdir -p $functions_dir $completions_dir $conf_dir
+
+    # Create main function file
+    set -l main_function $functions_dir/$plugin_name.fish
+    if not test -f $main_function
+        cat > $main_function <<EOF
+function $plugin_name -d "Main function for $plugin_name plugin"
+    argparse 'h/help' 'v/verbose' -- \$argv
+    or return 1
+
+    if set -q _flag_help
+        echo "Usage: $plugin_name [options] [args]"
+        echo "  -h, --help     Show this help"
+        echo "  -v, --verbose  Enable verbose output"
+        return 0
+    end
+
+    echo "Hello from $plugin_name plugin!"
+    if set -q _flag_verbose
+        echo "Verbose mode enabled"
+    end
+end
+EOF
+        echo "Created: $main_function"
+    end
+
+    # Create completion file
+    set -l completion_file $completions_dir/$plugin_name.fish
+    if not test -f $completion_file
+        cat > $completion_file <<EOF
+complete -c $plugin_name -f
+complete -c $plugin_name -s h -l help -d "Show help message"
+complete -c $plugin_name -s v -l verbose -d "Enable verbose output"
+EOF
+        echo "Created: $completion_file"
+    end
+
+    # Create configuration file
+    set -l config_file $conf_dir/$plugin_name.fish
+    if not test -f $config_file
+        cat > $config_file <<EOF
+# $plugin_name plugin configuration
+
+# Universal variables (persist across sessions)
+set -U ${plugin_name}_enabled true
+set -U ${plugin_name}_timeout 30
+
+# Environment variables
+set -gx ${plugin_name}_CONFIG_DIR ~/.config/$plugin_name
+set -gx ${plugin_name}_DATA_DIR ~/.local/share/$plugin_name
+
+# Aliases
+alias $plugin_name '$plugin_name'
+
+# Initialize plugin directory
+if not test -d \$$plugin_name\_CONFIG_DIR
+    mkdir -p \$$plugin_name\_CONFIG_DIR
+end
+EOF
+        echo "Created: $config_file"
+    end
+
+    echo ""
+    echo "Plugin '$plugin_name' created successfully!"
+    echo "Edit the files to add your functionality:"
+    echo "  Function: $main_function"
+    echo "  Completion: $completion_file"
+    echo "  Config: $config_file"
+end
+
+function __fish_plugin_completion -d "Generate completions for a command"
+    set -l command $argv[1]
+
+    if test -z "$command"
+        echo "Error: Command name required" >&2
+        echo "Usage: fish-plugin completion <command>" >&2
+        return 1
+    end
+
+    if not command -v $command >/dev/null 2>&1
+        echo "Error: Command '$command' not found in PATH" >&2
+        return 1
+    end
+
+    set -l completion_file ~/.config/fish/completions/$command.fish
+
+    cat > $completion_file <<EOF
+# Auto-generated completions for $command
+complete -c $command -f
+
+# Generate basic option completions
+# You may need to customize this based on the command's actual options
+complete -c $command -s h -l help -d "Show help"
+complete -c $command -s v -l verbose -d "Verbose output"
+complete -c $command -s q -l quiet -d "Quiet output"
+complete -c $command -s f -l force -d "Force operation"
+
+# File completion
+complete -c $command -a "(__fish_complete_suffix)"
+
+# Directory completion
+complete -c $command -a "(__fish_complete_directories)"
+EOF
+
+    echo "Generated completion file: $completion_file"
+    echo "You may need to customize the completions based on the command's actual options"
+end
+
+function __fish_plugin_validate -d "Validate plugin structure"
+    echo "Validating Fish plugin structure..."
+
+    set -l plugin_dir ~/.config/fish
+    set -l errors 0
+
+    # Check directories
+    echo "Checking directories..."
+    for dir in functions completions conf.d
+        if test -d $plugin_dir/$dir
+            echo "  ✓ $plugin_dir/$dir exists"
+        else
+            echo "  ✗ $plugin_dir/$dir missing"
+            set errors (math $errors + 1)
+        end
+    end
+
+    # Check functions
+    echo ""
+    echo "Checking functions..."
+    set -l function_files (find $plugin_dir/functions -name "*.fish" 2>/dev/null)
+    if test (count $function_files) -gt 0
+        for file in $function_files
+            echo "  ✓ $file"
+            # Validate function syntax
+            if fish -n $file >/dev/null 2>&1
+                echo "    ✓ Syntax valid"
+            else
+                echo "    ✗ Syntax error"
+                set errors (math $errors + 1)
+            end
+        end
+    else
+        echo "  ! No function files found"
+    end
+
+    # Check completions
+    echo ""
+    echo "Checking completions..."
+    set -l completion_files (find $plugin_dir/completions -name "*.fish" 2>/dev/null)
+    if test (count $completion_files) -gt 0
+        for file in $completion_files
+            echo "  ✓ $file"
+        end
+    else
+        echo "  ! No completion files found"
+    end
+
+    # Check configuration
+    echo ""
+    echo "Checking configuration..."
+    if test -f $plugin_dir/config.fish
+        echo "  ✓ $plugin_dir/config.fish exists"
+    else
+        echo "  ! $plugin_dir/config.fish missing"
+    end
+
+    set -l conf_files (find $plugin_dir/conf.d -name "*.fish" 2>/dev/null)
+    if test (count $conf_files) -gt 0
+        for file in $conf_files
+            echo "  ✓ $file"
+        end
+    else
+        echo "  ! No configuration files in conf.d/"
+    end
+
+    echo ""
+    if test $errors -eq 0
+        echo "✓ Plugin structure is valid"
+        return 0
+    else
+        echo "✗ Found $errors validation error(s)"
+        return 1
+    end
+end
+
+function __fish_plugin_install -d "Install plugin from template"
+    set -l plugin_name $argv[1]
+
+    if test -z "$plugin_name"
+        echo "Error: Plugin name required" >&2
+        echo "Usage: fish-plugin install <template-name>" >&2
+        return 1
+    end
+
+    # Available templates
+    switch $plugin_name
+        case prompt
+            __fish_plugin_install_prompt
+        case git
+            __fish_plugin_install_git
+        case docker
+            __fish_plugin_install_docker
+        case node
+            __fish_plugin_install_node
+        case '*'
+            echo "Unknown template: $plugin_name" >&2
+            echo "Available templates: prompt, git, docker, node" >&2
+            return 1
+    end
+end
+
+function __fish_plugin_install_prompt -d "Install enhanced prompt template"
+    set -l prompt_file ~/.config/fish/functions/fish_prompt.fish
+
+    cat > $prompt_file <<'EOF'
+function fish_prompt -d "Enhanced prompt with status and git info"
+    # Save last command status
+    set -l last_status $status
+
+    # Git status
+    set -l git_status ""
+    set -l git_branch (git branch --show-current 2>/dev/null)
+    if test -n "$git_branch"
+        if git diff --quiet HEAD 2>/dev/null
+            set git_status (set_color green)"$git_branch"(set_color normal)
+        else
+            set git_status (set_color red)"$git_branch*"(set_color normal)
+        end
+        set git_status " [$git_status]"
+    end
+
+    # Current directory
+    set -l cwd (set_color cyan)(prompt_pwd)(set_color normal)
+
+    # Prompt character
+    set -l prompt_char (set_color normal)
+    if test $last_status -eq 0
+        set prompt_char "❯"
+    else
+        set prompt_char (set_color red)"❯"(set_color normal)
+    end
+
+    echo -n -s "$cwd$git_status" " " "$prompt_char" " "
+end
+EOF
+
+    echo "Installed enhanced prompt template"
+    echo "Restart Fish to see changes"
+end
+
+function __fish_plugin_install_git -d "Install Git utilities plugin"
+    set -l git_file ~/.config/fish/functions/git_status.fish
+
+    cat > $git_file <<'EOF'
+function git_status -d "Enhanced git status with cleaner output"
+    if not git rev-parse --git-dir >/dev/null 2>&1
+        echo "Not a git repository"
+        return 1
+    end
+
+    echo -n "Branch: "
+    git branch --show-current
+    echo ""
+
+    echo "Modified files:"
+    git diff --name-only
+    echo ""
+
+    echo "Untracked files:"
+    git ls-files --others --exclude-standard
+end
+
+function git_quick_add -d "Quick add files by pattern"
+    if test (count $argv) -eq 0
+        echo "Usage: git_quick_add <pattern>"
+        return 1
+    end
+
+    git add (git status --porcelain | grep -E "^\\s\\s.*$argv[1]" | awk '{print $2}')
+    echo "Added files matching: $argv[1]"
+end
+EOF
+
+    echo "Installed Git utilities plugin"
+end
+
+function __fish_plugin_help -d "Show help"
+    echo "Fish Plugin Management Tool"
+    echo ""
+    echo "Usage: fish-plugin <command> [options]"
+    echo ""
+    echo "Commands:"
+    echo "  create <name>     Create new plugin scaffold"
+    echo "  completion <cmd>  Generate completions for command"
+    echo "  validate          Validate plugin structure"
+    echo "  install <template> Install plugin template"
+    echo "  help              Show this help"
+    echo ""
+    echo "Available templates for install:"
+    echo "  prompt    Enhanced prompt with git status"
+    echo "  git       Git utility functions"
+    echo "  docker    Docker completions and aliases"
+    echo "  node      Node.js development helpers"
+end
+
+# Initialize the script
+if test (count $argv) -eq 0
+    __fish_plugin_help
+end
