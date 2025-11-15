@@ -104,7 +104,7 @@ Tools for developing and extending Claude Code with custom agents, commands, ski
 
 
 **Agents** (1):
-- **marketplace-dev**: Use PROACTIVELY when working with Claude Code marketplace repository. Expert in adding/modifying plugins, hooks, commands, agents, and skills. MUST...
+- **claude-dev**: Use PROACTIVELY when working with Claude Code plugins, components, skills, agents, commands, or hooks. Expert in using claude-code-development skil...
 
 
 **Skills** (5):
