@@ -32,7 +32,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 - **13 Custom Commands**
 - **7 Expert Agents**
 - **22 Specialized Skills**
-- **2 Hooks**
+- **3 Hooks**
 - **0 MCP Servers**
 
 ---
@@ -113,6 +113,10 @@ Tools for developing and extending Claude Code with custom agents, commands, ski
 - **plugin-creator**: Use when creating or developing Claude Code plugins. Scaffolds structure, adds components, sets up development environments, and provides guidance ...
 - **skill-creator**: Use when creating or updating Claude Code skills that extend capabilities with specialized knowledge and workflows.
 - **slash-commands-creator**: Create and review Claude Code slash commands. Use when creating `/...` commands, reviewing syntax, or standardizing command definitions with proper...
+
+
+**Hooks** (1):
+- **PreToolUse_0**: Hook for PreToolUse
 
 ---
 
