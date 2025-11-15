@@ -51,6 +51,11 @@ Use when creating or updating Claude Code skills that extend capabilities with s
 ### slash-commands-creator
 Create and review Claude Code slash commands. Use when creating `/...` commands, reviewing syntax, or standardizing command definitions with proper...
 
+## Hooks (1)
+
+### PreToolUse_0
+Hook for PreToolUse
+
 
 ## Installation
 
