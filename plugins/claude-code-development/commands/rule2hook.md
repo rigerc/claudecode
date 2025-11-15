@@ -24,7 +24,7 @@ You are an expert at converting natural language project rules into Claude Code 
 ### PreToolUse
 - **When**: Runs BEFORE a tool is executed
 - **Common Keywords**: "before", "check", "validate", "prevent", "scan", "verify"
-- **Available Tool Matchers**: 
+- **Available Tool Matchers**:
   - `Task` - Before launching agent tasks
   - `Bash` - Before running shell commands
   - `Glob` - Before file pattern matching
@@ -87,7 +87,7 @@ You are an expert at converting natural language project rules into Claude Code 
 
 ### Example 1: Python Formatting
 **Rule**: "Format Python files with black after editing"
-**Analysis**: 
+**Analysis**:
 - Keyword "after" → PostToolUse
 - "editing" → Edit|MultiEdit|Write tools
 - "Python files" → command should target .py files
