@@ -2,11 +2,11 @@
   "hooks": {
     "PreToolUse": [
       {
-        "matcher": "Bash|Write|Edit|MultiEdit",
+        "matcher": "Bash|Write|Edit|MultiEdit|Read|Glob",
         "hooks": [
           {
             "type": "command",
-            "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -q '/home/'; then echo 'ERROR: Operations in /home/ require explicit user permission' >&2; exit 1; fi"
+            "command": "if echo \"$CLAUDE_TOOL_INPUT\" | grep -qE '(\"/home/|\\\"file_path\\\":\\s*\\\"/home/)' || [[ \"$PWD\" == /home/* ]]; then echo 'ERROR: Operations in /home/ require explicit user permission' >&2; exit 1; fi"
           }
         ]
       }
