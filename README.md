@@ -29,9 +29,9 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 ## Collection Summary
 
 - **11 Specialized Plugins**
-- **11 Custom Commands**
+- **13 Custom Commands**
 - **7 Expert Agents**
-- **21 Specialized Skills**
+- **22 Specialized Skills**
 - **2 Hooks**
 - **0 MCP Servers**
 
@@ -93,11 +93,13 @@ Tools for developing and extending Claude Code with custom agents, commands, ski
 **📦 Install**: `/plugin install claude-code-development@rigerc-claude`
 
 
-**Commands** (5):
+**Commands** (7):
 - `create-agent`: Create a new Claude Code agent or sub-agent using the working-with-claude-code skill
 - `create-command`: Create a new Claude Code slash command using the slash-command-creator skill
 - `create-hook`: Create a new Claude Code hook using the working-with-claude-code skill
 - `create-skill`: Create a new Claude Code Skill using the skill-creator skill
+- `rule2hook`: You are an expert at converting natural language project rules into Claude Code hook configurations. Your task is to analyze the given rules and ge...
+- `split-references`: Find SKILL.MD files with detailed-guide.md references and split long reference files into multiple focused files
 - `validate-all-skills`: Validate all agent skills using claude-skills-cli
 
 
@@ -105,7 +107,8 @@ Tools for developing and extending Claude Code with custom agents, commands, ski
 - **marketplace-dev**: Use PROACTIVELY when working with Claude Code marketplace repository. Expert in adding/modifying plugins, hooks, commands, agents, and skills. MUST...
 
 
-**Skills** (4):
+**Skills** (5):
+- **agent-creator**: Use when creating or updating Claude Code subagents. Provides expertise in agent configuration, system prompts, and workflow design.
 - **claude-skills-cli**: Create and manage Claude Agent Skills with progressive disclosure validation. Use for building and validating skill structure and activation.
 - **plugin-creator**: Use when creating or developing Claude Code plugins. Scaffolds structure, adds components, sets up development environments, and provides guidance ...
 - **skill-creator**: Use when creating or updating Claude Code skills that extend capabilities with specialized knowledge and workflows.

@@ -6,7 +6,7 @@ Tools for developing and extending Claude Code with custom agents, commands, ski
 
 This plugin provides the following components:
 
-## Commands (5)
+## Commands (7)
 
 ### `create-agent`
 Create a new Claude Code agent or sub-agent using the working-with-claude-code skill
@@ -20,6 +20,12 @@ Create a new Claude Code hook using the working-with-claude-code skill
 ### `create-skill`
 Create a new Claude Code Skill using the skill-creator skill
 
+### `rule2hook`
+You are an expert at converting natural language project rules into Claude Code hook configurations. Your task is to analyze the given rules and ge...
+
+### `split-references`
+Find SKILL.MD files with detailed-guide.md references and split long reference files into multiple focused files
+
 ### `validate-all-skills`
 Validate all agent skills using claude-skills-cli
 
@@ -28,7 +34,10 @@ Validate all agent skills using claude-skills-cli
 ### marketplace-dev
 Use PROACTIVELY when working with Claude Code marketplace repository. Expert in adding/modifying plugins, hooks, commands, agents, and skills. MUST...
 
-## Skills (4)
+## Skills (5)
+
+### agent-creator
+Use when creating or updating Claude Code subagents. Provides expertise in agent configuration, system prompts, and workflow design.
 
 ### claude-skills-cli
 Create and manage Claude Agent Skills with progressive disclosure validation. Use for building and validating skill structure and activation.
