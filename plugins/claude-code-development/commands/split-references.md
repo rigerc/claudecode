@@ -25,10 +25,10 @@ This command helps you optimize skill reference files by finding SKILL.MD files 
 
 Let me start by finding all SKILL.MD files and checking their detailed-usage.md references.
 
-# Find all SKILL.MD files
+## Find all SKILL.MD files
 $SKILL_FILES = $(find . -name "SKILL.md" -type f)
 
-# Check each SKILL.md for detailed-guide.md references
+## Check each SKILL.md for detailed-guide.md references
 for skill_file in $SKILL_FILES; do
     echo "Checking: $skill_file"
 
