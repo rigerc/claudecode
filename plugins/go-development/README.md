@@ -11,10 +11,13 @@ This plugin provides the following components:
 ### golang-pro
 Write idiomatic Go code with goroutines, channels, and interfaces. Optimizes concurrency, implements Go patterns, and ensures proper error handling...
 
-## Skills (10)
+## Skills (13)
 
 ### anthropic-sdk-go
 Use when integrating the official Anthropic Go SDK for Claude. Covers API clients, messages, streaming, function calling, files, and beta features ...
+
+### charmlog
+Use for beautiful, minimal, and colorful logging in Go applications with Charmbracelet Log
 
 ### go-bubbles-skill
 Use when working with the Bubbles component library for BubbleTea applications in Go. Provides expertise in components and styling.
@@ -37,11 +40,17 @@ Use when working with the go-openai library for OpenAI API integration in Go. Pr
 ### go-openrouter
 Use when working with the OpenRouter Go client library for AI model integration. Provides expertise in chat completions, streaming, function callin...
 
+### go-pond
+Use when implementing concurrent Go applications with Pond worker pool library for high-performance task management and goroutine control
+
 ### go-teastraw
 Use when creating end-to-end tests for TUI applications in Go using Teastraw. Expertise in testing compiled TUI binaries, simulating user interacti...
 
 ### go-urfave-cli-v3
 Use when building Go CLI applications with urfave/cli v3. Provides code generation, templates, migration tools, and reference documentation for com...
+
+### zerolog
+Use when implementing high-performance zero-allocation JSON logging with Zerolog in Go applications
 
 
 ## Installation

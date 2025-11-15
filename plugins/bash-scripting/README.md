@@ -11,10 +11,25 @@ This plugin provides the following components:
 ### bash-scripting-expert
 Expert Bash scripting developer specializing in best practices, code review, optimization, and modern Bash patterns. Provides professional guidance...
 
-## Skills (1)
+## Skills (6)
+
+### argc-bash
+Use when creating Bash CLIs with argc framework. Provides expertise in argc comment tags, parameter types, dynamic values, nested subcommands, and ...
 
 ### bats-tester
 Use when creating tests for bash scripts using bats-core. Provides expertise in test writing, setup, and best practices.
+
+### fish-plugins
+Use when creating Fish shell plugins, functions, completions, or managing Fish shell configurations
+
+### fish-shell
+Use when working with Fish Shell for interactive usage, scripting, configuration, automation, and intelligent completions
+
+### gum
+Use when working with charmbracelet/gum for creating interactive, glamorous shell scripts. Provides expertise in gum commands for input, selection,...
+
+### jq
+Use for JSON processing with jq command in bash scripts, data filtering, transformation, and API response parsing
 
 
 ## Installation
