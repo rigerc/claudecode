@@ -31,7 +31,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 - **11 Specialized Plugins**
 - **13 Custom Commands**
 - **7 Expert Agents**
-- **22 Specialized Skills**
+- **30 Specialized Skills**
 - **3 Hooks**
 - **0 MCP Servers**
 
@@ -81,8 +81,13 @@ Expert tools for Bash scripting, automation, and testing with bats-core framewor
 - **bash-scripting-expert**: Expert Bash scripting developer specializing in best practices, code review, optimization, and modern Bash patterns. Provides professional guidance...
 
 
-**Skills** (1):
+**Skills** (6):
+- **argc-bash**: Use when creating Bash CLIs with argc framework. Provides expertise in argc comment tags, parameter types, dynamic values, nested subcommands, and ...
 - **bats-tester**: Use when creating tests for bash scripts using bats-core. Provides expertise in test writing, setup, and best practices.
+- **fish-plugins**: Use when creating Fish shell plugins, functions, completions, or managing Fish shell configurations
+- **fish-shell**: Use when working with Fish Shell for interactive usage, scripting, configuration, automation, and intelligent completions
+- **gum**: Use when working with charmbracelet/gum for creating interactive, glamorous shell scripts. Provides expertise in gum commands for input, selection,...
+- **jq**: Use for JSON processing with jq command in bash scripts, data filtering, transformation, and API response parsing
 
 ---
 
@@ -184,8 +189,9 @@ Specialized tools for Go development with goroutines, channels, interfaces, and 
 - **golang-pro**: Write idiomatic Go code with goroutines, channels, and interfaces. Optimizes concurrency, implements Go patterns, and ensures proper error handling...
 
 
-**Skills** (10):
+**Skills** (13):
 - **anthropic-sdk-go**: Use when integrating the official Anthropic Go SDK for Claude. Covers API clients, messages, streaming, function calling, files, and beta features ...
+- **charmlog**: Use for beautiful, minimal, and colorful logging in Go applications with Charmbracelet Log
 - **go-bubbles-skill**: Use when working with the Bubbles component library for BubbleTea applications in Go. Provides expertise in components and styling.
 - **go-bubbletea-skill**: Use when building terminal UIs with the BubbleTea framework in Go. Provides expertise in Model-View-Update pattern and TUI best practices.
 - **go-doc**: Use when working with Go's `go doc` command. Access package docs, explore APIs, and manage HTTP documentation servers.
@@ -193,8 +199,10 @@ Specialized tools for Go development with goroutines, channels, interfaces, and 
 - **go-koanf**: Use when implementing Go configuration management with Koanf. Load from files, env vars, flags with hot-reloading and type-safe unmarshalling.
 - **go-openai**: Use when working with the go-openai library for OpenAI API integration in Go. Provides expertise in chat, embeddings, and more.
 - **go-openrouter**: Use when working with the OpenRouter Go client library for AI model integration. Provides expertise in chat completions, streaming, function callin...
+- **go-pond**: Use when implementing concurrent Go applications with Pond worker pool library for high-performance task management and goroutine control
 - **go-teastraw**: Use when creating end-to-end tests for TUI applications in Go using Teastraw. Expertise in testing compiled TUI binaries, simulating user interacti...
 - **go-urfave-cli-v3**: Use when building Go CLI applications with urfave/cli v3. Provides code generation, templates, migration tools, and reference documentation for com...
+- **zerolog**: Use when implementing high-performance zero-allocation JSON logging with Zerolog in Go applications
 
 ---
 
