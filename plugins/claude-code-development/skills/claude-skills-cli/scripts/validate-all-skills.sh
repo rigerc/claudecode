@@ -18,6 +18,15 @@ FAILED=0
 echo -e "${BLUE}🔍 Finding all skill directories...${NC}"
 echo
 
+echo -e "${BLUE}🔧 Fixing line endings in all markdown files...${NC}"
+# Fix line endings in all markdown files before validation
+find . -type f -name "*.md" -print0 | while IFS= read -r -d $'\0' md_file; do
+    # Convert Windows line endings to Unix format
+    sed -i 's/\r$//' "$md_file"
+done
+echo "Line endings fixed for all markdown files"
+echo
+
 # Find all SKILL.md files directly
 while IFS= read -r skill_file; do
     skill_dir=$(dirname "$skill_file")
