@@ -11,13 +11,16 @@ This plugin provides the following components:
 ### bash-scripting-expert
 Expert Bash scripting developer specializing in best practices, code review, optimization, and modern Bash patterns. Provides professional guidance...
 
-## Skills (6)
+## Skills (7)
 
 ### argc-bash
 Use when creating Bash CLIs with argc framework. Provides expertise in argc comment tags, parameter types, dynamic values, nested subcommands, and ...
 
 ### bats-tester
 Use when creating tests for bash scripts using bats-core. Provides expertise in test writing, setup, and best practices.
+
+### curl
+Use for expert guidance on curl HTTP requests, API testing, file transfers, shell automation, and network debugging
 
 ### fish-plugins
 Use when creating Fish shell plugins, functions, completions, or managing Fish shell configurations
