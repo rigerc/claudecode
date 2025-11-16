@@ -31,7 +31,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 - **11 Specialized Plugins**
 - **13 Custom Commands**
 - **7 Expert Agents**
-- **30 Specialized Skills**
+- **31 Specialized Skills**
 - **3 Hooks**
 - **0 MCP Servers**
 
@@ -81,9 +81,10 @@ Expert tools for Bash scripting, automation, and testing with bats-core framewor
 - **bash-scripting-expert**: Expert Bash scripting developer specializing in best practices, code review, optimization, and modern Bash patterns. Provides professional guidance...
 
 
-**Skills** (6):
+**Skills** (7):
 - **argc-bash**: Use when creating Bash CLIs with argc framework. Provides expertise in argc comment tags, parameter types, dynamic values, nested subcommands, and ...
 - **bats-tester**: Use when creating tests for bash scripts using bats-core. Provides expertise in test writing, setup, and best practices.
+- **curl**: Use for expert guidance on curl HTTP requests, API testing, file transfers, shell automation, and network debugging
 - **fish-plugins**: Use when creating Fish shell plugins, functions, completions, or managing Fish shell configurations
 - **fish-shell**: Use when working with Fish Shell for interactive usage, scripting, configuration, automation, and intelligent completions
 - **gum**: Use when working with charmbracelet/gum for creating interactive, glamorous shell scripts. Provides expertise in gum commands for input, selection,...
@@ -170,7 +171,7 @@ Comprehensive tools for generating API documentation, technical docs, and projec
 
 A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development.
 
-**📦 Install**: `/plugin install flatban@rigerc-claude`
+**📦 Install**: `/plugin install Flatban@rigerc-claude`
 
 
 **Commands** (1):
