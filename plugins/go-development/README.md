@@ -11,13 +11,16 @@ This plugin provides the following components:
 ### golang-pro
 Write idiomatic Go code with goroutines, channels, and interfaces. Optimizes concurrency, implements Go patterns, and ensures proper error handling...
 
-## Skills (13)
+## Skills (16)
 
 ### anthropic-sdk-go
 Use when integrating the official Anthropic Go SDK for Claude. Covers API clients, messages, streaming, function calling, files, and beta features ...
 
 ### charmlog
 Use for beautiful, minimal, and colorful logging in Go applications with Charmbracelet Log
+
+### fyne
+Use when developing cross-platform GUI applications in Go using the Fyne toolkit for desktop, mobile, and web applications.
 
 ### go-bubbles-skill
 Use when working with the Bubbles component library for BubbleTea applications in Go. Provides expertise in components and styling.
@@ -30,6 +33,9 @@ Use when working with Go's `go doc` command. Access package docs, explore APIs, 
 
 ### go-env-parser
 Use when working with github.com/caarlos0/env for parsing environment variables into Go structs. Covers struct tags, custom parsers, envFile/envExp...
+
+### go-hass-anything
+Use when developing Go applications for Home Assistant integration via MQTT using the go-hass-anything framework. Expert guidance for creating sens...
 
 ### go-koanf
 Use when implementing Go configuration management with Koanf. Load from files, env vars, flags with hot-reloading and type-safe unmarshalling.
@@ -48,6 +54,9 @@ Use when creating end-to-end tests for TUI applications in Go using Teastraw. Ex
 
 ### go-urfave-cli-v3
 Use when building Go CLI applications with urfave/cli v3. Provides code generation, templates, migration tools, and reference documentation for com...
+
+### gopsutil
+Use when implementing system monitoring, performance analysis, or DevOps applications requiring cross-platform system metrics in Go.
 
 ### zerolog
 Use when implementing high-performance zero-allocation JSON logging with Zerolog in Go applications
