@@ -31,7 +31,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 - **11 Specialized Plugins**
 - **13 Custom Commands**
 - **7 Expert Agents**
-- **34 Specialized Skills**
+- **36 Specialized Skills**
 - **3 Hooks**
 - **0 MCP Servers**
 
@@ -190,7 +190,7 @@ Specialized tools for Go development with goroutines, channels, interfaces, and 
 - **golang-pro**: Write idiomatic Go code with goroutines, channels, and interfaces. Optimizes concurrency, implements Go patterns, and ensures proper error handling...
 
 
-**Skills** (16):
+**Skills** (18):
 - **anthropic-sdk-go**: Use when integrating the official Anthropic Go SDK for Claude. Covers API clients, messages, streaming, function calling, files, and beta features ...
 - **charmlog**: Use for beautiful, minimal, and colorful logging in Go applications with Charmbracelet Log
 - **fyne**: Use when developing cross-platform GUI applications in Go using the Fyne toolkit for desktop, mobile, and web applications.
@@ -203,9 +203,11 @@ Specialized tools for Go development with goroutines, channels, interfaces, and 
 - **go-openai**: Use when working with the go-openai library for OpenAI API integration in Go. Provides expertise in chat, embeddings, and more.
 - **go-openrouter**: Use when working with the OpenRouter Go client library for AI model integration. Provides expertise in chat completions, streaming, function callin...
 - **go-pond**: Use when implementing concurrent Go applications with Pond worker pool library for high-performance task management and goroutine control
+- **go-syscall**: Use when working with Go syscalls, low-level system programming, and Windows APIs using syscall and golang.org/x/sys packages
 - **go-teastraw**: Use when creating end-to-end tests for TUI applications in Go using Teastraw. Expertise in testing compiled TUI binaries, simulating user interacti...
 - **go-urfave-cli-v3**: Use when building Go CLI applications with urfave/cli v3. Provides code generation, templates, migration tools, and reference documentation for com...
 - **gopsutil**: Use when implementing system monitoring, performance analysis, or DevOps applications requiring cross-platform system metrics in Go.
+- **xsys-windows**: Use when working with Windows system programming, Windows APIs, and Windows-specific functionality using golang.org/x/sys/windows package
 - **zerolog**: Use when implementing high-performance zero-allocation JSON logging with Zerolog in Go applications
 
 ---
