@@ -11,7 +11,7 @@ This plugin provides the following components:
 ### golang-pro
 Write idiomatic Go code with goroutines, channels, and interfaces. Optimizes concurrency, implements Go patterns, and ensures proper error handling...
 
-## Skills (16)
+## Skills (18)
 
 ### anthropic-sdk-go
 Use when integrating the official Anthropic Go SDK for Claude. Covers API clients, messages, streaming, function calling, files, and beta features ...
@@ -49,6 +49,9 @@ Use when working with the OpenRouter Go client library for AI model integration.
 ### go-pond
 Use when implementing concurrent Go applications with Pond worker pool library for high-performance task management and goroutine control
 
+### go-syscall
+Use when working with Go syscalls, low-level system programming, and Windows APIs using syscall and golang.org/x/sys packages
+
 ### go-teastraw
 Use when creating end-to-end tests for TUI applications in Go using Teastraw. Expertise in testing compiled TUI binaries, simulating user interacti...
 
@@ -57,6 +60,9 @@ Use when building Go CLI applications with urfave/cli v3. Provides code generati
 
 ### gopsutil
 Use when implementing system monitoring, performance analysis, or DevOps applications requiring cross-platform system metrics in Go.
+
+### xsys-windows
+Use when working with Windows system programming, Windows APIs, and Windows-specific functionality using golang.org/x/sys/windows package
 
 ### zerolog
 Use when implementing high-performance zero-allocation JSON logging with Zerolog in Go applications
