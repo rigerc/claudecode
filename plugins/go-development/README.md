@@ -11,7 +11,7 @@ This plugin provides the following components:
 ### golang-pro
 Write idiomatic Go code with goroutines, channels, and interfaces. Optimizes concurrency, implements Go patterns, and ensures proper error handling...
 
-## Skills (18)
+## Skills (19)
 
 ### anthropic-sdk-go
 Use when integrating the official Anthropic Go SDK for Claude. Covers API clients, messages, streaming, function calling, files, and beta features ...
@@ -60,6 +60,9 @@ Use when building Go CLI applications with urfave/cli v3. Provides code generati
 
 ### gopsutil
 Use when implementing system monitoring, performance analysis, or DevOps applications requiring cross-platform system metrics in Go.
+
+### media-winrt-go
+Use when implementing Windows media player integration - SystemMediaTransportControls for media playback control on Windows
 
 ### xsys-windows
 Use when working with Windows system programming, Windows APIs, and Windows-specific functionality using golang.org/x/sys/windows package
