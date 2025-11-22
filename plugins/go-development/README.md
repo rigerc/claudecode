@@ -11,7 +11,7 @@ This plugin provides the following components:
 ### golang-pro
 Write idiomatic Go code with goroutines, channels, and interfaces. Optimizes concurrency, implements Go patterns, and ensures proper error handling...
 
-## Skills (19)
+## Skills (20)
 
 ### anthropic-sdk-go
 Use when integrating the official Anthropic Go SDK for Claude. Covers API clients, messages, streaming, function calling, files, and beta features ...
@@ -57,6 +57,9 @@ Use when creating end-to-end tests for TUI applications in Go using Teastraw. Ex
 
 ### go-urfave-cli-v3
 Use when building Go CLI applications with urfave/cli v3. Provides code generation, templates, migration tools, and reference documentation for com...
+
+### go-wails3
+Use for Wails 3 desktop app development with Go backend and web frontend. Expert guidance on project setup, event system, menus, themes, and cross-...
 
 ### gopsutil
 Use when implementing system monitoring, performance analysis, or DevOps applications requiring cross-platform system metrics in Go.

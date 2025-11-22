@@ -31,7 +31,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 - **11 Specialized Plugins**
 - **13 Custom Commands**
 - **7 Expert Agents**
-- **37 Specialized Skills**
+- **38 Specialized Skills**
 - **3 Hooks**
 - **0 MCP Servers**
 
@@ -190,7 +190,7 @@ Specialized tools for Go development with goroutines, channels, interfaces, and 
 - **golang-pro**: Write idiomatic Go code with goroutines, channels, and interfaces. Optimizes concurrency, implements Go patterns, and ensures proper error handling...
 
 
-**Skills** (19):
+**Skills** (20):
 - **anthropic-sdk-go**: Use when integrating the official Anthropic Go SDK for Claude. Covers API clients, messages, streaming, function calling, files, and beta features ...
 - **charmlog**: Use for beautiful, minimal, and colorful logging in Go applications with Charmbracelet Log
 - **fyne**: Use when developing cross-platform GUI applications in Go using the Fyne toolkit for desktop, mobile, and web applications.
@@ -206,6 +206,7 @@ Specialized tools for Go development with goroutines, channels, interfaces, and 
 - **go-syscall**: Use when working with Go syscalls, low-level system programming, and Windows APIs using syscall and golang.org/x/sys packages
 - **go-teastraw**: Use when creating end-to-end tests for TUI applications in Go using Teastraw. Expertise in testing compiled TUI binaries, simulating user interacti...
 - **go-urfave-cli-v3**: Use when building Go CLI applications with urfave/cli v3. Provides code generation, templates, migration tools, and reference documentation for com...
+- **go-wails3**: Use for Wails 3 desktop app development with Go backend and web frontend. Expert guidance on project setup, event system, menus, themes, and cross-...
 - **gopsutil**: Use when implementing system monitoring, performance analysis, or DevOps applications requiring cross-platform system metrics in Go.
 - **media-winrt-go**: Use when implementing Windows media player integration - SystemMediaTransportControls for media playback control on Windows
 - **xsys-windows**: Use when working with Windows system programming, Windows APIs, and Windows-specific functionality using golang.org/x/sys/windows package
