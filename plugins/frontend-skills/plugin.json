@@ -1,0 +1,11 @@
+{
+  "name": "frontend-skills",
+  "version": "1.0.0",
+  "description": "Skills for frontend development",
+  "author": {
+    "name": "rigerc"
+  },
+  "homepage": "https://github.com/rigerc/claudecode",
+  "repository": "https://github.com/rigerc/claudecode",
+  "license": "MIT"
+}
