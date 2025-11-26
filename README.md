@@ -14,6 +14,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
   - [Code Quality](#code-quality)
   - [Documentation Generation](#documentation-generation)
   - [Flatban](#flatban)
+  - [Frontend Skills](#frontend-skills)
   - [Go Development](#go-development)
   - [Home Assistant](#home-assistant)
   - [Markdown Task Manager](#markdown-task-manager)
@@ -28,10 +29,10 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 
 ## Collection Summary
 
-- **11 Specialized Plugins**
+- **12 Specialized Plugins**
 - **13 Custom Commands**
 - **7 Expert Agents**
-- **38 Specialized Skills**
+- **39 Specialized Skills**
 - **3 Hooks**
 - **0 MCP Servers**
 
@@ -176,6 +177,18 @@ A Claude Code plugin that enables integration with [Flatban](https://github.com/
 
 **Commands** (1):
 - `flatban`: Create or update Flatban tasks with AI assistance
+
+---
+
+### Frontend Skills
+
+Skills for frontend development
+
+**📦 Install**: `/plugin install frontend-skills@rigerc-claude`
+
+
+**Skills** (1):
+- **shadcn-svelte**: Use when building Svelte/SvelteKit applications with shadcn-svelte components, need form integration, theme customization, or accessibility pattern...
 
 ---
 
