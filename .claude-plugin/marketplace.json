@@ -4,9 +4,9 @@
     "name": "rigerc's Claude personal marketplace"
   },
   "metadata": {
-    "version": "1.0.100",
+    "version": "1.0.101",
     "description": "A curated collection of specialized plugins for Claude Code, organized by functionality to provide focused tools for specific development tasks.",
-    "lastUpdated": "2025-11-26T21:14:22.014230Z"
+    "lastUpdated": "2025-12-03T20:12:48.698148Z"
   },
   "plugins": [
     {
@@ -35,8 +35,8 @@
       "description": "A Claude Code plugin that enables integration with [Flatban](https://github.com/gelform/flatban) - a filesystem-based Kanban project management system designed for AI-assisted development."
     },
     {
-      "name": "frontend-skills",
-      "source": "./plugins/frontend-skills",
+      "name": "frontend-helper-skills",
+      "source": "./plugins/frontend-helper-skills",
       "description": "Skills for frontend development"
     },
     {
@@ -68,11 +68,6 @@
       "name": "productivity-tools",
       "source": "./plugins/productivity-tools",
       "description": "Productivity enhancement tools including feature brainstorming and dotfile management"
-    },
-    {
-      "name": "frontend-helper-skills",
-      "source": "./plugins/frontend-helper-skills",
-      "description": "Skills for frontend development!"
     }
   ]
 }
