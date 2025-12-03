@@ -1,4 +1,4 @@
-# Frontend Skills
+# Frontend Helper Skills
 
 Skills for frontend development
 
@@ -17,7 +17,7 @@ Use when building Svelte/SvelteKit applications with shadcn-svelte components, n
 Install this plugin from the rigerc-claude marketplace:
 
 ```bash
-/plugin install frontend-skills@rigerc-claude
+/plugin install frontend-helper-skills@rigerc-claude
 ```
 
 ## Usage
