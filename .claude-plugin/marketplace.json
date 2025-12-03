@@ -65,8 +65,8 @@
       "description": "Productivity enhancement tools including feature brainstorming and dotfile management"
     },
     {
-      "name": "frontend-skills",
-      "source": "./plugins/frontend-skills",
+      "name": "frontend-helper-skills",
+      "source": "./plugins/frontend-helper-skills",
       "description": "Skills for frontend development!"
     }
   ]

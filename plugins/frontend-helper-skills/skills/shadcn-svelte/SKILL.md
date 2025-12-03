@@ -10,6 +10,7 @@ Frontend development skill for shadcn-svelte component library integration.
 
 ## When to Use
 - Building Svelte/SvelteKit applications with shadcn-svelte
+- When working with .svelte files
 - Need component installation, customization, or best practices
 - Form implementation with Superforms/Formsnap
 - Theme setup and dark mode implementation
