@@ -6,7 +6,10 @@ Skills for frontend development
 
 This plugin provides the following components:
 
-## Skills (1)
+## Skills (2)
+
+### frontend-designer
+Frontend design expert using 5-dimension framework to create intentional non-generic designs. Use for UI/UX design tasks.
 
 ### shadcn-svelte
 Use when building Svelte/SvelteKit applications with shadcn-svelte components, need form integration, theme customization, or accessibility pattern...
