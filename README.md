@@ -32,7 +32,7 @@ A curated collection of specialized plugins for Claude Code, organized by functi
 - **12 Specialized Plugins**
 - **13 Custom Commands**
 - **7 Expert Agents**
-- **39 Specialized Skills**
+- **40 Specialized Skills**
 - **3 Hooks**
 - **0 MCP Servers**
 
@@ -187,7 +187,8 @@ Skills for frontend development
 **📦 Install**: `/plugin install frontend-helper-skills@rigerc-claude`
 
 
-**Skills** (1):
+**Skills** (2):
+- **frontend-designer**: Frontend design expert using 5-dimension framework to create intentional non-generic designs. Use for UI/UX design tasks.
 - **shadcn-svelte**: Use when building Svelte/SvelteKit applications with shadcn-svelte components, need form integration, theme customization, or accessibility pattern...
 
 ---
