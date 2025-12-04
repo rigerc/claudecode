@@ -17,7 +17,7 @@ Frontend development skill for shadcn-svelte component library integration.
 - Accessibility compliance and component optimization
 
 ## Quick Start
-1. **Install component**: `npx shadcn-svelte@latest add button`
+1. **Install component**: `npx shadcn-svelte@latest add -y -o button`
 2. **Use in Svelte**: Import from `$lib/components/ui/button`
 3. **Customize**: Modify component files directly in your project
 4. **Theme**: Apply CSS variables for consistent design system
